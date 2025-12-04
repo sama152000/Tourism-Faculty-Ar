@@ -11,29 +11,36 @@ export class QuickSidebarService {
       title: 'وصول سريع',
       position: 'right',
       links: [
-        {
+         {
           id: '1',
-          title: 'بوابة الطالب',
-          icon: 'pi pi-user',
-          url: '/student-portal'
+          title: 'عن الكلية',
+          icon: 'pi pi-info-circle',
+          url: '/about'
+        },
+       
+        {
+          id: '4',
+          title: ' الاخبار',
+          icon: 'pi pi-file-edit',
+          url: '/news-list'
         },
         {
           id: '2',
-          title: 'التعلم الإلكتروني',
+          title: ' القطاعات',
           icon: 'pi pi-desktop',
-          url: '/elearning'
+          url: '/sectors'
         },
         {
           id: '3',
-          title: 'المكتبة',
+          title: 'الوحدات',
           icon: 'pi pi-book',
-          url: '/library'
+          url: '/units'
         },
         {
-          id: '4',
-          title: 'القبول والتسجيل',
-          icon: 'pi pi-file-edit',
-          url: '/admissions'
+          id: '6',
+          title: ' الاقسام',
+          icon: 'pi pi-user',
+          url: '/departments'
         },
         {
           id: '5',
@@ -41,12 +48,7 @@ export class QuickSidebarService {
           icon: 'pi pi-phone',
           url: '/contact'
         },
-        {
-          id: '6',
-          title: 'عن الكلية',
-          icon: 'pi pi-info-circle',
-          url: '/about'
-        }
+       
       ]
     };
   }

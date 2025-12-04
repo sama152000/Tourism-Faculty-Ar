@@ -49,27 +49,26 @@ export class FooterService {
         }
       ],
       footerSections: [
-        {
-          title: 'روابط سريعة',
-          links: [
-            { id: '1', label: 'الرئيسية', routerLink: '/' },
-            { id: '2', label: 'عن الكلية', routerLink: '/about' },
-            { id: '3', label: 'الأقسام العلمية', routerLink: '/departments' },
-            { id: '4', label: 'الأخبار والفعاليات', routerLink: '/news' },
-            { id: '5', label: 'اتصل بنا', routerLink: '/contact' }
-          ]
-        },
-        
-        {
-          title: 'خدمات الطلاب',
-          links: [
-            { id: '1', label: 'القبول والتسجيل', routerLink: '/admissions' },
-            { id: '2', label: 'شئون الطلاب', routerLink: '/student-affairs' },
-            { id: '3', label: 'خدمات التوظيف', routerLink: '/careers' },
-            { id: '4', label: 'البرامج الدولية', routerLink: '/international' },
-            { id: '5', label: 'شبكة الخريجين', routerLink: '/alumni' }
-          ]
-        }
+       {
+  title: 'روابط سريعة',
+  links: [
+    { id: '1', label: 'الرئيسية', routerLink: '/' },
+    { id: '2', label: 'عن الكلية', routerLink: '/about' },
+    { id: '3', label: 'الأقسام العلمية', routerLink: '/departments' },
+    { id: '4', label: 'الأخبار والفعاليات', routerLink: '/news-list' },
+    { id: '5', label: 'اتصل بنا', routerLink: '/contact' }
+  ]
+},
+
+{
+  title: 'خدمات الطلاب',
+  links: [
+    { id: '1', label: 'الدعم الأكاديمي', routerLink: '/services/1' },
+    { id: '2', label: 'المكتبة ومصادر المعلومات', routerLink: '/services/2' },
+    { id: '3', label: 'خدمات التوظيف والتدريب', routerLink: '/services/3' },
+    { id: '4', label: 'البرامج الدولية', routerLink: '/services/4' }
+  ]
+}
       ]
     };
   }
