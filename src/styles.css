@@ -1,1 +1,423 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Bootstrap CSS */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* PrimeIcons CSS */
+@import 'primeicons/primeicons.css';
+
+/* Almarai Font */
+@font-face {
+  font-family: 'Almarai' !important;
+  src: url('assets/fonts/Almarai/Almarai-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Almarai';
+  src: url('assets/fonts/Almarai/Almarai-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Almarai';
+  src: url('assets/fonts/Almarai/Almarai-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Almarai';
+  src: url('assets/fonts/Almarai/Almarai-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+
+
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  --primary-color: #4A4A4A;
+  --dark-primary-color: #323232;
+  --secondary-color: #ffcc00;
+  --accent-color: #b68c2d;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --light-bg: #f9f9f9;
+  --white: #ffffff;
+  --text-primary: #222222;
+  --text-secondary: #555555;
+  --text-light: #777777;
+  
+  /* Unified Padding */
+  --section-padding: 80px 0;
+  --container-padding: 0 15px;
+  --card-padding: 20px;
+  
+  /* Font Sizes */
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Border Radius */
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== RESET & BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--light-bg);
+  overflow-x: hidden;
+}
+
+/* ===== UNIFIED CONTAINER ===== */
+.faculty-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--container-padding);
+}
+
+/* ===== UNIFIED SECTION SPACING ===== */
+.faculty-section {
+  padding: var(--section-padding);
+}
+
+.faculty-section-alt {
+  padding: 60px 0;
+}
+
+/* ===== TYPOGRAPHY ===== */
+.faculty-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.faculty-subtitle {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.faculty-text {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+}
+
+.faculty-text-light {
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* ===== BUTTONS ===== */
+.faculty-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+}
+
+.faculty-btn-primary {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.faculty-btn-primary:hover {
+  background-color: #002244;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.faculty-btn-secondary {
+  background-color: var(--accent-color);
+  color: var(--white);
+}
+
+.faculty-btn-secondary:hover {
+  background-color: #8a6b20;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.faculty-btn-outline {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.faculty-btn-outline:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+/* ===== CARDS ===== */
+.faculty-card {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.faculty-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.faculty-card-header {
+  padding: var(--card-padding);
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: var(--white);
+}
+
+.faculty-card-body {
+  padding: var(--card-padding);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.faculty-card-footer {
+  padding: var(--spacing-md) var(--card-padding);
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+/* ===== GRID LAYOUTS ===== */
+.faculty-grid {
+  display: grid;
+  gap: var(--spacing-xl);
+}
+
+.faculty-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.faculty-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.faculty-grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* ===== UTILITY CLASSES ===== */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }
+
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+.d-block { display: block; }
+.d-none { display: none; }
+
+.align-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+
+.w-100 { width: 100%; }
+.h-100 { height: 100%; }
+
+.img-responsive {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.6s ease-out;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+@media (max-width: 1200px) {
+  .faculty-container {
+    max-width: 960px;
+  }
+}
+
+@media (max-width: 992px) {
+  .faculty-container {
+    max-width: 720px;
+  }
+  
+  .faculty-grid-4 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .faculty-container {
+    max-width: 540px;
+    padding: 0 15px;
+  }
+  
+  .faculty-section {
+    padding: 60px 0;
+  }
+  
+  .faculty-title {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .faculty-grid-2,
+  .faculty-grid-3,
+  .faculty-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .faculty-container {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  
+  .faculty-section {
+    padding: 40px 0;
+  }
+  
+  .faculty-title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .faculty-btn {
+    padding: 10px 20px;
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* ===== PRIMENG CUSTOMIZATIONS ===== */
+.p-button {
+  font-family: 'Poppins', sans-serif;
+  border-radius: var(--border-radius);
+}
+
+.p-card {
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Global override: ensure faculty tabs panels are white (fallback) */
+p-tabs.faculty-tabs,
+.faculty-tabs {
+  --p-tabs-tabpanel-background: var(--white) !important;
+  --p-tabs-tabpanel-color: var(--text-primary) !important;
+}
+
+.p-carousel .p-carousel-indicators .p-carousel-indicator {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight {
+  background-color: var(--secondary-color);
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus states */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .faculty-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .faculty-btn {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--text-primary);
+  }
+}
