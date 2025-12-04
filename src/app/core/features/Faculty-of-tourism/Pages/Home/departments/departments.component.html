@@ -1,0 +1,64 @@
+<section class="departments-section faculty-section">
+  <div class="faculty-container">
+    
+    <!-- Section Header -->
+    <div class="section-header text-center mb-5">
+      <h2 class="faculty-title slide-in">{{ departmentsData.title }}</h2>
+      <p class="faculty-text fade-in">{{ departmentsData.subtitle }}</p>
+    </div>
+
+    <!-- Departments Grid -->
+    <div class="departments-grid faculty-grid faculty-grid-3">
+      <div 
+        *ngFor="let department of departmentsData.departments; let i = index"
+        class="department-card faculty-card fade-in"
+        [style.animation-delay]="(i * 0.1) + 's'"
+      >
+        
+        <!-- Department Image -->
+        <div class="dept-image-wrapper">
+          <img 
+            [src]="department.image" 
+            [alt]="department.name"
+            class="dept-image"
+          />
+          <div class="image-overlay">
+            <a 
+              [href]="department.link"
+              class="explore-btn faculty-btn faculty-btn-secondary"
+            >
+              <i class="pi pi-eye"></i>
+              اكتشف
+            </a>
+          </div>
+        </div>
+
+        <!-- Department Info -->
+        <div class="dept-info faculty-card-body">
+          <h3 class="dept-name faculty-subtitle">{{ department.name }}</h3>
+          <p class="dept-description faculty-text">{{ department.description }}</p>
+          
+          <!-- Department Features -->
+          <div class="dept-features">
+            <span class="feature-badge" *ngFor="let feature of getDeptFeatures(department.id)">
+              <i class="pi pi-check"></i>
+              {{ feature }}
+            </span>
+          </div>
+          
+          <a
+            [routerLink]="['/departments', department.id]"
+            class="learn-more-btn faculty-btn faculty-btn-outline mt-auto"
+          >
+            تعرف على المزيد
+            <i class="pi pi-arrow-left ml-2"></i>
+          </a>
+        </div>
+        
+      </div>
+    </div>
+
+   
+    
+  </div>
+</section>

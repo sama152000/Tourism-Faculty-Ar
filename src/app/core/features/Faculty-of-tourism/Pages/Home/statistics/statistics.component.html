@@ -1,0 +1,47 @@
+<section class="statistics-section faculty-section-alt">
+  <div class="stats-background" [style.background-image]="'url(' + statisticsData.backgroundImage + ')'"></div>
+  <div class="stats-overlay"></div>
+  
+  <div class="faculty-container">
+    <div class="stats-content">
+      
+      <!-- Section Title -->
+      <h2 class="stats-title faculty-title text-center slide-in">{{ statisticsData.title }}</h2>
+      
+      <!-- Statistics Grid -->
+      <div class="stats-grid">
+        <div 
+          *ngFor="let stat of statisticsData.statistics; let i = index"
+          class="stat-card fade-in"
+          [style.animation-delay]="(i * 0.2) + 's'"
+        >
+          <div class="stat-icon-wrapper">
+            <i [class]="stat.icon" class="stat-icon"></i>
+          </div>
+          
+          <div class="stat-content">
+            <h3 class="stat-number" #counter>
+              {{ animatedValues[i] || 0 }}
+              <span class="stat-plus" *ngIf="stat.value >= 100">+</span>
+            </h3>
+            <p class="stat-label">{{ stat.label }}</p>
+          </div>
+          
+          <!-- Decorative Element -->
+          <div class="stat-decoration">
+            <div class="decoration-line"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="stats-additional-info fade-in">
+        <p class="stats-description">
+          تعكس هذه الأرقام التزامنا بالتميز في تعليم السياحة والضيافة، 
+          وتبرز النمو والأثر الإيجابي لمجتمعنا الأكاديمي.
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</section>

@@ -1,0 +1,131 @@
+<section class="faculty-section">
+  <div class="faculty-container">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+      <h1 class="faculty-title">{{ unitData.title }}</h1>
+      <p class="faculty-text">{{ unitData.subtitle }}</p>
+    </div>
+
+    <!-- Units Tabs -->
+    <div class="departments-tabs-container">
+      <div class="departments-tabs">
+        <div class="departments-tablist">
+          <button
+            *ngFor="let unit of unitData.units"
+            class="departments-tab"
+            [class.active]="selectedTab === unit.id"
+            (click)="onTabChange(unit.id)"
+          >
+            {{ unit.name }}
+          </button>
+        </div>
+        <div class="departments-tabpanels">
+          <div
+            *ngFor="let unit of unitData.units"
+            class="departments-tabpanel"
+            [class.active]="selectedTab === unit.id"
+          >
+            <div class="department-content-wrapper">
+            <!-- Unit Header -->
+            <div class="department-header">
+              <div class="row align-items-center">
+                <div class="col-lg-8 col-md-12">
+                  <div class="department-info">
+                    <div class="department-icon">
+                      <i [class]="unit.icon"></i>
+                    </div>
+                    <h2 class="department-title">{{ unit.title }}</h2>
+                    <p class="department-overview">{{ unit.overview }}</p>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                  <div class="department-stats">
+                    <div class="stat-card">
+                      <i class="pi pi-users stat-icon"></i>
+                      <div class="stat-info">
+                        <span class="stat-number">{{ unit.personnel }}</span>
+                        <span class="stat-label">عدد الأعضاء</span>
+                      </div>
+                    </div>
+                    <div class="stat-card">
+                      <i class="pi pi-chart-bar stat-icon"></i>
+                      <div class="stat-info">
+                        <span class="stat-number">{{ unit.capacity }}</span>
+                        <span class="stat-label">الطاقة الاستيعابية</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="department-divider">
+
+            <!-- Unit Content Grid -->
+            <div class="department-content-grid">
+              <div class="row">
+                <!-- Mission Section -->
+                <div class="col-lg-12 col-md-12 mb-4">
+                  <div class="mission-card">
+                    <div class="card-header">رسالة الوحدة</div>
+                    <div class="card-body">
+                      <p class="faculty-text">{{ unit.mission }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Objectives Section -->
+                <div class="col-lg-6 col-md-12 mb-4">
+                  <div class="objectives-card">
+                    <div class="card-header">أهداف الوحدة</div>
+                    <div class="card-body">
+                      <ul class="objectives-list">
+                        <li *ngFor="let objective of unit.objectives" class="objective-item">
+                          <i class="pi pi-check-circle objective-icon"></i>
+                          {{ objective }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Functions Section -->
+                <div class="col-lg-6 col-md-12 mb-4">
+                  <div class="courses-card">
+                    <div class="card-header">المهام الرئيسية</div>
+                    <div class="card-body">
+                      <div class="courses-grid">
+                        <span
+                          *ngFor="let func of unit.functions"
+                          class="course-chip"
+                        >
+                          {{ func }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Services Section -->
+                <div class="col-lg-12 col-md-12 mb-4">
+                  <div class="careers-card">
+                    <div class="card-header">الخدمات المقدمة</div>
+                    <div class="card-body">
+                      <div class="careers-grid">
+                        <div *ngFor="let service of unit.services" class="career-item">
+                          <i class="pi pi-wrench career-icon"></i>
+                          <span>{{ service }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

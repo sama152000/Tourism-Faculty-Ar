@@ -1,0 +1,131 @@
+<section class="faculty-section">
+  <div class="faculty-container">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+      <h1 class="faculty-title">{{ sectorData.title }}</h1>
+      <p class="faculty-text">{{ sectorData.subtitle }}</p>
+    </div>
+
+    <!-- Sectors Tabs -->
+    <div class="departments-tabs-container">
+      <div class="departments-tabs">
+        <div class="departments-tablist">
+          <button
+            *ngFor="let sector of sectorData.sectors"
+            class="departments-tab"
+            [class.active]="selectedTab === sector.id"
+            (click)="onTabChange(sector.id)"
+          >
+            {{ sector.name }}
+          </button>
+        </div>
+        <div class="departments-tabpanels">
+          <div
+            *ngFor="let sector of sectorData.sectors"
+            class="departments-tabpanel"
+            [class.active]="selectedTab === sector.id"
+          >
+            <div class="department-content-wrapper">
+            <!-- Sector Header -->
+            <div class="department-header">
+              <div class="row align-items-center">
+                <div class="col-lg-8 col-md-12">
+                  <div class="department-info">
+                    <div class="department-icon">
+                      <i [class]="sector.icon"></i>
+                    </div>
+                    <h2 class="department-title">{{ sector.title }}</h2>
+                    <p class="department-overview">{{ sector.overview }}</p>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                  <div class="department-stats">
+                    <div class="stat-card">
+                      <i class="pi pi-users stat-icon"></i>
+                      <div class="stat-info">
+                        <span class="stat-number">{{ sector.facultyMembers }}</span>
+                        <span class="stat-label">أعضاء هيئة التدريس</span>
+                      </div>
+                    </div>
+                    <div class="stat-card">
+                      <i class="pi pi-user-plus stat-icon"></i>
+                      <div class="stat-info">
+                        <span class="stat-number">{{ sector.staff }}</span>
+                        <span class="stat-label">العاملون الإداريون</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="department-divider">
+
+            <!-- Sector Content Grid -->
+            <div class="department-content-grid">
+              <div class="row">
+                <!-- Mission Section -->
+                <div class="col-lg-12 col-md-12 mb-4">
+                  <div class="mission-card">
+                    <div class="card-header">رسالة القطاع</div>
+                    <div class="card-body">
+                      <p class="faculty-text">{{ sector.mission }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Objectives Section -->
+                <div class="col-lg-6 col-md-12 mb-4">
+                  <div class="objectives-card">
+                    <div class="card-header">الأهداف الرئيسية</div>
+                    <div class="card-body">
+                      <ul class="objectives-list">
+                        <li *ngFor="let objective of sector.objectives" class="objective-item">
+                          <i class="pi pi-check-circle objective-icon"></i>
+                          {{ objective }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Activities Section -->
+                <div class="col-lg-6 col-md-12 mb-4">
+                  <div class="courses-card">
+                    <div class="card-header">الأنشطة الرئيسية</div>
+                    <div class="card-body">
+                      <div class="courses-grid">
+                        <span
+                          *ngFor="let activity of sector.activities"
+                          class="course-chip"
+                        >
+                          {{ activity }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Responsibilities Section -->
+                <div class="col-lg-12 col-md-12 mb-4">
+                  <div class="careers-card">
+                    <div class="card-header">المهام والمسؤوليات الرئيسية</div>
+                    <div class="card-body">
+                      <div class="careers-grid">
+                        <div *ngFor="let responsibility of sector.responsibilities" class="career-item">
+                          <i class="pi pi-cog career-icon"></i>
+                          <span>{{ responsibility }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

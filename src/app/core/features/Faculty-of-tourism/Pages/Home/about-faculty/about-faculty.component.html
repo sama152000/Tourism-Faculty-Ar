@@ -1,0 +1,64 @@
+<section class="about-faculty-section faculty-section">
+  <div class="faculty-container">
+    <div class="about-faculty-container">
+      
+      <!-- Text Content Side -->
+      <div class="about-text-content">
+        <h2 class="faculty-title text-left slide-in">
+          {{ aboutData.aboutInfo.title }}
+        </h2>
+        
+        <p class="faculty-text fade-in">
+          {{ aboutData.aboutInfo.description }}
+        </p>
+        
+        <!-- Highlights List -->
+        <ul class="about-highlights fade-in">
+          <li 
+            *ngFor="let highlight of aboutData.aboutInfo.highlights"
+            class="highlight-item"
+          >
+            <i class="pi pi-check-circle highlight-icon"></i>
+            <span>{{ highlight }}</span>
+          </li>
+        </ul>
+        
+        <a 
+          [href]="aboutData.aboutInfo.buttonLink" 
+          class="about-cta-btn faculty-btn faculty-btn-primary"
+        >
+          {{ aboutData.aboutInfo.buttonText }}
+          <i class="pi pi-arrow-left ml-2"></i>
+        </a>
+      </div>
+
+      <!-- Images Side -->
+      <div class="about-images-container fade-in">
+        <div class="main-image-wrapper">
+          <img 
+            [src]="aboutData.aboutInfo.mainImage" 
+            [alt]="aboutData.aboutInfo.title"
+            class="main-image"
+          />
+        </div>
+        
+        <div class="overlay-image-wrapper">
+          <img 
+            [src]="aboutData.aboutInfo.overlayImage" 
+            alt="Faculty activities"
+            class="overlay-image"
+          />
+          
+          <!-- Decorative Element -->
+          <div class="image-decoration">
+            <div class="decoration-circle"></div>
+            <div class="decoration-dots">
+              <span class="dot" *ngFor="let item of [1,2,3,4,5,6,7,8,9]"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>

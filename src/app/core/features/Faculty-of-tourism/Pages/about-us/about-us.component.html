@@ -1,0 +1,60 @@
+<section class="faculty-section">
+  <div class="faculty-container">
+    <!-- Header Section -->
+    <div class="text-center mb-5" *ngIf="aboutData">
+      <h1 class="faculty-title">{{ aboutData.title }}</h1>
+      <p class="faculty-text">{{ aboutData.subtitle }}</p>
+    </div>
+
+    <!-- Tabs Content -->
+    <div class="about-tabs-container" *ngIf="aboutData.sections.length">
+      <div class="custom-tabs">
+        <!-- Tab Headers -->
+        <div class="tab-headers">
+          <button
+            *ngFor="let section of aboutData.sections"
+            class="tab-button"
+            [class.active]="selectedTab === section.id"
+            (click)="onTabChange(section.id)"
+          >
+            {{ section.title }}
+          </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+          <div
+            *ngFor="let section of aboutData.sections"
+            class="tab-panel"
+            [class.active]="selectedTab === section.id"
+          >
+            <div class="tab-content-wrapper">
+              <div class="row align-items-center">
+                <!-- Content Column -->
+                <div class="col-lg-12 col-md-12">
+                  <div class="content-section">
+                    <h2 class="section-title">{{ section.title }}</h2>
+
+                    <div class="content-text">
+                      <p *ngFor="let paragraph of formatContent(section.content)"
+                         class="faculty-text"
+                         [innerHTML]="paragraph">
+                      </p>
+                    </div>
+
+                    <div *ngIf="section.additionalInfo" class="additional-info">
+                      <div class="info-card">
+                        <i class="pi pi-info-circle info-icon"></i>
+                        <p class="faculty-text-light">{{ section.additionalInfo }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

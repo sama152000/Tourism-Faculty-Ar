@@ -1,0 +1,58 @@
+<section 
+  class="hero-slider"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
+  <div class="slider-container">
+    <!-- Slides -->
+    <div class="slides">
+      <div 
+        *ngFor="let slide of sliderData.slides; let i = index"
+        class="slide"
+        [class.active]="i === currentSlide"
+        [style.background-image]="'url(' + slide.image + ')'"
+      >
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <h2 class="slide-title fade-in">{{ slide.title }}</h2>
+          <p class="slide-description fade-in">{{ slide.description }}</p>
+          <a 
+            *ngIf="slide.buttonText && slide.buttonLink"
+            [href]="slide.buttonLink" 
+            class="slide-button faculty-btn faculty-btn-secondary fade-in"
+          >
+            {{ slide.buttonText }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <button 
+      class="slider-nav-btn prev-btn"
+      (click)="prevSlide()"
+      aria-label="Previous slide"
+    >
+      <i class="pi pi-chevron-left"></i>
+    </button>
+    
+    <button 
+      class="slider-nav-btn next-btn"
+      (click)="nextSlide()"
+      aria-label="Next slide"
+    >
+      <i class="pi pi-chevron-right"></i>
+    </button>
+
+    <!-- Dots Navigation -->
+    <div class="slider-dots">
+      <button 
+        *ngFor="let slide of sliderData.slides; let i = index"
+        class="dot"
+        [class.active]="i === currentSlide"
+        (click)="goToSlide(i)"
+        [attr.aria-label]="'Go to slide ' + (i + 1)"
+      ></button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+<div 
+  class="quick-sidebar"
+  [class.expanded]="isExpanded"
+  [class.left-position]="sidebarData.position === 'left'"
+  [class.right-position]="sidebarData.position === 'right'"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
+  
+  <!-- Toggle Button -->
+  <button 
+    class="sidebar-toggle"
+    (click)="toggleExpanded()"
+    [attr.aria-expanded]="isExpanded"
+    [attr.aria-label]="isExpanded ? 'Collapse sidebar' : 'Expand sidebar'"
+  >
+    <i [class]="isExpanded ? 'pi pi-angle-right' : 'pi pi-angle-left'" *ngIf="sidebarData.position === 'right'"></i>
+    <i [class]="isExpanded ? 'pi pi-angle-left' : 'pi pi-angle-right'" *ngIf="sidebarData.position === 'left'"></i>
+  </button>
+
+  <!-- Sidebar Content -->
+  <nav class="sidebar-nav" [attr.aria-label]="sidebarData.title">
+    <ul class="sidebar-links">
+      <li *ngFor="let link of sidebarData.links; let i = index" class="sidebar-item">
+        <a 
+          [href]="link.url"
+          [target]="link.isExternal ? '_blank' : '_self'"
+          [rel]="link.isExternal ? 'noopener noreferrer' : null"
+          class="sidebar-link"
+          [title]="link.title"
+          [style.animation-delay]="(i * 0.1) + 's'"
+        >
+          <span class="link-icon">
+            <i [class]="link.icon"></i>
+          </span>
+          <span class="link-text">{{ link.title }}</span>
+          <i *ngIf="link.isExternal" class="pi pi-external-link external-indicator"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  
+</div>

@@ -1,0 +1,127 @@
+<footer class="faculty-footer">
+  
+  <!-- Main Footer Content -->
+  <div class="footer-main">
+    <div class="faculty-container">
+      <div class="footer-content">
+        
+        <!-- About Section -->
+        <div class="footer-section about-section">
+          <h3 class="footer-section-title">عن الكلية</h3>
+          <p class="footer-about-text">{{ footerData.aboutText }}</p>
+          
+          <!-- Social Links -->
+          <div class="footer-social">
+            <h4 class="social-title">تابعونا</h4>
+            <div class="social-links">
+              <a 
+                *ngFor="let social of footerData.socialLinks" 
+                [href]="social.url"
+                [title]="social.platform"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+              >
+                <i [class]="social.icon"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Links Sections -->
+        <div 
+          *ngFor="let section of footerData.footerSections"
+          class="footer-section links-section"
+        >
+          <h3 class="footer-section-title">{{ section.title }}</h3>
+          <ul class="footer-links">
+            <li *ngFor="let link of section.links" class="footer-link-item">
+              <a 
+                [href]="link.routerLink || link.url"
+                class="footer-link"
+              >
+                <i class="pi pi-angle-right link-icon"></i>
+                {{ link.label }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="footer-section contact-section">
+          <h3 class="footer-section-title">بيانات التواصل</h3>
+          <div class="contact-info">
+            
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="pi pi-map-marker"></i>
+              </div>
+              <div class="contact-details">
+                <strong>العنوان</strong>
+                <span>{{ footerData.contactInfo.address }}</span>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="pi pi-phone"></i>
+              </div>
+              <div class="contact-details">
+                <strong>الهاتف</strong>
+                <a [href]="'tel:' + footerData.contactInfo.phone">{{ footerData.contactInfo.phone }}</a>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="pi pi-envelope"></i>
+              </div>
+              <div class="contact-details">
+                <strong>البريد الإلكتروني</strong>
+                <a [href]="'mailto:' + footerData.contactInfo.email">{{ footerData.contactInfo.email }}</a>
+              </div>
+            </div>
+
+            <div class="contact-item" *ngIf="footerData.contactInfo.website">
+              <div class="contact-icon">
+                <i class="pi pi-globe"></i>
+              </div>
+              <div class="contact-details">
+                <strong>الموقع الإلكتروني</strong>
+                <a [href]="footerData.contactInfo.website" target="_blank" rel="noopener noreferrer">
+                  زيارة الموقع الرسمي
+                </a>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <div class="faculty-container">
+      <div class="footer-bottom-content">
+        
+        <!-- Copyright -->
+        <div class="footer-copyright">
+          <p>{{ footerData.copyrightText }}</p>
+        </div>
+
+        <!-- Additional Links -->
+        <div class="footer-legal">
+          <a href="/privacy" class="legal-link">سياسة الخصوصية</a>
+          <span class="separator">|</span>
+          <a href="/terms" class="legal-link">شروط الاستخدام</a>
+          <span class="separator">|</span>
+          <a href="/sitemap" class="legal-link">خريطة الموقع</a>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+</footer>

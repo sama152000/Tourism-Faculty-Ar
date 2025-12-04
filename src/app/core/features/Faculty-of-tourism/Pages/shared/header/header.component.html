@@ -1,0 +1,83 @@
+<!-- TOP BAR -->
+<div class="faculty-topbar">
+  <div class="faculty-container">
+    <div class="d-flex justify-between align-center">
+      <div class="social-links">
+        <a 
+          *ngFor="let social of headerData.socialLinks" 
+          [href]="social.url" 
+          [title]="social.platform"
+          class="social-link"
+        >
+          <i [class]="social.icon"></i>
+        </a>
+      </div>
+      
+      <div class="search-lang d-flex align-center">
+       <a href="https://tourism-faculty-en.vercel.app/home">
+        <button class="lang-btn faculty-btn faculty-btn-secondary">
+          {{ headerData.languageButton }} 
+        </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN HEADER -->
+<header class="faculty-header">
+  <div class="faculty-container">
+    <div class="header-content d-flex justify-between align-center">
+      <!-- Logo Section -->
+      <div class="logo-section d-flex align-center">
+        <img [src]="headerData.logo" [alt]="headerData.title" class="logo-img">
+        <h1 class="logo-title">{{ headerData.title }}</h1>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button 
+        class="mobile-menu-toggle d-none"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="isMobileMenuOpen"
+      >
+        <i [class]="isMobileMenuOpen ? 'pi pi-times' : 'pi pi-bars'"></i>
+      </button>
+
+      <!-- Desktop Navigation -->
+      <nav class="main-navigation">
+        <p-menubar 
+          [model]="headerData.navigationItems"
+          class="faculty-menubar"
+        ></p-menubar>
+      </nav>
+
+      <!-- Mobile Navigation -->
+      <nav class="mobile-navigation" [class.active]="isMobileMenuOpen">
+        <ul class="mobile-menu">
+          <li *ngFor="let item of headerData.navigationItems" class="mobile-menu-item">
+            <a 
+              [routerLink]="item.routerLink" 
+              class="mobile-menu-link"
+              (click)="toggleMobileMenu()"
+            >
+              {{ item.label }}
+            </a>
+            
+            <!-- Mobile Submenu -->
+            <ul *ngIf="item.items" class="mobile-submenu">
+              <li *ngFor="let subItem of item.items">
+                <a 
+                  [routerLink]="subItem.routerLink" 
+                  class="mobile-submenu-link"
+                  (click)="toggleMobileMenu()"
+                >
+                  {{ subItem.label }}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

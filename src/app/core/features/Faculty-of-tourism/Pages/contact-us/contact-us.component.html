@@ -1,0 +1,189 @@
+<section class="faculty-section">
+  <div class="faculty-container">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+      <h1 class="faculty-title">اتصل بنا</h1>
+      <p class="faculty-text">تواصل مع كلية السياحة والفنادق. نحن هنا للمساعدة والإجابة عن أي استفسار لديك.</p>
+    </div>
+
+    <!-- Contact Content -->
+    <div class="contact-content-wrapper">
+      <div class="row">
+        <!-- Contact Information -->
+        <div class="col-lg-6 col-md-12 mb-4">
+          <div class="contact-info-section">
+            <h2 class="section-title">تواصل معنا</h2>
+            <p class="section-description">
+              نرحب باستفسارات الطلاب الجدد والشركاء الأكاديميين ومحترحب بمهنيي الصناعة. تواصل معنا للحصول على معلومات حول برامجنا، القبول، فرص البحث العلمي، أو التعاون المشترك.
+            </p>
+
+            <!-- Contact Details -->
+            <div class="contact-details">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="pi pi-map-marker"></i>
+                </div>
+                <div class="contact-content">
+                  <h3 class="contact-label">العنوان</h3>
+                  <p class="contact-value">{{ contactInfo.address }}</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="pi pi-envelope"></i>
+                </div>
+                <div class="contact-content">
+                  <h3 class="contact-label">البريد الإلكتروني</h3>
+                  <p class="contact-value">
+                    <a [href]="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a>
+                  </p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="pi pi-phone"></i>
+                </div>
+                <div class="contact-content">
+                  <h3 class="contact-label">رقم الهاتف</h3>
+                  <p class="contact-value">
+                    <a [href]="'tel:' + contactInfo.phone">{{ contactInfo.phone }}</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Office Hours -->
+            <div class="office-hours">
+              <h3 class="office-hours-title">مواعيد العمل الرسمية</h3>
+              <div class="hours-list">
+                <div class="hours-item">
+                  <span class="day">الأحد - الأربعاء</span>
+                  <span class="time">من 8:00 صباحاً حتى 4:00 مساءً</span>
+                </div>
+                <div class="hours-item">
+                  <span class="day">الخميس</span>
+                  <span class="time">من 9:00 صباحاً حتى 3:00 مساءً</span>
+                </div>
+                <div class="hours-item">
+                  <span class="day">الجمعة والسبت</span>
+                  <span class="time">عطلة رسمية</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="col-lg-6 col-md-12 mb-4">
+          <div class="contact-form-section">
+            <h2 class="section-title">أرسل لنا رسالة</h2>
+            
+            <!-- Success Message -->
+            <div class="alert alert-success" *ngIf="showSuccessMessage">
+              <i class="pi pi-check-circle"></i>
+              شكراً لك! تم استلام رسالتك بنجاح، وسنتواصل معك في أقرب وقت ممكن.
+            </div>
+
+            <form #contactFormRef="ngForm" (ngSubmit)="onSubmit(contactFormRef)" class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name" class="form-label">الاسم الكامل <span class="required">*</span></label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form-control"
+                    [(ngModel)]="contactForm.name"
+                    required
+                    #name="ngModel"
+                  >
+                  <div class="form-error" *ngIf="name.invalid && name.touched">
+                    الاسم مطلوب.
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="email" class="form-label">البريد الإلكتروني <span class="required">*</span></label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    [(ngModel)]="contactForm.email"
+                    required
+                    email
+                    #email="ngModel"
+                  >
+                  <div class="form-error" *ngIf="email.invalid && email.touched">
+                    <span *ngIf="email.errors?.['required']">البريد الإلكتروني مطلوب.</span>
+                    <span *ngIf="email.errors?.['email']">من فضلك أدخل بريدًا إلكترونيًا صحيحًا.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="subject" class="form-label">الموضوع <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  class="form-control"
+                  [(ngModel)]="contactForm.subject"
+                  required
+                  #subject="ngModel"
+                >
+                <div class="form-error" *ngIf="subject.invalid && subject.touched">
+                  الموضوع مطلوب.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="message" class="form-label">الرسالة <span class="required">*</span></label>
+                <textarea
+                  id="message"
+                  name="message"
+                  class="form-control"
+                  rows="5"
+                  [(ngModel)]="contactForm.message"
+                  required
+                  #message="ngModel"
+                ></textarea>
+                <div class="form-error" *ngIf="message.invalid && message.touched">
+                  الرسالة مطلوبة.
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button 
+                  type="submit" 
+                  class="faculty-btn faculty-btn-primary submit-btn"
+                  [disabled]="contactFormRef.invalid || isSubmitting"
+                >
+                  <span *ngIf="!isSubmitting">
+                    <i class="pi pi-send"></i>
+                    إرسال الرسالة
+                  </span>
+                  <span *ngIf="isSubmitting">
+                    <i class="pi pi-spinner pi-spin"></i>
+                    جاري الإرسال...
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map Section -->
+      <div class="map-section">
+        <h2 class="section-title text-center">اعثر علينا</h2>
+        <div class="map-container">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3594.0447069041106!2d32.7688211!3d25.736035099999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x144941adfd32920f%3A0x7f6f76603bbec6a!2z2YPZhNmK2Kkg2KfZhNiz2YrYp9it2Kkg2YjYp9mE2YHZhtin2K_ZgiAtINis2KfZhdi52Kkg2KfZhNij2YLYtdix!5e0!3m2!1sar!2seg!4v1764829409396!5m2!1sar!2seg" 
+          width="1300" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

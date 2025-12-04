@@ -1,0 +1,284 @@
+.magazine-section {
+  position: relative;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.magazine-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('https://images.pexels.com/photos/2177009/pexels-photo-2177009.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover;
+  opacity: 0.05;
+  z-index: 1;
+}
+
+.magazine-content-wrapper {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.9) 100%);
+  border-radius: var(--border-radius-xl);
+  padding: 60px 40px;
+  box-shadow: var(--shadow-xl);
+  backdrop-filter: blur(10px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+/* ===== TEXT CONTENT ===== */
+.magazine-text-content {
+  padding: 20px 0;
+}
+
+.magazine-title {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 25px;
+  position: relative;
+  font-weight: 700;
+}
+
+.magazine-title::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  right: 0;
+  width: 50px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+  border-radius: 2px;
+}
+
+.magazine-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 35px;
+}
+
+/* ===== MAGAZINE FEATURES ===== */
+.magazine-features {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 35px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.feature-icon {
+  color: var(--accent-color);
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+}
+
+.feature-item span {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.magazine-btn {
+  font-size: 1.1rem;
+  padding: 15px 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(182, 140, 45, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.magazine-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.magazine-btn:hover::before {
+  left: 100%;
+}
+
+/* ===== IMAGE CONTENT ===== */
+.magazine-image-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.magazine-cover-wrapper {
+  position: relative;
+  max-width: 400px;
+}
+
+.magazine-cover {
+  width: 100%;
+  max-width: 350px;
+  height: 450px;
+  object-fit: cover;
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.magazine-cover:hover {
+  transform: translateY(-5px) scale(1.02);
+}
+
+/* ===== FLOATING ELEMENTS ===== */
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.floating-card {
+  position: absolute;
+  background: var(--white);
+  padding: 12px 16px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid rgba(0, 51, 102, 0.1);
+}
+
+.research-card {
+  top: 20px;
+  right: -20px;
+  color: var(--accent-color);
+  animation: float 4s ease-in-out infinite;
+}
+
+.impact-card {
+  bottom: 80px;
+  left: -30px;
+  color: var(--primary-color);
+  animation: float 4s ease-in-out infinite 2s;
+}
+
+.floating-card i {
+  font-size: 1.1rem;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 992px) {
+  .magazine-content-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 50px 30px;
+    text-align: center;
+  }
+  
+  .magazine-features {
+    align-items: center;
+  }
+  
+  .feature-item {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .magazine-content-wrapper {
+    padding: 40px 20px;
+    gap: 30px;
+  }
+  
+  .magazine-title {
+    font-size: 2rem;
+  }
+  
+  .magazine-cover {
+    max-width: 280px;
+    height: 360px;
+  }
+  
+  .research-card,
+  .impact-card {
+    position: static;
+    margin: 10px auto;
+    transform: none !important;
+    animation: none;
+  }
+  
+  .floating-elements {
+    position: static;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .magazine-title {
+    font-size: 1.6rem;
+  }
+  
+  .magazine-description {
+    font-size: 1rem;
+  }
+  
+  .magazine-cover {
+    max-width: 240px;
+    height: 320px;
+  }
+  
+  .magazine-btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+  
+  .floating-elements {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  .magazine-cover {
+    transition: none;
+  }
+  
+  .floating-card {
+    animation: none !important;
+  }
+  
+  .magazine-btn::before {
+    transition: none;
+  }
+}

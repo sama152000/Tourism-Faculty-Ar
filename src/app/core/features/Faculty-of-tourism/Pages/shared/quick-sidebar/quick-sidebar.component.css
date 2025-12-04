@@ -1,0 +1,311 @@
+.quick-sidebar {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9999;
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(0, 51, 102, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  width: 60px;
+}
+
+.quick-sidebar.right-position {
+  right: 20px;
+}
+
+.quick-sidebar.left-position {
+  left: 20px;
+}
+
+.quick-sidebar.expanded {
+  width: 250px;
+}
+
+/* ===== TOGGLE BUTTON ===== */
+.sidebar-toggle {
+  position: absolute;
+  top: 15px;
+  width: 30px;
+  height: 30px;
+  background: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.right-position .sidebar-toggle {
+  right: 15px;
+}
+
+.left-position .sidebar-toggle {
+  left: 15px;
+}
+
+.sidebar-toggle:hover {
+  background: var(--accent-color);
+  transform: scale(1.1);
+}
+
+/* ===== NAVIGATION ===== */
+.sidebar-nav {
+  padding: 60px 0 20px;
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.quick-sidebar:not(.expanded) .sidebar-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-item {
+  margin: 0;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  gap: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar-link:hover {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color));
+  color: var(--white);
+  transform: translateX(5px);
+}
+
+.sidebar-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--secondary-color);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+  transform-origin: bottom;
+}
+
+.sidebar-link:hover::before {
+  transform: scaleY(1);
+}
+
+/* ===== LINK ELEMENTS ===== */
+.link-icon {
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-link:hover .link-icon {
+  transform: scale(1.1);
+}
+
+.link-text {
+  font-weight: 500;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.quick-sidebar.expanded .link-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.external-indicator {
+  font-size: 0.7rem;
+  margin-left: auto;
+  opacity: 0.7;
+}
+
+/* ===== ANIMATION EFFECTS ===== */
+.quick-sidebar.expanded .sidebar-link {
+  animation: slideInRight 0.3s ease forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .quick-sidebar {
+    display: none;
+    width: 50px;
+    right: 10px;
+
+  }
+  
+  .quick-sidebar.expanded {
+    width: 200px;
+  }
+  
+  .quick-sidebar.right-position {
+    right: 10px;
+  }
+  
+  .quick-sidebar.left-position {
+    left: 10px;
+  }
+  
+  .sidebar-link {
+    padding: 12px 15px;
+  }
+  
+  .link-text {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quick-sidebar {
+    display: none;
+  }
+}
+
+/* ===== COLLAPSED STATE ===== */
+.quick-sidebar:not(.expanded) .sidebar-link {
+  justify-content: center;
+  padding: 15px 0;
+  margin: 0 auto;
+  width: 40px;
+  border-radius: var(--border-radius);
+  margin-bottom: 5px;
+}
+
+.quick-sidebar:not(.expanded) .sidebar-link:hover {
+  background: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Ensure icons are clearly visible in collapsed state */
+.quick-sidebar:not(.expanded) .link-icon {
+  opacity: 1 !important;
+  font-size: 1.35rem !important;
+  color: var(--text-primary) !important;
+}
+
+/* Add a small scale-up when the user hovers the icon in collapsed mode */
+.quick-sidebar:not(.expanded) .link-icon:hover {
+  transform: scale(1.15);
+}
+
+.quick-sidebar:not(.expanded) .sidebar-link {
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hide text in collapsed state to only show icons */
+.quick-sidebar:not(.expanded) .link-text {
+  display: none !important;
+}
+
+/* Provide a narrow visible bar so icons are obvious even when closed */
+.quick-sidebar:not(.expanded) {
+  width: 60px; /* keep narrow */
+  padding: 8px 0; /* small padding */
+}
+
+/* Improve focus/hover for accessibility */
+.quick-sidebar:not(.expanded) .sidebar-link:focus,
+.quick-sidebar:not(.expanded) .sidebar-link:hover {
+  transform: none; /* avoid shift */
+  outline: none;
+}
+
+/* ===== TOOLTIP FOR COLLAPSED STATE ===== */
+.quick-sidebar:not(.expanded) .sidebar-link::after {
+  content: attr(title);
+  position: absolute;
+  left: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--text-primary);
+  color: var(--white);
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.quick-sidebar.left-position:not(.expanded) .sidebar-link::after {
+  left: -200px;
+  right: auto;
+}
+
+.quick-sidebar:not(.expanded) .sidebar-link:hover::after {
+  opacity: 1;
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  .quick-sidebar,
+  .sidebar-link,
+  .link-icon,
+  .link-text {
+    transition: none;
+  }
+  
+  .sidebar-link {
+    animation: none !important;
+  }
+}
+
+/* ===== FOCUS STATES ===== */
+.sidebar-toggle:focus,
+.sidebar-link:focus {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+  .quick-sidebar {
+    border: 2px solid var(--text-primary);
+  }
+  
+  .sidebar-link:hover {
+    background: var(--text-primary);
+    color: var(--white);
+  }
+}

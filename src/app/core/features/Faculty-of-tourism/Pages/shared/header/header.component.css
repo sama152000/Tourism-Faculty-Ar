@@ -1,0 +1,294 @@
+/* ===== TOPBAR ===== */
+.faculty-topbar {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: var(--white);
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+
+.social-link {
+  color: var(--white);
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  color: var(--secondary-color);
+}
+
+.search-lang {
+  gap: 15px;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-input {
+  padding: 6px 35px 6px 15px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  font-size: 0.9rem;
+  background: var(--white);
+  color: var(--text-primary);
+  min-width: 200px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+.lang-btn {
+  font-size: 0.85rem;
+  padding: 6px 40px;
+  border-radius: 20px;
+}
+
+/* ===== MAIN HEADER ===== */
+.faculty-header {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px 0;
+  position: relative;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.header-content {
+  width: 100%;
+}
+
+/* ===== LOGO SECTION ===== */
+.logo-section {
+  gap: 12px;
+}
+
+.logo-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  /* border-radius: 50%; */
+  /* border: 2px solid var(--secondary-color); */
+}
+
+.logo-title {
+  font-size: 1.4rem;
+  color: var(--secondary-color);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ===== NAVIGATION ===== */
+.main-navigation :ng-deep .p-menubar {
+  background: var(--text-secondary);
+  border: none;
+  padding: 0;
+}
+
+/* Ensure the background color is forced for the host `faculty-menubar` class */
+.faculty-menubar,
+.main-navigation :ng-deep .faculty-menubar .p-menubar,
+.main-navigation :ng-deep .faculty-menubar {
+  background: var(--text-secondary) !important;
+  color: var(--white) !important;
+  border: none !important;
+}
+
+.main-navigation :ng-deep .p-menubar-submenu {
+  display: none;
+  position: absolute;
+  min-width: 12.5rem;
+  z-index: 1;
+  background: var(--primary-color) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--p-menubar-submenu-border-radius);
+  box-shadow: var(--p-menubar-submenu-shadow);
+  color: var(--white) !important;
+  flex-direction: column;
+  padding: var(--p-menubar-submenu-padding);
+  gap: var(--p-menubar-submenu-gap);
+}
+/* Use the PrimeNG CSS variable so built-in styles respect the change */
+.faculty-menubar {
+  --p-menubar-background: var(--primary-color) !important;
+  --p-menubar-border-color: transparent !important;
+  /* submenu variable overrides so PrimeNG uses our primary color */
+  --p-menubar-submenu-background: var(--primary-color) !important;
+  --p-menubar-submenu-border-color: transparent !important;
+  --p-menubar-submenu-color: var(--white) !important;
+}
+
+.main-navigation :ng-deep .p-menuitem-link {
+  color: var(--white) !important;
+  background-color: transparent !important; /* use submenu host background */
+  padding: 10px 15px;
+  font-weight: 500;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+}
+
+.main-navigation :ng-deep .p-menuitem-link:hover {
+  background-color: rgba(255, 204, 0, 0.1) !important;
+  color: var(--secondary-color) !important;
+}
+
+.main-navigation :ng-deep .p-submenu-list {
+  background: var(--primary-color) !important;
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  min-width: 200px;
+}
+
+/* Ensure submenu items are readable on the primary color */
+.main-navigation :ng-deep .p-menubar-submenu .p-menuitem-link,
+.main-navigation :ng-deep .p-submenu-list .p-menuitem-link {
+  color: var(--white) !important;
+  background-color: transparent !important;
+}
+
+/* Hover/focus states for submenu items */
+.main-navigation :ng-deep .p-menubar-submenu .p-menuitem-link:hover,
+.main-navigation :ng-deep .p-submenu-list .p-menuitem-link:hover {
+  background-color: rgba(255,255,255,0.06) !important; /* subtle hover */
+  color: var(--white) !important;
+}
+
+.main-navigation :ng-deep .p-menuitem-icon {
+  color: var(--white);
+}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.mobile-navigation {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background:var(--primary-color);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+}
+
+.mobile-navigation.active {
+  display: block;
+}
+
+.mobile-menu {
+  list-style: none;
+  padding: 20px 0;
+  margin: 0;
+}
+
+.mobile-menu-item {
+  margin: 0;
+}
+
+.mobile-menu-link {
+  display: block;
+  padding: 15px 30px;
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu-link:hover {
+  background-color: rgba(255, 204, 0, 0.1);
+  color: var(--secondary-color);
+}
+
+.mobile-submenu {
+  list-style: none;
+  background: rgba(0, 0, 0, 0.3);
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-submenu-link {
+  display: block;
+  padding: 12px 50px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.mobile-submenu-link:hover {
+  background-color: rgba(255, 204, 0, 0.1);
+  color: var(--secondary-color);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+  .main-navigation {
+    display: none;
+  }
+  
+  .mobile-menu-toggle {
+    display: block !important;
+  }
+  
+  .logo-title {
+    font-size: 1.2rem;
+  }
+  
+  .logo-img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .faculty-topbar {
+    display: none;
+  }
+  
+  .faculty-header {
+    padding: 10px 0;
+  }
+  
+  .logo-title {
+    font-size: 1rem;
+  }
+  
+  .logo-img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-input {
+    min-width: 150px;
+    font-size: 0.8rem;
+  }
+  
+  .lang-btn {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+  }
+}

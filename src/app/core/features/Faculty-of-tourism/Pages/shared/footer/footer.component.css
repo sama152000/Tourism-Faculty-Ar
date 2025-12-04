@@ -1,0 +1,368 @@
+.faculty-footer {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+  color: var(--white);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===== MAIN FOOTER ===== */
+.footer-main {
+  padding: 60px 0 40px;
+  position: relative;
+}
+
+.footer-main::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--secondary-color) 50%, transparent 100%);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* ===== FOOTER SECTIONS ===== */
+.footer-section {
+  margin-bottom: 30px;
+}
+
+.footer-section-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--accent-color);
+}
+
+/* ===== ABOUT SECTION ===== */
+.footer-about-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 25px;
+}
+
+.footer-social {
+  margin-top: 25px;
+}
+
+.social-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+  color: var(--white);
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.social-link:hover {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 204, 0, 0.3);
+}
+
+.social-link i {
+  font-size: 1rem;
+}
+
+/* ===== LINKS SECTIONS ===== */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-link-item {
+  margin-bottom: 8px;
+}
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+
+.footer-link:hover {
+  color: var(--secondary-color);
+  transform: translateX(5px);
+}
+
+.link-icon {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.footer-link:hover .link-icon {
+  opacity: 1;
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-item {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.contact-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 204, 0, 0.2);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.contact-icon i {
+  color: var(--secondary-color);
+  font-size: 1.1rem;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.contact-details strong {
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.contact-details span,
+.contact-details a {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-details a:hover {
+  color: var(--secondary-color);
+}
+
+/* ===== FOOTER BOTTOM ===== */
+.footer-bottom {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.footer-copyright {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legal-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+.legal-link:hover {
+  color: var(--secondary-color);
+}
+
+.separator {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  
+  .about-section {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .footer-main {
+    padding: 40px 0 30px;
+  }
+  
+  .about-section {
+    grid-column: 1;
+  }
+  
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .footer-legal {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-main {
+    padding: 30px 0 20px;
+  }
+  
+  .footer-section-title {
+    font-size: 1.1rem;
+  }
+  
+  .footer-about-text {
+    font-size: 0.9rem;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .contact-item {
+    gap: 12px;
+  }
+  
+  .contact-icon {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .contact-icon i {
+    font-size: 1rem;
+  }
+  
+  .footer-legal {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .separator {
+    display: none;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  .footer-link,
+  .social-link {
+    transition: none;
+  }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+  .faculty-footer {
+    background: #000000;
+    border-top: 3px solid var(--secondary-color);
+  }
+  
+  .footer-section-title {
+    color: var(--white);
+  }
+  
+  .footer-link:hover,
+  .social-link:hover {
+    background: var(--white);
+    color: #000000;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .faculty-footer {
+    background: var(--white);
+    color: var(--text-primary);
+  }
+  
+  .social-links,
+  .footer-legal {
+    display: none;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .footer-section-title {
+    color: var(--text-primary);
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+  }
+  
+  .footer-link {
+    color: var(--text-primary);
+  }
+  
+  .contact-details a {
+    color: var(--text-primary);
+  }
+}

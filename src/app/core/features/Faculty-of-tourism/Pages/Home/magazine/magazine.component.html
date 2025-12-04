@@ -1,0 +1,57 @@
+<section class="magazine-section faculty-section">
+  <div class="magazine-background"></div>
+  
+  <div class="faculty-container">
+    <div class="magazine-content-wrapper">
+      
+      <!-- Text Content -->
+      <div class="magazine-text-content">
+        <h2 class="magazine-title slide-in">{{ magazineData.magazineInfo.title }}</h2>
+        <p class="magazine-description fade-in">{{ magazineData.magazineInfo.description }}</p>
+        
+        <!-- Key Features -->
+        <div class="magazine-features fade-in">
+          <div class="feature-item">
+            <i class="pi pi-book feature-icon"></i>
+            <span>مقالات محكمة علمياً</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-users feature-icon"></i>
+            <span>أبحاث الصناعة السياحية</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-globe feature-icon"></i>
+            <span>نطاق دولي</span>
+          </div>
+        </div>
+        
+        <a 
+          [href]="magazineData.magazineInfo.buttonLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="magazine-btn faculty-btn faculty-btn-secondary"
+        >
+          {{ magazineData.magazineInfo.buttonText }}
+          <i class="pi pi-external-link ml-2"></i>
+        </a>
+      </div>
+
+      <!-- Magazine Image -->
+      <div class="magazine-image-content fade-in">
+        <div class="magazine-cover-wrapper">
+          <img 
+            [src]="magazineData.magazineInfo.coverImage"
+            [alt]="magazineData.magazineInfo.title"
+            class="magazine-cover"
+          />
+          
+          <!-- Floating Elements -->
+          <div class="floating-elements">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>

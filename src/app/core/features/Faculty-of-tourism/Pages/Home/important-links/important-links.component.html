@@ -1,0 +1,62 @@
+<section class="important-links-section faculty-section-alt">
+  <div class="faculty-container">
+    
+    <!-- Section Header -->
+    <div class="section-header text-center mb-5">
+      <h2 class="faculty-title slide-in">{{ linksData.title }}</h2>
+      <p class="faculty-text fade-in">وصول سريع إلى المصادر الأساسية للكلية وخدمات الجامعة</p>
+    </div>
+
+    <!-- Links Carousel -->
+    <div class="links-carousel-wrapper">
+      <p-carousel 
+        [value]="linksData.links"
+        [numVisible]="5"
+        [numScroll]="1"
+        [circular]="true"
+        [autoplayInterval]="3000"
+        [responsiveOptions]="responsiveOptions"
+        class="faculty-carousel"
+      >
+        <ng-template pTemplate="item" let-link>
+          <div class="link-item-wrapper">
+            <a 
+              [href]="link.url"
+              class="link-item"
+              [target]="link.url.startsWith('http') ? '_blank' : '_self'"
+              [rel]="link.url.startsWith('http') ? 'noopener noreferrer' : null"
+            >
+              <!-- <div class="link-image-wrapper">
+                <img 
+                  [src]="link.image"
+                  [alt]="link.title"
+                  class="link-image"
+                />
+                <div class="image-overlay">
+                  <i class="pi pi-external-link overlay-icon"></i>
+                </div>
+              </div> -->
+              
+              <div class="link-content">
+                <h4 class="link-title">{{ link.title }}</h4>
+                <div class="link-indicator">
+                  <i class="pi pi-arrow-left"></i>
+                </div>
+              </div>
+            </a>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <!-- Additional Info -->
+    <div class="links-additional-info text-center mt-4">
+      <p class="info-text fade-in">
+        تحتاج إلى مساعدة في الوصول لأي من هذه المصادر؟ تفضل بزيارة  
+        <a href="/support" class="support-link">مركز دعم تقنية المعلومات</a> 
+        أو تواصل معنا مباشرة.
+      </p>
+    </div>
+    
+  </div>
+</section>
