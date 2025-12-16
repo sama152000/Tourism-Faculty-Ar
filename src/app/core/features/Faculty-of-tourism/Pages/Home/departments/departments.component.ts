@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DepartmentTabsService } from '../../../Services/department-tabs.service';
-import { DepartmentsData } from '../../../model/departments.model';
+import { DepartmentTabsData, Department } from '../../../model/departments.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { DepartmentsService } from '../../../Services/departments.service';
 
 @Component({
   selector: 'app-departments',
@@ -15,16 +14,17 @@ import { DepartmentsService } from '../../../Services/departments.service';
   styleUrls: ['./departments.component.css']
 })
 export class DepartmentsComponent implements OnInit {
-  departmentsData!: DepartmentsData;
+  departmentsData!: DepartmentTabsData;
+  displayedDepartments: Department[] = [];
 
-  constructor(private departmentsService: DepartmentsService) {}
+  constructor(private departmentTabsService: DepartmentTabsService) {}
 
   ngOnInit(): void {
-    const data = this.departmentsService.getDepartmentsData();
-    this.departmentsData = {
-      ...data,
-      departments: data.departments.slice(0, 3)
-    };
+    this.departmentTabsService.getDepartmentTabsData().subscribe(data => {
+      this.departmentsData = data;
+      // عرض أول 3 أقسام فقط في الهوم
+      this.displayedDepartments = data.sections.slice(0, 3);
+    });
   }
 
   getDeptFeatures(deptId: string): string[] {

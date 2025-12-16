@@ -1,0 +1,109 @@
+<section class="faculty-section" *ngIf="programData">
+  <div class="faculty-container">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+      <h1 class="faculty-title">{{ programData.title }}</h1>
+      <p class="faculty-subtitle align-items-center">{{ programData.subtitle }}</p>
+    </div>
+
+    <!-- Programs Tabs -->
+    <div class="departments-tabs-container" *ngIf="programData.sections.length">
+      <div class="departments-tabs">
+        <!-- Side Tabs -->
+        <div class="departments-tablist">
+          <button *ngFor="let program of programData.sections"
+                  class="departments-tab"
+                  [class.active]="selectedTab === program.id"
+                  (click)="onTabChange(program.id)">
+            {{ program.pageTitle }}
+          </button>
+        </div>
+
+        <!-- Tab Panels -->
+        <div class="departments-tabpanels">
+          <div *ngFor="let program of programData.sections"
+               class="departments-tabpanel"
+               [class.active]="selectedTab === program.id">
+            <div class="department-content-wrapper">
+              <!-- Program Header -->
+              <div class="row">
+                <div class="col-lg-8 col-md-12">
+                  <h2 class="department-title">{{ program.pageTitle }}</h2>
+                  <p class="faculty-text">{{ program.about }}</p>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                  <div class="department-stats">
+                    <div class="stat-card">
+                      <i class="pi pi-users stat-icon"></i>
+                      <div class="stat-info">
+                        <span class="stat-number">{{ getFacultyCount(program) }}</span>
+                        <span class="stat-label">أعضاء هيئة التدريس</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="department-divider">
+
+              <!-- Mission -->
+              <div class="mission-card mb-4">
+                <div class="card-header">رسالة البرنامج</div>
+                <div class="card-body">
+                  <p class="faculty-text">{{ program.mission }}</p>
+                </div>
+              </div>
+
+              <!-- Vision -->
+              <div class="mission-card mb-4">
+                <div class="card-header">رؤية البرنامج</div>
+                <div class="card-body">
+                  <p class="faculty-text">
+                    {{ program.vision && program.vision.trim() !== '' ? program.vision : 'لا توجد رؤية مسجلة لهذا البرنامج حالياً' }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Objectives -->
+              <div class="objectives-card mb-4" *ngIf="program.goals?.length">
+                <div class="card-header">الأهداف التعليمية</div>
+                <div class="card-body">
+                  <ul class="objectives-list">
+                    <li *ngFor="let goal of program.goals" class="objective-item">
+                      <i class="pi pi-check-circle objective-icon"></i>
+                      {{ goal.goalName }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Details -->
+              <div class="courses-card mb-4" *ngIf="program.details?.length">
+                <div class="card-header">تفاصيل البرنامج</div>
+                <div class="card-body">
+                  <div *ngFor="let detail of program.details">
+                    <p class="faculty-text">{{ detail.content }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Members -->
+              <div class="careers-card mb-4" *ngIf="program.members?.length">
+                <div class="card-header">الأعضاء</div>
+                <div class="card-body">
+                  <ul style="list-style-type: none;">
+                    <li *ngFor="let member of program.members">
+                      <i class="pi pi-check-circle objective-icon"></i>
+                      {{ member.memberName }} <span *ngIf="member.isLeader">(منسق البرنامج)</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

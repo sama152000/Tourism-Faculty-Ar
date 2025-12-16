@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentTabsService } from '../../Services/department-tabs.service';
-import { DepartmentDetail, DepartmentTabsData } from '../../model/departments.model';
+import { DepartmentTabsData, Department } from '../../model/departments.model';
 
 @Component({
   selector: 'app-departments',
@@ -13,7 +13,7 @@ import { DepartmentDetail, DepartmentTabsData } from '../../model/departments.mo
 })
 export class DepartmentsComponent implements OnInit {
   departmentData!: DepartmentTabsData;
-  selectedTab: string = 'tourism-studies';
+  selectedTab: string = '';
 
   constructor(
     private departmentTabsService: DepartmentTabsService,
@@ -22,43 +22,36 @@ export class DepartmentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.departmentData = this.departmentTabsService.getDepartmentTabsData();
-
-    // Handle route parameters for department id
-    this.route.params.subscribe(params => {
-      if (params['id']) {
-        this.selectedTab = this.mapIdToTab(params['id']);
+    this.departmentTabsService.getDepartmentTabsData().subscribe(data => {
+      this.departmentData = data;
+      if (data.sections.length) {
+        this.selectedTab = data.sections[0].id; // أول قسم افتراضي
       }
+
+      this.route.queryParams.subscribe(params => {
+        if (params['tab']) {
+          this.selectedTab = params['tab'];
+        }
+      });
     });
   }
 
-  private mapIdToTab(id: string): string {
-    const idMap: { [key: string]: string } = {
-      '1': 'tourism-studies',
-      '2': 'hotel-management',
-      '3': 'guidance-interpretation',
-      '4': 'sustainable-tourism'
-    };
-    return idMap[id] || 'tourism-studies'; // default to first tab
+  onTabChange(id: string): void {
+    this.selectedTab = id;
+
+    // Update URL without reloading
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { tab: this.selectedTab },
+      queryParamsHandling: 'merge'
+    });
   }
 
-  onTabChange(value: string | number | undefined): void {
-    if (value) {
-      this.selectedTab = value.toString();
-
-      // Update URL with department id
-      const id = this.mapTabToId(this.selectedTab);
-      this.router.navigate(['/departments', id]);
-    }
+  getFacultyCount(department: Department): number {
+    return department.members?.length || 0;
   }
 
-  private mapTabToId(tab: string): string {
-    const tabMap: { [key: string]: string } = {
-      'tourism-studies': '1',
-      'hotel-management': '2',
-      'guidance-interpretation': '3',
-      'sustainable-tourism': '4'
-    };
-    return tabMap[tab] || '1'; // default to first
+  getServicesCount(department: Department): number {
+    return department.services?.length || 0;
   }
 }

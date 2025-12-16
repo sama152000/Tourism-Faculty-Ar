@@ -1,9 +1,9 @@
-<section class="news-section faculty-section">
+<section class="news-section faculty-section" *ngIf="newsData.news.length">
   <div class="faculty-container">
-    
+
     <!-- Section Header -->
     <div class="news-header d-flex justify-between align-center mb-4">
-      <h2 class="faculty-title slide-in">{{ newsData.title }}</h2>
+      <h2 class="faculty-title slide-in">آخر الأخبار</h2>
       <a
        routerLink="/news-list"
        class="view-all-btn faculty-btn faculty-btn-primary"
@@ -15,7 +15,7 @@
 
     <!-- News Grid -->
     <div class="news-grid faculty-grid faculty-grid-3">
-      <article 
+      <article
         *ngFor="let newsItem of newsData.news; let i = index"
         class="news-card faculty-card fade-in"
         [style.animation-delay]="(i * 0.2) + 's'"
@@ -24,14 +24,14 @@
         <!-- News Image -->
         <div class="news-image-wrapper">
           <img 
-            [src]="newsItem.image"
+            [src]="newsItem.featuredImagePath"
             [alt]="newsItem.title"
             class="news-image"
           />
           <div class="image-overlay">
             <span class="news-date-badge">
               <i class="pi pi-calendar"></i>
-              {{ formatDate(newsItem.date) }}
+              {{ formatDate(newsItem.createdDate) }}
             </span>
           </div>
         </div>
@@ -39,23 +39,25 @@
         <!-- News Content -->
         <div class="news-content faculty-card-body">
           <h3 class="news-title">
-            <a [href]="newsItem.link" class="news-link">
+            <a [routerLink]="['/news-details', newsItem.id]" class="news-link">
               {{ newsItem.title }}
             </a>
           </h3>
           
-          <p class="news-excerpt faculty-text">{{ newsItem.excerpt }}</p>
+          <p class="news-excerpt faculty-text">
+            {{ newsItem.content | slice:0:120 }}...
+          </p>
           
           <!-- News Meta -->
           <div class="news-meta">
             <span class="news-date">
               <i class="pi pi-clock"></i>
-              {{ formatDate(newsItem.date) }}
+              {{ formatDate(newsItem.createdDate) }}
             </span>
           </div>
           
           <a 
-            [href]="newsItem.link"
+            [routerLink]="['/news-details', newsItem.id]"
             class="read-more-btn faculty-btn faculty-btn-outline mt-auto"
           >
             قراءة المزيد  
@@ -65,9 +67,5 @@
         
       </article>
     </div>
-
-    <!-- News CTA Section -->
-   
-    
   </div>
 </section>

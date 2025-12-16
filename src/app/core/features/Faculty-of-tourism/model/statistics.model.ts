@@ -1,13 +1,13 @@
-
-export interface StatItem {
+export interface Statistic {
   id: string;
-  value: number;
-  label: string;
-  icon?: string;
+  title: string;
+  value: string;
+  iconPath: string;
+  isActive: boolean;
 }
 
 export interface StatisticsData {
   title: string;
-  statistics: StatItem[];
-  backgroundImage: string;
+  subtitle: string;
+  items: Statistic[];
 }

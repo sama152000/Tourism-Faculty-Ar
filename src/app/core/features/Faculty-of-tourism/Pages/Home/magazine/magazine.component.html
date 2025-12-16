@@ -1,4 +1,4 @@
-<section class="magazine-section faculty-section">
+<section class="magazine-section faculty-section" *ngIf="selectedJournal">
   <div class="magazine-background"></div>
   
   <div class="faculty-container">
@@ -6,8 +6,8 @@
       
       <!-- Text Content -->
       <div class="magazine-text-content">
-        <h2 class="magazine-title slide-in">{{ magazineData.magazineInfo.title }}</h2>
-        <p class="magazine-description fade-in">{{ magazineData.magazineInfo.description }}</p>
+        <h2 class="magazine-title slide-in">{{ selectedJournal.title }}</h2>
+        <p class="magazine-description fade-in">{{ selectedJournal.description }}</p>
         
         <!-- Key Features -->
         <div class="magazine-features fade-in">
@@ -25,13 +25,15 @@
           </div>
         </div>
         
+        <!-- زر تحميل أو رابط -->
         <a 
-          [href]="magazineData.magazineInfo.buttonLink"
+          *ngIf="selectedJournal.journalAttachments.length"
+          [href]="selectedJournal.journalAttachments[0].url"
           target="_blank"
           rel="noopener noreferrer"
           class="magazine-btn faculty-btn faculty-btn-secondary"
         >
-          {{ magazineData.magazineInfo.buttonText }}
+          تصفح العدد
           <i class="pi pi-external-link ml-2"></i>
         </a>
       </div>
@@ -40,15 +42,11 @@
       <div class="magazine-image-content fade-in">
         <div class="magazine-cover-wrapper">
           <img 
-            [src]="magazineData.magazineInfo.coverImage"
-            [alt]="magazineData.magazineInfo.title"
+            *ngIf="selectedJournal.journalAttachments.length"
+            [src]="selectedJournal.journalAttachments[0].url"
+            [alt]="selectedJournal.title"
             class="magazine-cover"
           />
-          
-          <!-- Floating Elements -->
-          <div class="floating-elements">
-            
-          </div>
         </div>
       </div>
       

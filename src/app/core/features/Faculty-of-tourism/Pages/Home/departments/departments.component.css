@@ -36,7 +36,7 @@
 .dept-image-wrapper {
   position: relative;
   overflow: hidden;
-  height: 200px;
+  height: 400px;
 }
 
 .dept-image {
@@ -88,7 +88,7 @@
   padding: 25px;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 50%;
 }
 
 .dept-name {
@@ -114,7 +114,7 @@
 }
 
 .dept-description {
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   line-height: 1.7;
   flex-grow: 1;
 }

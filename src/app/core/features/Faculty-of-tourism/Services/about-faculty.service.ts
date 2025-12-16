@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { AboutFacultyData } from '../model/about-faculty.model';
+import { AboutFacultyData } from '../model/AboutFacultyData.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AboutFacultyService {
-
   getAboutFacultyData(): AboutFacultyData {
     return {
       aboutInfo: {
         title: 'عن الكلية',
-        description: 'تُعد كلية السياحة والفنادق بجامعة الأقصر مؤسسة رائدة تُكرس جهودها لتحقيق التميز في مجالات الضيافة والسياحة والدراسات الثقافية. نهدف إلى تزويد الطلاب بأسس أكاديمية قوية وتدريب عملي متميز يؤهلهم ليصبحوا قادة المستقبل في صناعة السياحة العالمية.',
+        description: 'تُعد كلية السياحة والفنادق بجامعة الأقصر مؤسسة رائدة...',
         highlights: [
           'برامج دراسية تجمع بين التعلم النظري والتطبيق العملي',
           'إشراف أكاديمي ومهني من نخبة الخبراء في المجال',

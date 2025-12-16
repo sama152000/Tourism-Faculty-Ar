@@ -1,211 +1,42 @@
 import { Injectable } from '@angular/core';
-import { DepartmentTabsData, DepartmentsData } from '../model/departments.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
+import { Department, DepartmentTabsData } from '../model/departments.model';
+import { forkJoin, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentTabsService {
+  constructor(private http: HttpClient) {}
 
-  getDepartmentTabsData(): DepartmentTabsData {
-    return {
-      title: 'الأقسام العلمية',
-      subtitle: 'تعرف على أقسامنا المتخصصة وبرامجها الشاملة',
-      departments: [
-        {
-          id: 'tourism-studies',
-          name: 'الدراسات السياحية',
-          title: 'قسم الدراسات السياحية',
-          overview: 'يُكرس قسم الدراسات السياحية جهوده لتقديم تعليم شامل في تخطيط السياحة، وإدارة الوجهات، والتنمية السياحية المستدامة. يجمع البرنامج بين المعرفة النظرية والخبرة العملية لإعداد الطلاب لشغل مناصب قيادية في صناعة السياحة العالمية.',
-          mission: 'إعداد متخصصين سياحيين أكفاء قادرين على المساهمة في تنمية السياحة المستدامة مع الحفاظ على التراث الثقافي وتعزيز ممارسات السياحة المسؤولة.',
-          objectives: [
-            'تزويد الطلاب بمعرفة شاملة بأنظمة وعمليات السياحة',
-            'تنمية مهارات تخطيط السياحة وإدارة الوجهات',
-            'تعزيز فهم ممارسات السياحة المستدامة',
-            'تشجيع حفظ التراث الثقافي من خلال السياحة',
-            'إعداد الطلاب للعمل في المنظمات السياحية والجهات الحكومية'
-          ],
-          courses: [
-            'جغرافيا السياحة والوجهات',
-            'تخطيط وتنمية السياحة',
-            'إدارة السياحة المستدامة',
-            'سياحة التراث الثقافي',
-            'تسويق وترويج السياحة',
-            'اقتصاديات وتمويل السياحة',
-            'إدارة عمليات الرحلات السياحية',
-            'السياسات والتشريعات السياحية'
-          ],
-          careerOpportunities: [
-            'مدير تنمية سياحية',
-            'مدير تسويق وجهات سياحية',
-            'استشاري سياحي',
-            'أخصائي سياحة التراث الثقافي',
-            'محلل بحوث سياحية',
-            'موظف سياحة حكومي',
-            'مدير مشاريع سياحية',
-            'منسق سياحة مستدامة'
-          ],
-          facultyMembers: 18,
-          students: 320,
-          image: 'https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg?auto=compress&cs=tinysrgb&w=600',
-          icon: 'pi pi-globe'
-        },
-        
-        {
-          id: 'hotel-management',
-          name: 'إدارة الفنادق',
-          title: 'قسم إدارة الفنادق',
-          overview: 'يركز قسم إدارة الفنادق على إعداد قيادات المستقبل في صناعة الضيافة. يغطي البرنامج الشامل جميع جوانب تشغيل الفنادق من إدارة الاستقبال إلى عمليات الأغذية والمشروبات، مع توفير خبرة عملية في مرافق فندقية حديثة.',
-          mission: 'إعداد متخصصين في الضيافة قادرين على التفوق في تشغيل وإدارة الفنادق وتقديم الخدمات بأعلى معايير رضا النزلاء والكفاءة التشغيلية.',
-          objectives: [
-            'تنمية الخبرة في تشغيل وإدارة الفنادق',
-            'إتقان تقنيات إدارة الأغذية والمشروبات',
-            'فهم الإدارة المالية في الضيافة',
-            'تنمية مهارات القيادة وخدمة العملاء',
-            'تعلم استراتيجيات إدارة الإيرادات والتسويق الفندقي'
-          ],
-          courses: [
-            'إدارة عمليات الفنادق',
-            'إدارة الأغذية والمشروبات',
-            'عمليات الاستقبال الأمامي',
-            'إدارة التدبير المنزلي',
-            'الإدارة المالية الفندقية',
-            'إدارة الإيرادات',
-            'تسويق الضيافة',
-            'إدارة الموارد البشرية في الفنادق'
-          ],
-          careerOpportunities: [
-            'مدير عام فندق',
-            'مدير الأغذية والمشروبات',
-            'مدير الاستقبال الأمامي',
-            'مدير الإيرادات',
-            'مدير عمليات فندقية',
-            'مدير خدمات النزلاء',
-            'مدير تسويق فندقي',
-            'استشاري ضيافة'
-          ],
-          facultyMembers: 22,
-          students: 280,
-          image: 'https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=600',
-          icon: 'pi pi-building'
-        },
-        {
-          id: 'guidance-interpretation',
-          name: 'الإرشاد والتفسير السياحي',
-          title: 'قسم الإرشاد السياحي والتفسير',
-          overview: 'يتخصص قسم الإرشاد والتفسير السياحي في تدريب مرشدين سياحيين محترفين وأخصائيي تفسير ثقافي. يركز البرنامج على علم المصريات، والتفسير الثقافي، ومهارات التواصل لإعداد مرشدين على دراية عالية قادرين على نقل تراث مصر الغني للزائرين بفعالية.',
-          mission: 'تدريب مرشدين سياحيين محترفين ومفسرين ثقافيين قادرين على إيصال الأهمية التاريخية والثقافية لمصر مع تقديم تجارب زيارة استثنائية.',
-          objectives: [
-            'تنمية معرفة شاملة بتاريخ وثقافة مصر',
-            'إتقان تقنيات التفسير والتواصل',
-            'تعلم مهارات الإرشاد لأنواع مختلفة من السياح',
-            'فهم أخلاقيات السياحة والمعايير المهنية',
-            'تنمية القدرة على التواصل بلغات متعددة'
-          ],
-          courses: [
-            'تاريخ مصر القديمة',
-            'التراث الإسلامي والقبطي',
-            'تفسير المواقع الأثرية',
-            'تقنيات وأساليب الإرشاد السياحي',
-            'مهارات التواصل السياحي',
-            'اللغات الأجنبية للسياحة',
-            'التفسير الثقافي',
-            'دراسات المتاحف وإدارتها'
-          ],
-          careerOpportunities: [
-            'مرشد سياحي مرخص',
-            'مفسر متاحف',
-            'أخصائي تراث ثقافي',
-            'مرشد مواقع أثرية',
-            'موظف معلومات سياحية',
-            'منسق سياحة ثقافية',
-            'مدير موقع تراثي',
-            'أخصائي تثقيف سياحي'
-          ],
-          facultyMembers: 15,
-          students: 180,
-          image: 'https://images.pexels.com/photos/2177009/pexels-photo-2177009.jpeg?auto=compress&cs=tinysrgb&w=600',
-          icon: 'pi pi-users'
-        },
-        {
-          id: 'sustainable-tourism',
-          name: 'السياحة المستدامة',
-          title: 'قسم تنمية السياحة المستدامة',
-          overview: 'يُعد قسم السياحة المستدامة أحدث إضافة لدينا، ويركز على ممارسات السياحة المسؤولة بيئيًا وتنمية السياحة المجتمعية. يلبي هذا البرنامج المستقبلي الطلب المتزايد على النهج المستدام في صناعة السياحة.',
-          mission: 'تعزيز ممارسات السياحة المستدامة التي توازن بين الفوائد الاقتصادية والحفاظ على البيئة وتنمية المجتمعات، لضمان مساهمة السياحة إيجابيًا في المجتمعات المحلية والنظم البيئية.',
-          objectives: [
-            'تنمية فهم مبادئ السياحة المستدامة',
-            'تعلم تقييم الأثر البيئي للسياحة',
-            'إتقان تنمية السياحة المجتمعية',
-            'فهم السياحة البيئية والسياحة القائمة على الطبيعة',
-            'تعزيز ممارسات السياحة المسؤولة'
-          ],
-          courses: [
-            'مبادئ السياحة المستدامة',
-            'تقييم الأثر البيئي',
-            'السياحة المجتمعية',
-            'تنمية السياحة البيئية',
-            'السياحة وتغير المناخ',
-            'إدارة السياحة المسؤولة',
-            'سياحة الحفاظ على البيئة',
-            'تنمية السياحة الريفية'
-          ],
-          careerOpportunities: [
-            'استشاري سياحة مستدامة',
-            'مدير سياحة بيئية',
-            'منسق سياحة مجتمعية',
-            'أخصائي سياحة بيئية',
-            'موظف سياحة حفظ بيئي',
-            'موظف تنمية مستدامة',
-            'مطور سياحة ريفية',
-            'مدير استدامة مؤسسية'
-          ],
-          facultyMembers: 12,
-          students: 150,
-          image: 'https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&w=600',
-          icon: 'pi pi-globe'
-        }
-      ]
-    };
+  getDepartmentTabsData(): Observable<DepartmentTabsData> {
+    const departments$ = this.http.get<any>(`${environment.apiUrl}departments/getall`);
+    const details$ = this.http.get<any>(`${environment.apiUrl}departmentdetails/getall`);
+    const members$ = this.http.get<any>(`${environment.apiUrl}departmentmembers/getall`);
+    const programs$ = this.http.get<any>(`${environment.apiUrl}departmentprograms/getall`);
+    const services$ = this.http.get<any>(`${environment.apiUrl}departmentservices/getall`);
+
+    return forkJoin([departments$, details$, members$, programs$, services$]).pipe(
+      map(([departmentsRes, detailsRes, membersRes, programsRes, servicesRes]) => {
+        const departments: Department[] = departmentsRes.data.map((dept: any) => ({
+          ...dept,
+          details: detailsRes.data.filter((d: any) => d.departmentId === dept.id),
+          members: membersRes.data.filter((m: any) => m.departmentId === dept.id),
+          programs: programsRes.data.filter((p: any) => p.departmentId === dept.id),
+          services: servicesRes.data.filter((s: any) => s.departmentId === dept.id)
+        }));
+
+        return {
+          title: 'الأقسام العلمية',
+          subtitle: 'تعرف على أقسام الكلية المختلفة',
+          sections: departments
+        } as DepartmentTabsData;
+      })
+    );
   }
 
-  getDepartments() {
-    return this.getDepartmentTabsData().departments;
-  }
-
-  getDepartmentsData(): DepartmentsData {
-    return {
-      title: 'أقسامنا العلمية',
-      subtitle: 'تعرف على الأقسام العلمية الرئيسية بكلية السياحة والفنادق',
-      departments: [
-        {
-          id: '1',
-          name: 'الدراسات السياحية',
-          description: 'يركز على تخطيط السياحة، إدارة التراث، الإرشاد السياحي، واستراتيجيات تنمية الوجهات.',
-          image: './assets/tour4.jpg',
-          link: '/departments/tourism'
-        },
-        {
-          id: '2',
-          name: 'إدارة الفنادق',
-          description: 'يتخصص في عمليات الفنادق، إدارة الأغذية والمشروبات، جودة الخدمة، وتحسين الإيرادات.',
-          image: './assets/tour12.jpeg',
-          link: '/departments/hotel'
-        },
-        {
-          id: '3',
-          name: 'الإرشاد والتفسير السياحي',
-          description: 'تدريب مرشدين سياحيين محترفين وخدمات تفسير للمواقع التراثية والسياحة الثقافية.',
-          image: './assets/event3.jpg',
-          link: '/departments/guidance'
-        },
-        {
-          id: '4',
-          name: 'السياحة المستدامة',
-          description: 'يركز على ممارسات السياحة الصديقة للبيئة، الحفاظ على البيئة، والسياحة المجتمعية.',
-          image: './assets/event3.jpg',
-          link: '/departments/sustainable'
-        }
-      ]
-    };
+  getDepartments(): Observable<Department[]> {
+    return this.getDepartmentTabsData().pipe(map(data => data.sections));
   }
 }

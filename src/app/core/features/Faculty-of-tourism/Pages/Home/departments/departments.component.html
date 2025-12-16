@@ -1,4 +1,4 @@
-<section class="departments-section faculty-section">
+<section class="departments-section faculty-section" *ngIf="departmentsData">
   <div class="faculty-container">
     
     <!-- Section Header -->
@@ -10,7 +10,7 @@
     <!-- Departments Grid -->
     <div class="departments-grid faculty-grid faculty-grid-3">
       <div 
-        *ngFor="let department of departmentsData.departments; let i = index"
+        *ngFor="let department of displayedDepartments; let i = index"
         class="department-card faculty-card fade-in"
         [style.animation-delay]="(i * 0.1) + 's'"
       >
@@ -18,13 +18,13 @@
         <!-- Department Image -->
         <div class="dept-image-wrapper">
           <img 
-            [src]="department.image" 
+            [src]="department.departmentAttachments[0]?.url || 'assets/default-dept.jpg'" 
             [alt]="department.name"
             class="dept-image"
           />
           <div class="image-overlay">
             <a 
-              [href]="department.link"
+              [routerLink]="['/departments', department.id]"
               class="explore-btn faculty-btn faculty-btn-secondary"
             >
               <i class="pi pi-eye"></i>
@@ -36,7 +36,7 @@
         <!-- Department Info -->
         <div class="dept-info faculty-card-body">
           <h3 class="dept-name faculty-subtitle">{{ department.name }}</h3>
-          <p class="dept-description faculty-text">{{ department.description }}</p>
+          <p class="dept-description faculty-text">{{ department.about }}</p>
           
           <!-- Department Features -->
           <div class="dept-features">
@@ -57,8 +57,5 @@
         
       </div>
     </div>
-
-   
-    
   </div>
 </section>

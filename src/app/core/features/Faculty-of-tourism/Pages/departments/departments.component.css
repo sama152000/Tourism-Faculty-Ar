@@ -1,3 +1,22 @@
+.faculty-text {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  text-align: justify;
+  margin-bottom: var(--spacing-md);
+}
+.faculty-subtitle{
+    font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  text-align: justify;
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 .departments-tabs-container {
   background: var(--white);
   border-radius: var(--border-radius-lg);

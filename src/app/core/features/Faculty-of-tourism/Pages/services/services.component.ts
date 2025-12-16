@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesService } from '../../Services/services.service';
-import { Service, ServiceTabsData } from '../../model/service.model';
+import { Service, ServicesTabsData } from '../../model/service.model';
 
 @Component({
   selector: 'app-services',
@@ -12,8 +12,8 @@ import { Service, ServiceTabsData } from '../../model/service.model';
   styleUrls: ['./services.component.css']
 })
 export class ServicesComponent implements OnInit {
-  serviceData!: ServiceTabsData;
-  selectedTab: string = 'academic-support';
+  serviceData!: ServicesTabsData;
+  selectedTab: string = '';
 
   constructor(
     private servicesService: ServicesService,
@@ -22,26 +22,26 @@ export class ServicesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.serviceData = this.servicesService.getServiceTabsData();
-
-    // Handle query parameters for tab selection
-    this.route.queryParams.subscribe(params => {
-      if (params['tab']) {
-        this.selectedTab = params['tab'];
+    this.servicesService.getServicesTabsData().subscribe(data => {
+      this.serviceData = data;
+      if (data.sections.length) {
+        this.selectedTab = data.sections[0].id;
       }
+
+      this.route.queryParams.subscribe(params => {
+        if (params['tab']) {
+          this.selectedTab = params['tab'];
+        }
+      });
     });
   }
 
-  onTabChange(value: string | number | undefined): void {
-    if (value) {
-      this.selectedTab = value.toString();
-
-      // Update URL without reloading
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { tab: this.selectedTab },
-        queryParamsHandling: 'merge'
-      });
-    }
+  onTabChange(id: string): void {
+    this.selectedTab = id;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { tab: this.selectedTab },
+      queryParamsHandling: 'merge'
+    });
   }
 }

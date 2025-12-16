@@ -1,35 +1,77 @@
-export interface Department {
+export interface DepartmentAttachment {
   id: string;
-  name: string;
-  description: string;
-  image: string;
-  link?: string;
+  fileName: string;
+  url: string;
 }
 
-export interface DepartmentsData {
-  title: string;
-  subtitle: string;
-  departments: Department[];
+export interface DepartmentGoal {
+  id: string;
+  index: number;
+  goalName: string;
 }
-
 
 export interface DepartmentDetail {
   id: string;
-  name: string;
   title: string;
-  overview: string;
+  content: string;
+  departmentId: string;
+  departmentName: string;
+}
+
+export interface DepartmentMember {
+  id: string;
+  isLeader: boolean;
+  departmentId: string;
+  departmentName: string;
+  memberId: string;
+  memberName: string;
+}
+
+export interface DepartmentProgram {
+  id: string;
+  name: string;
+  departmentId: string;
+  departmentName: string;
+  programId: string;
+  programName: string;
+}
+
+export interface DepartmentService {
+  id: string;
+  name: string;
+  details: string;
+  duration: string;
+  applicationUrl: string;
+  downloadUrl: string;
+  isOnline: boolean;
+  category: string;
+  fees?: number;
+  contactPerson: string;
+  contactPhone: string;
+  departmentId: string;
+  departmentName: string;
+}
+
+export interface Department {
+  id: string;
+  name: string;
+  subTitle: string;
+  pageId: string;
+  pageTitle: string;
+  aboutId: string;
+  about: string;
   mission: string;
-  objectives: string[];
-  courses: string[];
-  careerOpportunities: string[];
-  facultyMembers: number;
-  students: number;
-  image: string;
-  icon: string;
+  vision: string;
+  goals: DepartmentGoal[];
+  departmentAttachments: DepartmentAttachment[];
+  details: DepartmentDetail[];
+  members: DepartmentMember[];
+  programs: DepartmentProgram[];
+  services: DepartmentService[];
 }
 
 export interface DepartmentTabsData {
   title: string;
   subtitle: string;
-  departments: DepartmentDetail[];
+  sections: Department[];
 }

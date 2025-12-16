@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UnitsService } from '../../Services/units.service';
-import { Unit, UnitTabsData } from '../../model/unit.model';
+import { Unit, UnitsTabsData } from '../../model/unit.model';
 
 @Component({
   selector: 'app-units',
@@ -12,8 +12,8 @@ import { Unit, UnitTabsData } from '../../model/unit.model';
   styleUrls: ['./units.component.css']
 })
 export class UnitsComponent implements OnInit {
-  unitData!: UnitTabsData;
-  selectedTab: string = 'quality-assurance';
+  unitData!: UnitsTabsData;
+  selectedTab: string = '';
 
   constructor(
     private unitsService: UnitsService,
@@ -22,26 +22,30 @@ export class UnitsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.unitData = this.unitsService.getUnitTabsData();
-
-    // Handle query parameters for tab selection
-    this.route.queryParams.subscribe(params => {
-      if (params['tab']) {
-        this.selectedTab = params['tab'];
+    this.unitsService.getUnitsTabsData().subscribe(data => {
+      this.unitData = data;
+      if (data.sections.length) {
+        this.selectedTab = data.sections[0].id;
       }
+
+      this.route.queryParams.subscribe(params => {
+        if (params['tab']) {
+          this.selectedTab = params['tab'];
+        }
+      });
     });
   }
 
-  onTabChange(value: string | number | undefined): void {
-    if (value) {
-      this.selectedTab = value.toString();
+  onTabChange(id: string): void {
+    this.selectedTab = id;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { tab: this.selectedTab },
+      queryParamsHandling: 'merge'
+    });
+  }
 
-      // Update URL without reloading
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { tab: this.selectedTab },
-        queryParamsHandling: 'merge'
-      });
-    }
+  getMembersCount(unit: Unit): number {
+    return unit.members?.length || 0;
   }
 }

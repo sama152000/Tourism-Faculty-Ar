@@ -1,100 +1,87 @@
-<section class="faculty-section" *ngIf="contentItem">
+<section class="faculty-section" *ngIf="post">
   <div class="faculty-container">
-    <!-- Breadcrumb Navigation -->
+    <!-- Breadcrumb -->
     <nav class="breadcrumb-nav">
       <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">الرئيسية</a></li>
         <li class="breadcrumb-item">
-          <a routerLink="/">الرئيسية</a>
+          <a [routerLink]="['/news-list']" [queryParams]="{category: post.postCategories[0]?.categoryName}">
+            {{ post.postCategories[0]?.categoryName }}
+          </a>
         </li>
-        <li class="breadcrumb-item">
-          <a [routerLink]="['/news-list']" [queryParams]="{category: contentItem.category}">{{ getCategoryLabel(contentItem.category) }}</a>
-        </li>
-        <li class="breadcrumb-item active">{{ contentItem.title }}</li>
+        <li class="breadcrumb-item active">{{ post.title }}</li>
       </ol>
     </nav>
 
-    <!-- Content Header -->
+    <!-- Header -->
     <div class="content-header">
       <div class="content-meta">
-        <!-- <span class="content-category-badge" [style.background-color]="getCategoryColor(contentItem.category)">
-          {{ getCategoryLabel(contentItem.category) }}
-        </span> -->
         <span class="content-date">
           <i class="pi pi-calendar"></i>
-          {{ formatDate(contentItem.date) }}
+          {{ formatDate(post.createdDate) }}
         </span>
       </div>
-      <h1 class="content-title">{{ contentItem.title }}</h1>
-      <p class="content-excerpt">{{ contentItem.excerpt }}</p>
-      
-      <!-- Social Share -->
+      <h1 class="content-title">{{ post.title }}</h1>
       <div class="content-actions">
-        <button class="action-btn" (click)="shareContent()" title="مشاركة">
-          <i class="pi pi-share-alt"></i>
-          مشاركة
+        <button class="action-btn" (click)="sharePost()" title="مشاركة">
+          <i class="pi pi-share-alt"></i> مشاركة
         </button>
       </div>
     </div>
 
     <!-- Featured Image -->
-    <div class="content-image-container">
-      <img [src]="contentItem.image" [alt]="contentItem.title" class="content-featured-image">
+    <div class="content-image-container" *ngIf="post.featuredImagePath">
+      <img [src]="post.featuredImagePath" [alt]="post.title" class="content-featured-image">
     </div>
 
-    <!-- Content Body -->
+    <!-- Body -->
     <div class="content-body-wrapper">
       <div class="row">
         <div class="col-lg-8 col-md-12">
           <article class="content-article">
             <div class="content-body">
-              <p *ngFor="let paragraph of contentItem.content.split('\n\n')" class="content-paragraph">
+              <p *ngFor="let paragraph of post.content.split('\n\n')" class="content-paragraph">
                 {{ paragraph.trim() }}
               </p>
             </div>
           </article>
         </div>
-        
+
         <!-- Sidebar -->
         <div class="col-lg-4 col-md-12">
           <aside class="content-sidebar">
             <!-- Navigation -->
-            <div class="sidebar-section" *ngIf="previousContent || nextContent">
+            <div class="sidebar-section" *ngIf="previousPost || nextPost">
               <h3 class="sidebar-title">التنقل</h3>
               <div class="navigation-buttons">
-                <a *ngIf="previousContent" 
-                   class="nav-btn prev-btn" 
-                   (click)="navigateToContent(previousContent.id)">
+                <a *ngIf="previousPost" class="nav-btn prev-btn" (click)="navigateToPost(previousPost.id)">
                   <i class="pi pi-arrow-right"></i>
                   <div class="nav-content">
                     <span class="nav-label">السابق</span>
-                    <span class="nav-title">{{ previousContent.title }}</span>
+                    <span class="nav-title">{{ previousPost.title }}</span>
                   </div>
                 </a>
-                <a *ngIf="nextContent" 
-                   class="nav-btn next-btn" 
-                   (click)="navigateToContent(nextContent.id)">
+                <a *ngIf="nextPost" class="nav-btn next-btn" (click)="navigateToPost(nextPost.id)">
                   <div class="nav-content">
                     <span class="nav-label">التالي</span>
-                    <span class="nav-title">{{ nextContent.title }}</span>
+                    <span class="nav-title">{{ nextPost.title }}</span>
                   </div>
                   <i class="pi pi-arrow-left"></i>
                 </a>
               </div>
             </div>
 
-            <!-- Related Content -->
-            <div class="sidebar-section" *ngIf="relatedContent.length > 0">
-              <h3 class="sidebar-title">{{ getCategoryLabel(contentItem.category) }} ذات صلة</h3>
+            <!-- Related -->
+            <div class="sidebar-section" *ngIf="relatedPosts.length > 0">
+              <h3 class="sidebar-title">محتوى ذات صلة</h3>
               <div class="related-items">
-                <a *ngFor="let item of relatedContent" 
-                   class="related-item" 
-                   (click)="navigateToContent(item.id)">
-                  <img [src]="item.image" [alt]="item.title" class="related-image">
+                <a *ngFor="let item of relatedPosts" class="related-item" (click)="navigateToPost(item.id)">
+                  <img [src]="item.featuredImagePath" [alt]="item.title" class="related-image">
                   <div class="related-content">
                     <h4 class="related-title">{{ item.title }}</h4>
                     <span class="related-date">
                       <i class="pi pi-calendar"></i>
-                      {{ formatDate(item.date) }}
+                      {{ formatDate(item.createdDate) }}
                     </span>
                   </div>
                 </a>
@@ -106,16 +93,13 @@
               <h3 class="sidebar-title">روابط سريعة</h3>
               <div class="quick-links">
                 <a routerLink="/news-list" class="quick-link">
-                  <i class="pi pi-list"></i>
-                  جميع الأخبار والفعاليات
+                  <i class="pi pi-list"></i> جميع الأخبار والفعاليات
                 </a>
-                <a routerLink="/news-list" [queryParams]="{category: 'events'}" class="quick-link">
-                  <i class="pi pi-calendar"></i>
-                  الفعاليات القادمة
+                <a routerLink="/news-list" [queryParams]="{category: 'حدث'}" class="quick-link">
+                  <i class="pi pi-calendar"></i> الفعاليات القادمة
                 </a>
                 <a routerLink="/contact" class="quick-link">
-                  <i class="pi pi-envelope"></i>
-                  اتصل بنا
+                  <i class="pi pi-envelope"></i> اتصل بنا
                 </a>
               </div>
             </div>

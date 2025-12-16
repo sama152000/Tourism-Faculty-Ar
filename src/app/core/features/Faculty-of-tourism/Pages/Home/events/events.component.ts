@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EventsData } from '../../../model/events.model';
-import { ContentService } from '../../../Services/content.service';
-import { ContentItem } from '../../../model/content.model';
-import { Input } from '@angular/core';
+import { NewsService } from '../../../Services/news.service';
+import { NewsPost } from '../../../model/news.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
@@ -16,58 +14,47 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  eventsData!: EventsData;
-  @Input() limit: number = 2; // default limit for home page - show 2 items in the home layout
+  eventsPosts: NewsPost[] = [];
+  @Input() limit: number = 2; // default limit for home page
 
-  constructor(private contentService: ContentService) {}
+  constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
-    // Fetch only events from the central ContentService and map to UI model
-    const items: ContentItem[] = this.contentService.getContentByCategory('events').slice(0,3);
-    // Use all events (do not filter out past events); sort by date descending (newest first)
-    const source = items.slice();
-    source.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    const limited = source.slice(0, this.limit);
-    this.eventsData = {
-      title: 'الاحداث والفعاليات',
-      events: limited.map(item => ({
-        id: item.id,
-        title: item.title,
-        description: item.excerpt,
-        image: item.image,
-        date: new Date(item.date),
-        link: item.link || `/events/${item.id}`
-      })),
-      viewAllLink: '/news-list'
-    };
-  }
+    this.newsService.getNews().subscribe(posts => {
+      // فلترة الأحداث فقط
+      const eventsOnly = posts.filter(p =>
+        p.postCategories.some(c => c.categoryName === 'حدث')
+      );
 
-  formatDate(date: Date): string {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
+      // ترتيب حسب التاريخ تنازلي
+      const sorted = [...eventsOnly].sort(
+        (a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
+      );
+
+      this.eventsPosts = sorted.slice(0, this.limit);
     });
   }
 
-  getTimeUntilEvent(eventDate: Date): string {
+  formatDate(dateStr: string): string {
+    const date = new Date(dateStr);
+    return new Intl.DateTimeFormat('ar-EG', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    }).format(date);
+  }
+
+  getTimeUntilEvent(dateStr: string): string {
+    const eventDate = new Date(dateStr);
     const now = new Date();
     const diffTime = eventDate.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    if (diffDays < 0) {
-      return 'انتهى الحدث';
-    } else if (diffDays === 0) {
-      return 'اليوم';
-    } else if (diffDays === 1) {
-      return 'غدًا';
-    } else if (diffDays <= 7) {
-      return `في غضون ${diffDays} أيام`;
-    } else if (diffDays <= 30) {
-      return `في غضون ${Math.ceil(diffDays / 7)} أسابيع`;
-    } else {
-      return `في غضون ${Math.ceil(diffDays / 30)} أشهر`;
-    }
-  }
 
+    if (diffDays < 0) return 'انتهى الحدث';
+    if (diffDays === 0) return 'اليوم';
+    if (diffDays === 1) return 'غدًا';
+    if (diffDays <= 7) return `في غضون ${diffDays} أيام`;
+    if (diffDays <= 30) return `في غضون ${Math.ceil(diffDays / 7)} أسابيع`;
+    return `في غضون ${Math.ceil(diffDays / 30)} أشهر`;
+  }
 }

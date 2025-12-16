@@ -24,7 +24,7 @@
   box-shadow: var(--shadow-xl);
   backdrop-filter: blur(10px);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 50px;
   align-items: center;
 }
@@ -89,7 +89,7 @@
 
 .magazine-btn {
   font-size: 1.1rem;
-  padding: 15px 30px;
+  padding: 10px 40px;
   display: inline-flex;
   align-items: center;
   gap: 8px;

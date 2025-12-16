@@ -1,145 +1,46 @@
 import { Injectable } from '@angular/core';
-import { SectorTabsData } from '../model/sector.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
+import { Sector, SectorsTabsData } from '../model/sector.model';
+import { forkJoin, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SectorsService {
+  constructor(private http: HttpClient) {}
 
-  getSectorTabsData(): SectorTabsData {
-    return {
-      title: 'قطاعات الكلية',
-      subtitle: 'تعرف على القطاعات المتخصصة التي تدعم تميزنا الأكاديمي والإداري',
-      sectors: [
-        {
-          id: 'academic-affairs',
-          name: 'الشئون الأكاديمية',
-          title: 'قطاع الشئون الأكاديمية',
-          overview: 'يتولى قطاع الشئون الأكاديمية الإشراف على جميع البرامج التعليمية وتطوير المناهج وضمان الجودة الأكاديمية داخل الكلية، لضمان تقديم تعليم عالي الجودة يتوافق مع المعايير الدولية ومتطلبات سوق العمل.',
-          mission: 'الحفاظ على التميز الأكاديمي من خلال تصميم مناهج مبتكرة، واستخدام منهجيات تدريس فعالة، والتحسين المستمر للبرامج التعليمية التي تؤهل الطلاب لمهن ناجحة في السياحة والضيافة.',
-          objectives: [
-            'تطوير وتحديث المناهج لتتوافق مع معايير الصناعة',
-            'ضمان جودة جميع البرامج الأكاديمية',
-            'تيسير التطوير المهني لأعضاء هيئة التدريس',
-            'تعزيز أساليب التدريس والتعلم المبتكرة',
-            'إقامة شراكات مع مؤسسات دولية'
-          ],
-          activities: [
-            'مراجعة وتطوير المناهج الدراسية',
-            'اعتماد البرامج الأكاديمية',
-            'تدريب وتطوير أعضاء هيئة التدريس',
-            'دعم الطلاب أكاديميًا',
-            'برامج التبادل الدولي'
-          ],
-          responsibilities: [
-            'إدارة البرامج الأكاديمية',
-            'الإشراف على ضمان الجودة',
-            'تقييم أداء أعضاء هيئة التدريس',
-            'متابعة التقدم الأكاديمي للطلاب',
-            'تنفيذ السياسات التعليمية'
-          ],
-          facultyMembers: 45,
-          staff: 12,
-          icon: 'pi pi-book'
-        },
-        {
-          id: 'student-affairs',
-          name: 'شئون الطلاب',
-          title: 'قطاع شئون الطلاب',
-          overview: 'يكرس قطاع شئون الطلاب جهوده لدعم الحياة الطلابية والرفاهية والأنشطة اللامنهجية، ويضمن توفير خدمات دعم شاملة تعزز المسار الأكاديمي والتنمية الشخصية للطلاب.',
-          mission: 'تقديم خدمات دعم شاملة للطلاب تعزز النمو الشخصي والنجاح الأكاديمي والتطور المهني، مع خلق مجتمع حرم جامعي نابض بالحياة.',
-          objectives: [
-            'توفير خدمات دعم شاملة للطلاب',
-            'تنظيم الأنشطة والفعاليات اللامنهجية',
-            'تطوير مهارات القيادة لدى الطلاب',
-            'ضمان رفاهية الطلاب وسلامتهم',
-            'تعزيز التكامل الثقافي والاجتماعي'
-          ],
-          activities: [
-            'برامج التهيئة والتعريف للطلاب الجدد',
-            'الإرشاد المهني والتوجيه',
-            'الفعاليات الثقافية والاجتماعية',
-            'إدارة الأندية الطلابية',
-            'خدمات الإرشاد الأكاديمي'
-          ],
-          responsibilities: [
-            'تسجيل الطلاب وحفظ السجلات',
-            'إدارة الشئون التأديبية',
-            'تنسيق السكن الطلابي',
-            'إدارة المساعدات المالية',
-            'علاقات الخريجين'
-          ],
-          facultyMembers: 25,
-          staff: 18,
-          icon: 'pi pi-users'
-        },
-        {
-          id: 'research-development',
-          name: 'البحث والتطوير',
-          title: 'قطاع البحث العلمي والتطوير',
-          overview: 'يدعم قطاع البحث والتطوير وينسق الأنشطة البحثية داخل الكلية، ويركز على تطوير المعرفة في مجالي السياحة والضيافة من خلال مشاريع بحثية مبتكرة ونشر علمي متميز.',
-          mission: 'تطوير المعرفة العلمية والابتكار في السياحة والضيافة من خلال بحوث عالية الجودة تسهم في تطوير الصناعة والتميز الأكاديمي.',
-          objectives: [
-            'تعزيز ثقافة البحث داخل الكلية',
-            'تأمين التمويل للمشروعات البحثية',
-            'تسهيل التعاون مع شركاء الصناعة',
-            'دعم مبادرات البحث لأعضاء هيئة التدريس والطلاب',
-            'نشر نتائج البحوث في دوريات علمية'
-          ],
-          activities: [
-            'تنسيق المشروعات البحثية',
-            'دعم تقديم طلبات المنح البحثية',
-            'تنظيم المؤتمرات العلمية',
-            'مساعدة النشر العلمي',
-            'تطوير شراكات مع الصناعة'
-          ],
-          responsibilities: [
-            'وضع استراتيجية البحث العلمي',
-            'تحديد فرص التمويل',
-            'الإشراف على أخلاقيات البحث',
-            'مراقبة جودة النشر',
-            'تقييم أثر البحوث'
-          ],
-          facultyMembers: 30,
-          staff: 8,
-          icon: 'pi pi-search'
-        },
-        {
-          id: 'community-service',
-          name: 'خدمة المجتمع',
-          title: 'قطاع خدمة المجتمع وتنمية البيئة',
-          overview: 'يدير قطاع خدمة المجتمع تفاعل الكلية مع المجتمعات المحلية ومبادرات تنمية السياحة، ويضمن مساهمة الكلية بفعالية في تنمية السياحة الإقليمية ورفاهية المجتمع.',
-          mission: 'تعزيز الارتباط بين الكلية والمجتمعات المحلية من خلال مشاريع تنمية سياحية مستدامة ومبادرات خدمة مجتمعية.',
-          objectives: [
-            'تطوير مشاريع سياحة مجتمعية',
-            'تقديم خدمات استشارية سياحية',
-            'دعم حفظ التراث المحلي',
-            'تسهيل مشاركة الطلاب في خدمة المجتمع',
-            'تعزيز ممارسات السياحة المستدامة'
-          ],
-          activities: [
-            'تنمية السياحة المجتمعية',
-            'مشاريع حفظ المواقع التراثية',
-            'برامج تدريب المرشدين المحليين',
-            'حملات توعية سياحية',
-            'تنسيق الأعمال التطوعية'
-          ],
-          responsibilities: [
-            'إدارة الشراكات المجتمعية',
-            'الإشراف على تنفيذ المشروعات',
-            'تقييم الأثر وإعداد التقارير',
-            'إشراك أصحاب المصلحة',
-            'متابعة الاستدامة'
-          ],
-          facultyMembers: 20,
-          staff: 15,
-          icon: 'pi pi-heart'
-        }
-      ]
-    };
+  getSectorsTabsData(): Observable<SectorsTabsData> {
+    const sectors$ = this.http.get<any>(`${environment.apiUrl}sectors/getall`);
+    const details$ = this.http.get<any>(`${environment.apiUrl}sectordetails/getall`);
+    const members$ = this.http.get<any>(`${environment.apiUrl}sectormember/getall`);
+    const posts$ = this.http.get<any>(`${environment.apiUrl}sectorposts/getall`);
+    const programs$ = this.http.get<any>(`${environment.apiUrl}sectorprograms/getall`);
+    const services$ = this.http.get<any>(`${environment.apiUrl}sectorservices/getall`);
+    const units$ = this.http.get<any>(`${environment.apiUrl}sectorunits/getall`);
+
+    return forkJoin([sectors$, details$, members$, posts$, programs$, services$, units$]).pipe(
+      map(([sectorsRes, detailsRes, membersRes, postsRes, programsRes, servicesRes, unitsRes]) => {
+        const sectors: Sector[] = sectorsRes.data.map((sector: any) => ({
+          ...sector,
+          details: detailsRes.data.filter((d: any) => d.sectorId === sector.id),
+          members: membersRes.data.filter((m: any) => m.sectorId === sector.id),
+          posts: postsRes.data.filter((p: any) => p.sectorId === sector.id),
+          programs: programsRes.data.filter((pr: any) => pr.sectorId === sector.id),
+          services: servicesRes.data.filter((s: any) => s.sectorId === sector.id),
+          units: unitsRes.data.filter((u: any) => u.sectorId === sector.id)
+        }));
+
+        return {
+          title: 'القطاعات',
+          subtitle: 'تعرف على القطاعات المختلفة داخل الكلية',
+          sections: sectors
+        } as SectorsTabsData;
+      })
+    );
   }
 
-  getSectors() {
-    return this.getSectorTabsData().sectors;
+  getSectors(): Observable<Sector[]> {
+    return this.getSectorsTabsData().pipe(map(data => data.sections));
   }
 }

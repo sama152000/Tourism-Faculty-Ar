@@ -7,7 +7,7 @@
     <!-- Slides -->
     <div class="slides">
       <div 
-        *ngFor="let slide of sliderData.slides; let i = index"
+        *ngFor="let slide of sliderData?.slides; let i = index"
         class="slide"
         [class.active]="i === currentSlide"
         [style.background-image]="'url(' + slide.image + ')'"
@@ -46,8 +46,8 @@
 
     <!-- Dots Navigation -->
     <div class="slider-dots">
-      <button 
-        *ngFor="let slide of sliderData.slides; let i = index"
+      <button
+        *ngFor="let slide of sliderData?.slides; let i = index"
         class="dot"
         [class.active]="i === currentSlide"
         (click)="goToSlide(i)"

@@ -27,17 +27,18 @@ export class AboutUsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.aboutData = this.aboutTabsService.getAboutTabsData();
-    // debug: log to confirm data is retrieved
+  this.aboutTabsService.getAboutTabsData().subscribe(data => {
+    this.aboutData = data;
     console.log('[AboutUs] aboutData loaded:', this.aboutData);
 
-    // Handle query parameters for tab selection
     this.route.queryParams.subscribe(params => {
       if (params['tab']) {
         this.selectedTab = params['tab'];
       }
     });
-  }
+  });
+}
+
 
   onTabChange(tabId: string): void {
     this.selectedTab = tabId;

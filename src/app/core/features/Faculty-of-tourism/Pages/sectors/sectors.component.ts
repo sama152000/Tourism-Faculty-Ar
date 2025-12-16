@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SectorsService } from '../../Services/sectors.service';
-import { Sector, SectorTabsData } from '../../model/sector.model';
+import { Sector, SectorsTabsData } from '../../model/sector.model';
 
 @Component({
   selector: 'app-sectors',
@@ -12,8 +12,8 @@ import { Sector, SectorTabsData } from '../../model/sector.model';
   styleUrls: ['./sectors.component.css']
 })
 export class SectorsComponent implements OnInit {
-  sectorData!: SectorTabsData;
-  selectedTab: string = 'academic-affairs';
+  sectorData!: SectorsTabsData;
+  selectedTab: string = '';
 
   constructor(
     private sectorsService: SectorsService,
@@ -22,26 +22,30 @@ export class SectorsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.sectorData = this.sectorsService.getSectorTabsData();
-
-    // Handle query parameters for tab selection
-    this.route.queryParams.subscribe(params => {
-      if (params['tab']) {
-        this.selectedTab = params['tab'];
+    this.sectorsService.getSectorsTabsData().subscribe(data => {
+      this.sectorData = data;
+      if (data.sections.length) {
+        this.selectedTab = data.sections[0].id;
       }
+
+      this.route.queryParams.subscribe(params => {
+        if (params['tab']) {
+          this.selectedTab = params['tab'];
+        }
+      });
     });
   }
 
-  onTabChange(value: string | number | undefined): void {
-    if (value) {
-      this.selectedTab = value.toString();
+  onTabChange(id: string): void {
+    this.selectedTab = id;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { tab: this.selectedTab },
+      queryParamsHandling: 'merge'
+    });
+  }
 
-      // Update URL without reloading
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { tab: this.selectedTab },
-        queryParamsHandling: 'merge'
-      });
-    }
+  getMembersCount(sector: Sector): number {
+    return sector.members?.length || 0;
   }
 }

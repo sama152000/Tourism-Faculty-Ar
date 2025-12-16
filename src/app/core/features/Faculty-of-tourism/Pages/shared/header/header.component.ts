@@ -20,9 +20,12 @@ export class HeaderComponent implements OnInit {
 
   constructor(private headerService: HeaderService) {}
 
-  ngOnInit(): void {
-    this.headerData = this.headerService.getHeaderData();
-  }
+ ngOnInit(): void {
+  this.headerService.getHeaderData().subscribe(data => {
+    this.headerData = data;
+  });
+}
+
 
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;

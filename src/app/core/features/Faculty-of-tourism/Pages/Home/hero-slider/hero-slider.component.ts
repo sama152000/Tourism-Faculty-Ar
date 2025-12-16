@@ -19,13 +19,16 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
 
   constructor(private heroSliderService: HeroSliderService) {}
 
-  ngOnInit(): void {
-    this.sliderData = this.heroSliderService.getHeroSliderData();
-    
+ ngOnInit(): void {
+  this.heroSliderService.getHeroSliderData().subscribe(data => {
+    this.sliderData = data;
+
     if (this.sliderData.autoPlay) {
       this.startAutoPlay();
     }
-  }
+  });
+}
+
 
   ngOnDestroy(): void {
     if (this.autoPlayInterval) {
@@ -34,19 +37,25 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
   }
 
   startAutoPlay(): void {
-    this.autoPlayInterval = setInterval(() => {
-      this.nextSlide();
-    }, this.sliderData.interval);
+    if (this.sliderData && this.sliderData.interval) {
+      this.autoPlayInterval = setInterval(() => {
+        this.nextSlide();
+      }, this.sliderData.interval);
+    }
   }
 
   nextSlide(): void {
-    this.currentSlide = (this.currentSlide + 1) % this.sliderData.slides.length;
+    if (this.sliderData && this.sliderData.slides) {
+      this.currentSlide = (this.currentSlide + 1) % this.sliderData.slides.length;
+    }
   }
 
   prevSlide(): void {
-    this.currentSlide = this.currentSlide === 0 
-      ? this.sliderData.slides.length - 1 
-      : this.currentSlide - 1;
+    if (this.sliderData && this.sliderData.slides) {
+      this.currentSlide = this.currentSlide === 0
+        ? this.sliderData.slides.length - 1
+        : this.currentSlide - 1;
+    }
   }
 
   goToSlide(index: number): void {
@@ -60,7 +69,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
   }
 
   onMouseLeave(): void {
-    if (this.sliderData.autoPlay) {
+    if (this.sliderData && this.sliderData.autoPlay) {
       this.startAutoPlay();
     }
   }

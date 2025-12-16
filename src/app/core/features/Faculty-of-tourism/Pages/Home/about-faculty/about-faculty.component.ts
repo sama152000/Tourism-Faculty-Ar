@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AboutFacultyService } from '../../../Services/about-faculty.service';
-import { AboutFacultyData } from '../../../model/about-faculty.model';
+import { AboutFacultyData } from '../../../model/AboutFacultyData.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 

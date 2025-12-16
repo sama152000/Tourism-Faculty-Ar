@@ -1,133 +1,139 @@
-<section class="faculty-section">
+<section class="faculty-section" *ngIf="departmentData">
   <div class="faculty-container">
     <!-- Header Section -->
     <div class="text-center mb-5">
       <h1 class="faculty-title">{{ departmentData.title }}</h1>
-      <p class="faculty-text">{{ departmentData.subtitle }}</p>
+      <p class="faculty-subtitle align-items-center ">{{ departmentData.subtitle }}</p>
     </div>
 
     <!-- Departments Tabs -->
-    <div class="departments-tabs-container">
+    <div class="departments-tabs-container" *ngIf="departmentData.sections.length">
       <div class="departments-tabs">
         <div class="departments-tablist">
-          <button
-            *ngFor="let department of departmentData.departments"
-            class="departments-tab"
-            [class.active]="selectedTab === department.id"
-            (click)="onTabChange(department.id)"
-          >
+          <button *ngFor="let department of departmentData.sections" class="departments-tab"
+            [class.active]="selectedTab === department.id" (click)="onTabChange(department.id)">
             {{ department.name }}
           </button>
         </div>
+
         <div class="departments-tabpanels">
-          <div
-            *ngFor="let department of departmentData.departments"
-            class="departments-tabpanel"
-            [class.active]="selectedTab === department.id"
-          >
+          <div *ngFor="let department of departmentData.sections" class="departments-tabpanel"
+            [class.active]="selectedTab === department.id">
             <div class="department-content-wrapper">
-            <!-- Department Header -->
-            <div class="department-header">
-              <div class="row align-items-center">
+              <!-- Department Header -->
+              <div class="row">
                 <div class="col-lg-8 col-md-12">
-                  <div class="department-info">
-                    <div class="department-icon">
-                      <i [class]="department.icon"></i>
-                    </div>
-                    <h2 class="department-title">{{ department.title }}</h2>
-                    <p class="department-overview">{{ department.overview }}</p>
-                  </div>
+                  <h2 class="department-title">{{ department.pageTitle }}</h2>
+                  <p class="faculty-text">{{ department.about }}</p>
                 </div>
                 <div class="col-lg-4 col-md-12">
                   <div class="department-stats">
                     <div class="stat-card">
                       <i class="pi pi-users stat-icon"></i>
                       <div class="stat-info">
-                        <span class="stat-number">{{ department.facultyMembers }}</span>
+                        <span class="stat-number">{{ department.members?.length || 0 }}</span>
                         <span class="stat-label">أعضاء هيئة التدريس</span>
                       </div>
                     </div>
                     <div class="stat-card">
-                      <i class="pi pi-graduation-cap stat-icon"></i>
+                      <i class="pi pi-user stat-icon"></i>
                       <div class="stat-info">
-                        <span class="stat-number">{{ department.students }}</span>
-                        <span class="stat-label">طالب وطالبة</span>
+                        <span class="stat-number">{{ department.services?.length || 0 }}</span> <span class="stat-label">الخدمات</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+            
+          <hr class="department-divider">
+
+
+          
+          <!-- Mission -->
+          <div class="mission-card mb-4">
+            <div class="card-header">رسالة القسم</div>
+            <div class="card-body">
+              <p class="faculty-text">{{ department.mission }}</p>
             </div>
+          </div>
 
-            <hr class="department-divider">
-
-            <!-- Department Content Grid -->
-            <div class="department-content-grid">
-              <div class="row">
-                <!-- Mission Section -->
-                <div class="col-lg-12 col-md-12 mb-4">
-                  <div class="mission-card">
-                    <div class="card-header">رسالة القسم</div>
-                    <div class="card-body">
-                      <p class="faculty-text">{{ department.mission }}</p>
-                    </div>
-                  </div>
+          <!-- Vision -->
+          <div class="mission-card mb-4">
+                <div class="card-header">رؤية القسم</div>
+                <div class="card-body">
+                  <p class="faculty-text">{{ department.vision }}</p>
                 </div>
+              </div>
 
-                <!-- Objectives Section -->
-                <div class="col-lg-6 col-md-12 mb-4">
-                  <div class="objectives-card">
-                    <div class="card-header">الأهداف التعليمية</div>
-                    <div class="card-body">
-                      <ul class="objectives-list">
-                        <li *ngFor="let objective of department.objectives" class="objective-item">
-                          <i class="pi pi-check-circle objective-icon"></i>
-                          {{ objective }}
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+          <!-- Objectives -->
+          <div class="objectives-card mb-4" *ngIf="department.goals">
+            <div class="card-header">الأهداف التعليمية</div>
+            <div class="card-body">
+              <ul class="objectives-list">
+                <li *ngFor="let goal of department.goals" class="objective-item">
+                  <i class="pi pi-check-circle objective-icon"></i>
+                  {{ goal.goalName }}
+                </li>
+              </ul>
+            </div>
+          </div>
 
-                <!-- Courses Section -->
-                <div class="col-lg-6 col-md-12 mb-4">
-                  <div class="courses-card">
-                    <div class="card-header">المقررات الأساسية</div>
-                    <div class="card-body">
-                      <div class="courses-grid">
-                        <span
-                          *ngFor="let course of department.courses"
-                          class="course-chip"
-                        >
-                          {{ course }}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Career Opportunities Section -->
-                <div class="col-lg-12 col-md-12 mb-4">
-                  <div class="careers-card">
-                    <div class="card-header">فرص العمل المتاحة</div>
-                    <div class="card-body">
-                      <div class="careers-grid">
-                        <div *ngFor="let career of department.careerOpportunities" class="career-item">
-                          <i class="pi pi-briefcase career-icon"></i>
-                          <span>{{ career }}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-               
+          <!-- Details (Courses etc.) -->
+          <div class="courses-card mb-4" *ngIf="department.details?.length">
+            <div class="card-header">المقررات الأساسية</div>
+            <div class="card-body">
+              <div *ngFor="let detail of department.details">
+                <p class="faculty-text ">{{ detail.content }}</p>
               </div>
             </div>
           </div>
+
+          <!-- Programs -->
+          <div class="courses-card mb-4" *ngIf="department.programs?.length">
+            <div class="card-header">البرامج</div>
+            <div class="card-body">
+              <ul style="list-style-type: none;">
+                <li *ngFor="let program of department.programs" class="faculty-text">
+                  <i class="pi pi-check-circle objective-icon"></i>
+                  {{ program.programName }}
+                </li>
+              </ul>
+            </div>
           </div>
+
+          <!-- Services -->
+          <div class="careers-card mb-4" *ngIf="department.services?.length">
+            <div class="card-header">الخدمات</div>
+            <div class="card-body">
+              <div *ngFor="let service of department.services">
+                <h4 class="faculty-text">{{ service.name }}</h4>
+                <p  class="faculty-text">{{ service.details }}</p>
+                <small  class="faculty-text">المدة: {{ service.duration }}</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Members -->
+          <div class="careers-card mb-4" *ngIf="department.members?.length">
+            <div class="card-header">الأعضاء</div>
+            <div class="card-body">
+              <ul style="list-style-type: none;">
+                <li *ngFor="let member of department.members">
+                                    <i class="pi pi-check-circle objective-icon"></i>
+
+                  {{ member.memberName }} <span *ngIf="member.isLeader">(رئيس القسم)</span>
+                  
+                </li>
+              </ul>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
+  </div>
+  </div>
+  
 </section>
+

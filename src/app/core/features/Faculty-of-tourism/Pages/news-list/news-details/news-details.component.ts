@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ContentService } from '../../../Services/content.service';
-import { ContentItem } from '../../../model/content.model';
+import { NewsService } from '../../../Services/news.service';
+import { NewsPost } from '../../../model/news.model';
 
 @Component({
   selector: 'app-news-details',
@@ -12,13 +12,13 @@ import { ContentItem } from '../../../model/content.model';
   styleUrls: ['./news-details.component.css']
 })
 export class NewsDetailsComponent implements OnInit {
-  contentItem: ContentItem | undefined;
-  relatedContent: ContentItem[] = [];
-  nextContent: ContentItem | undefined;
-  previousContent: ContentItem | undefined;
+  post: NewsPost | undefined;
+  relatedPosts: NewsPost[] = [];
+  nextPost: NewsPost | undefined;
+  previousPost: NewsPost | undefined;
 
   constructor(
-    private contentService: ContentService,
+    private newsService: NewsService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -27,64 +27,60 @@ export class NewsDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
-        this.loadContentDetails(id);
+        this.loadPostDetails(id);
       }
     });
   }
 
-  loadContentDetails(id: string): void {
-    this.contentItem = this.contentService.getContentById(id);
-    
-    if (this.contentItem) {
-      this.relatedContent = this.contentService.getRelatedContent(this.contentItem.category, id);
-      this.nextContent = this.contentService.getNextContent(id);
-      this.previousContent = this.contentService.getPreviousContent(id);
-    } else {
-      // Redirect to news list if content not found
-      this.router.navigate(['/news-list']);
-    }
+  loadPostDetails(id: string): void {
+    this.newsService.getNews().subscribe(posts => {
+      this.post = posts.find(p => p.id === id);
+
+      if (this.post) {
+        // related posts: نفس التصنيف
+        const categoryNames = this.post.postCategories.map(c => c.categoryName);
+        this.relatedPosts = posts.filter(
+          p => p.id !== id && p.postCategories.some(c => categoryNames.includes(c.categoryName))
+        );
+
+        // ترتيب حسب التاريخ
+        const sorted = [...posts].sort(
+          (a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime()
+        );
+        const index = sorted.findIndex(p => p.id === id);
+        this.previousPost = index > 0 ? sorted[index - 1] : undefined;
+        this.nextPost = index < sorted.length - 1 ? sorted[index + 1] : undefined;
+      } else {
+        this.router.navigate(['/news-list']);
+      }
+    });
   }
 
-  formatDate(date: Date): string {
-    return new Intl.DateTimeFormat('en-US', {
+  formatDate(dateStr: string): string {
+    const date = new Date(dateStr);
+    return new Intl.DateTimeFormat('ar-EG', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     }).format(date);
   }
 
-  getCategoryLabel(category: string): string {
-    return category.charAt(0).toUpperCase() + category.slice(1);
-  }
-
-  getCategoryColor(category: string): string {
-    const colors = {
-      'news': '#4A4A4A',
-      'articles': '#b68c2d',
-      'announcements': '#28a745',
-      'events': '#dc3545'
-    };
-    return colors[category as keyof typeof colors] || '#4A4A4A';
-  }
-
-  navigateToContent(id: string): void {
+  navigateToPost(id: string): void {
     this.router.navigate(['/news-details', id]).then(() => {
-      this.loadContentDetails(id);
+      this.loadPostDetails(id);
       window.scrollTo(0, 0);
     });
   }
 
-  shareContent(): void {
-    if (navigator.share && this.contentItem) {
+  sharePost(): void {
+    if (navigator.share && this.post) {
       navigator.share({
-        title: this.contentItem.title,
-        text: this.contentItem.excerpt,
+        title: this.post.title,
+        text: this.post.content.slice(0, 100),
         url: window.location.href
       });
     } else {
-      // Fallback: Copy URL to clipboard
       navigator.clipboard.writeText(window.location.href);
-      // You could show a toast notification here
     }
   }
 }

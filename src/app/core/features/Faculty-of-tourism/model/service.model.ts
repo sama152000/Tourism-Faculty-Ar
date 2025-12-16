@@ -1,19 +1,13 @@
 export interface Service {
   id: string;
-  name: string;
   title: string;
-  overview: string;
-  mission: string;
-  objectives: string[];
-  offerings: string[];
-  benefits: string[];
-  staffMembers: number;
-  users: number;
-  icon: string;
+  description: string;
+  iconPath: string;
+  isActive: boolean;
 }
 
-export interface ServiceTabsData {
+export interface ServicesTabsData {
   title: string;
   subtitle: string;
-  services: Service[];
+  sections: Service[];
 }

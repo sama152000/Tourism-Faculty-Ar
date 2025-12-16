@@ -1,44 +1,47 @@
-<section class="faculty-section">
+<section class="faculty-section" *ngIf="newsData">
   <div class="faculty-container">
     <!-- Header Section -->
     <div class="text-center mb-5">
-      <h1 class="faculty-title">الأخبار والفعاليات</h1>
-      <p class="faculty-text">تابع أحدث الأخبار والمقالات والإعلانات والفعاليات من كلية السياحة والفنادق</p>
+      <h1 class="faculty-title">{{ newsData.title }}</h1>
+      <p class="faculty-text">{{ newsData.subtitle }}</p>
     </div>
 
     <!-- Content Tabs -->
-    <div class="content-tabs-container">
+    <div class="content-tabs-container" *ngIf="newsData.sections.length">
       <div class="content-tabs">
+        <!-- Tabs -->
         <div class="content-tablist">
           <button
-            *ngFor="let category of categories"
+            *ngFor="let category of newsData.sections"
             class="content-tab"
-            [class.active]="selectedCategory === category.id"
-            (click)="onTabChange(category.id)"
+            [class.active]="selectedCategory === category.categoryName"
+            (click)="onTabChange(category.categoryName)"
           >
-            <span class="tab-label">{{ category.label }}</span>
-            <span class="tab-count">{{ category.count }}</span>
+            <span class="tab-label">{{ category.categoryName }}</span>
+            <span class="tab-count">{{ category.posts.length }}</span>
           </button>
         </div>
+
+        <!-- Tab Panel -->
         <div class="content-tabpanels">
           <div class="content-tabpanel active">
             <div class="content-grid">
-              <div class="content-card" *ngFor="let item of contentItems">
+              <div class="content-card" *ngFor="let item of selectedPosts">
                 <div class="content-image-container">
-                  <img [src]="item.image" [alt]="item.title" class="content-image">
-                  <div class="content-category-badge" [style.background-color]="getCategoryColor(item.category)">
-                    {{ getCategoryLabel(item.category) }}
+                  <img [src]="item.featuredImagePath" [alt]="item.title" class="content-image">
+                  <div class="content-category-badge">
+                    {{ selectedCategory }}
                   </div>
                 </div>
                 <div class="content-card-body">
                   <div class="content-meta">
                     <span class="content-date">
                       <i class="pi pi-calendar"></i>
-                      {{ formatDate(item.date) }}
+                      {{ formatDate(item.createdDate) }}
                     </span>
                   </div>
                   <h3 class="content-title">{{ item.title }}</h3>
-                  <p class="content-excerpt">{{ item.excerpt }}</p>
+                  <p class="content-excerpt">{{ item.content | slice:0:150 }}...</p>
                   <div class="content-card-footer">
                     <a [routerLink]="['/news-details', item.id]" class="faculty-btn faculty-btn-primary">
                       اقرأ المزيد
@@ -48,15 +51,15 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- Empty State -->
-            <div *ngIf="contentItems.length === 0" class="empty-state">
+            <div *ngIf="selectedPosts.length === 0" class="empty-state">
               <div class="empty-state-icon">
                 <i class="pi pi-search"></i>
               </div>
               <h3 class="empty-state-title">لا يوجد محتوى</h3>
               <p class="empty-state-text">
-                لا توجد عناصر في فئة "{{ getCategoryLabel(selectedCategory) }}" في الوقت الحالي.
+                لا توجد عناصر في فئة "{{ selectedCategory }}" في الوقت الحالي.
               </p>
             </div>
           </div>

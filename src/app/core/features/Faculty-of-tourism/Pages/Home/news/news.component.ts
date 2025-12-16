@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NewsData } from '../../../model/news.model';
-import { ContentService } from '../../../Services/content.service';
-import { ContentItem } from '../../../model/content.model';
-import { Input } from '@angular/core';
+import { NewsService } from '../../../Services/news.service';
+import { NewsPost } from '../../../model/news.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from "@angular/router";
@@ -16,34 +14,29 @@ import { RouterLink } from "@angular/router";
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {
-  newsData!: NewsData;
+  newsPosts: NewsPost[] = [];
+  newsData: { news: NewsPost[] } = { news: [] };
   @Input() limit: number = 3; // default limit for home page
 
-  constructor(private contentService: ContentService) {}
+  constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
-    // Fetch only news items from the central ContentService and map to UI model
-    const items: ContentItem[] = this.contentService.getContentByCategory('news');
-    const limited = items.slice(0, this.limit);
-    this.newsData = {
-      title: 'اخر الاخبار',
-      news: limited.map(item => ({
-        id: item.id,
-        title: item.title,
-        excerpt: item.excerpt,
-        image: item.image,
-        date: item.date,
-        link: item.link || `/news-details/${item.id}`
-      })),
-      viewAllLink: '/news-list'
-    };
+    this.newsService.getNews().subscribe(posts => {
+      // فلترة الأخبار فقط
+      const newsOnly = posts.filter(p =>
+        p.postCategories.some(c => c.categoryName === 'أخبار')
+      );
+      this.newsPosts = newsOnly.slice(0, this.limit);
+      this.newsData.news = this.newsPosts;
+    });
   }
 
-  formatDate(date: Date): string {
-    return date.toLocaleDateString('en-US', {
+  formatDate(dateStr: string): string {
+    const date = new Date(dateStr);
+    return new Intl.DateTimeFormat('ar-EG', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
-    });
+    }).format(date);
   }
 }

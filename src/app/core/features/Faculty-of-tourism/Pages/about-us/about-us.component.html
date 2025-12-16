@@ -29,25 +29,60 @@
             [class.active]="selectedTab === section.id"
           >
             <div class="tab-content-wrapper">
-              <div class="row align-items-center">
+              <div class="row align-items-center" *ngIf="section.id !== 'dean-word' || !section.image">
                 <!-- Content Column -->
                 <div class="col-lg-12 col-md-12">
                   <div class="content-section">
+
                     <h2 class="section-title">{{ section.title }}</h2>
+<div *ngIf="section.image" class="dean-image text-center mb-3">
+  <img [src]="section.image" alt="Dean Image" class="img-fluid rounded shadow">
+</div>
 
                     <div class="content-text">
                       <p *ngFor="let paragraph of formatContent(section.content)"
                          class="faculty-text"
                          [innerHTML]="paragraph">
+
                       </p>
+
                     </div>
 
                     <div *ngIf="section.additionalInfo" class="additional-info">
                       <div class="info-card">
                         <i class="pi pi-info-circle info-icon"></i>
                         <p class="faculty-text-light">{{ section.additionalInfo }}</p>
+
                       </div>
                     </div>
+
+                  </div>
+                </div>
+              </div>
+              <!-- Two Column Layout for Dean Word -->
+              <div class="row align-items-center" *ngIf="section.id === 'dean-word' && section.image">
+                <!-- Content Column -->
+                <div class="col-lg-6 col-md-12">
+                  <div class="content-section">
+                    <h2 class="section-title">{{ section.title }}</h2>
+                    <div class="content-text">
+                      <p *ngFor="let paragraph of formatContent(section.content)"
+                         class="faculty-text"
+                         [innerHTML]="paragraph">
+                      </p>
+                    </div>
+                    <div *ngIf="section.additionalInfo" class="additional-info">
+                      <div class="info-card">
+                        <i class="pi pi-info-circle info-icon"></i>
+                        <p class="faculty-text-light">{{ section.additionalInfo }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Image Column -->
+                <div class="col-lg-6 col-md-12">
+                  <div class="dean-image text-center">
+                    <img [src]="section.image" alt="Dean Image" class="dean-img rounded shadow">
                   </div>
                 </div>
               </div>

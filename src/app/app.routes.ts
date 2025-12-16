@@ -8,20 +8,30 @@ import { ServicesComponent } from './core/features/Faculty-of-tourism/Pages/serv
 import { NewsListComponent } from './core/features/Faculty-of-tourism/Pages/news-list/news-list.component';
 import { NewsDetailsComponent } from './core/features/Faculty-of-tourism/Pages/news-list/news-details/news-details.component';
 import { ContactUsComponent } from './core/features/Faculty-of-tourism/Pages/contact-us/contact-us.component';
+import { ProgramsComponent } from './core/features/Faculty-of-tourism/Pages/programs/programs.component';
+import { CentersComponent } from './core/features/Faculty-of-tourism/Pages/centers/centers.component';
 
 export const routes: Routes = [
- { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
- { path: 'about', component: AboutUsComponent },
-  { path: 'departments', redirectTo: '/departments/1', pathMatch: 'full' },
+  { path: 'about', component: AboutUsComponent },
+  { path: 'departments', component: DepartmentsComponent },
   { path: 'departments/:id', component: DepartmentsComponent },
   { path: 'sectors', component: SectorsComponent },
-    { path: 'units', component: UnitsComponent },
-        { path: 'services', component: ServicesComponent },
+  { path: 'sectors/:id', component: SectorsComponent },
+  { path: 'units', component: UnitsComponent },
+  { path: 'services', component: ServicesComponent },
+  { path: 'services/:id', component: ServicesComponent },
   { path: 'news-list', component: NewsListComponent },
   { path: 'news-details/:id', component: NewsDetailsComponent },
   { path: 'contact', component: ContactUsComponent },
+  { path: 'programs', component: ProgramsComponent },
+  { path: 'centers', component: CentersComponent },
+  { path: 'centers/:id', component: CentersComponent },
 
-    { path: '**', redirectTo: '/home' }
+
+
+
+  { path: '**', redirectTo: '/home' }
 
 ];

@@ -1,4 +1,4 @@
-<section class="faculty-section">
+<section class="faculty-section" *ngIf="unitData">
   <div class="faculty-container">
     <!-- Header Section -->
     <div class="text-center mb-5">
@@ -7,122 +7,125 @@
     </div>
 
     <!-- Units Tabs -->
-    <div class="departments-tabs-container">
+    <div class="departments-tabs-container" *ngIf="unitData.sections.length">
       <div class="departments-tabs">
+        <!-- Side Tabs -->
         <div class="departments-tablist">
           <button
-            *ngFor="let unit of unitData.units"
+            *ngFor="let unit of unitData.sections"
             class="departments-tab"
             [class.active]="selectedTab === unit.id"
             (click)="onTabChange(unit.id)"
           >
-            {{ unit.name }}
+            {{ unit.unitTitle }}
           </button>
         </div>
+
+        <!-- Tab Panels -->
         <div class="departments-tabpanels">
           <div
-            *ngFor="let unit of unitData.units"
+            *ngFor="let unit of unitData.sections"
             class="departments-tabpanel"
             [class.active]="selectedTab === unit.id"
           >
             <div class="department-content-wrapper">
-            <!-- Unit Header -->
-            <div class="department-header">
+              <!-- Unit Header -->
               <div class="row align-items-center">
                 <div class="col-lg-8 col-md-12">
-                  <div class="department-info">
-                    <div class="department-icon">
-                      <i [class]="unit.icon"></i>
-                    </div>
-                    <h2 class="department-title">{{ unit.title }}</h2>
-                    <p class="department-overview">{{ unit.overview }}</p>
-                  </div>
+                  <h2 class="department-title">{{ unit.unitTitle }}</h2>
+                  <p class="faculty-text">{{ unit.content }}</p>
                 </div>
                 <div class="col-lg-4 col-md-12">
                   <div class="department-stats">
                     <div class="stat-card">
                       <i class="pi pi-users stat-icon"></i>
                       <div class="stat-info">
-                        <span class="stat-number">{{ unit.personnel }}</span>
-                        <span class="stat-label">عدد الأعضاء</span>
-                      </div>
-                    </div>
-                    <div class="stat-card">
-                      <i class="pi pi-chart-bar stat-icon"></i>
-                      <div class="stat-info">
-                        <span class="stat-number">{{ unit.capacity }}</span>
-                        <span class="stat-label">الطاقة الاستيعابية</span>
+                        <span class="stat-number">{{ getMembersCount(unit) }}</span>
+                        <span class="stat-label">الأعضاء</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <hr class="department-divider">
+              <hr class="department-divider">
 
-            <!-- Unit Content Grid -->
-            <div class="department-content-grid">
-              <div class="row">
-                <!-- Mission Section -->
-                <div class="col-lg-12 col-md-12 mb-4">
-                  <div class="mission-card">
-                    <div class="card-header">رسالة الوحدة</div>
-                    <div class="card-body">
-                      <p class="faculty-text">{{ unit.mission }}</p>
-                    </div>
-                  </div>
+              <!-- Mission -->
+              <div class="mission-card mb-4">
+                <div class="card-header">رسالة الوحدة</div>
+                <div class="card-body">
+                  <p class="faculty-text">{{ unit.mission }}</p>
                 </div>
+              </div>
 
-                <!-- Objectives Section -->
-                <div class="col-lg-6 col-md-12 mb-4">
-                  <div class="objectives-card">
-                    <div class="card-header">أهداف الوحدة</div>
-                    <div class="card-body">
-                      <ul class="objectives-list">
-                        <li *ngFor="let objective of unit.objectives" class="objective-item">
-                          <i class="pi pi-check-circle objective-icon"></i>
-                          {{ objective }}
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+              <!-- Vision -->
+              <div class="mission-card mb-4">
+                <div class="card-header">رؤية الوحدة</div>
+                <div class="card-body">
+                  <p class="faculty-text">{{ unit.vision }}</p>
                 </div>
+              </div>
 
-                <!-- Functions Section -->
-                <div class="col-lg-6 col-md-12 mb-4">
-                  <div class="courses-card">
-                    <div class="card-header">المهام الرئيسية</div>
-                    <div class="card-body">
-                      <div class="courses-grid">
-                        <span
-                          *ngFor="let func of unit.functions"
-                          class="course-chip"
-                        >
-                          {{ func }}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+              <!-- History -->
+              <div class="mission-card mb-4" *ngIf="unit.history">
+                <div class="card-header">تاريخ الوحدة</div>
+                <div class="card-body">
+                  <p class="faculty-text">{{ unit.history }}</p>
                 </div>
+              </div>
 
-                <!-- Services Section -->
-                <div class="col-lg-12 col-md-12 mb-4">
-                  <div class="careers-card">
-                    <div class="card-header">الخدمات المقدمة</div>
-                    <div class="card-body">
-                      <div class="careers-grid">
-                        <div *ngFor="let service of unit.services" class="career-item">
-                          <i class="pi pi-wrench career-icon"></i>
-                          <span>{{ service }}</span>
-                        </div>
-                      </div>
-                    </div>
+              <!-- Goals -->
+              <div class="objectives-card mb-4" *ngIf="unit.goals?.length">
+                <div class="card-header">الأهداف</div>
+                <div class="card-body">
+                  <ul class="objectives-list" style="list-style-type: none;">
+                    <ng-container *ngFor="let goal of unit.goals">
+                      <li *ngIf="goal.goalName" class="objective-item">
+                        <i class="pi pi-check-circle objective-icon"></i>
+                        {{ goal.goalName }}
+                      </li>
+                    </ng-container>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Details -->
+              <div class="courses-card mb-4" *ngIf="unit.details?.length">
+                <div class="card-header">تفاصيل الوحدة</div>
+                <div class="card-body">
+                  <div *ngFor="let detail of unit.details">
+                    <h4>{{ detail.title }}</h4>
+                    <p class="faculty-text">{{ detail.content }}</p>
+                    <small class="faculty-text">{{ detail.unitPlace }}</small>
                   </div>
                 </div>
               </div>
+
+              <!-- Attachments -->
+              <div class="courses-card mb-4" *ngIf="unit.unitAttachments?.length">
+                <div class="card-header">مرفقات الوحدة</div>
+                <div class="card-body">
+                  <div *ngFor="let attach of unit.unitAttachments">
+                    <img [src]="attach.url" alt="Unit Attachment" class="img-fluid rounded shadow mb-3">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Members -->
+              <div class="careers-card mb-4" *ngIf="unit.members?.length">
+                <div class="card-header">الأعضاء</div>
+                <div class="card-body">
+                  <ul style="list-style-type: none;">
+                    <li *ngFor="let member of unit.members">
+                                            <i class="pi pi-check-circle objective-icon"></i>
+
+                      {{ member.memberName }} <span *ngIf="member.isLeader">(مدير الوحدة)</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
             </div>
-          </div>
           </div>
         </div>
       </div>
