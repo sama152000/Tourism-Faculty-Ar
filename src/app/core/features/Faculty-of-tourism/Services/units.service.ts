@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { Unit, UnitsTabsData } from '../model/unit.model';
 import { forkJoin, map, Observable } from 'rxjs';
+import { slugify } from '../../../../utilities/slug.util'; // ✅ استدعاء الدالة
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class UnitsService {
         const units: Unit[] = unitsRes.data.map((unit: any) => ({
           ...unit,
           details: detailsRes.data.filter((d: any) => d.unitId === unit.id),
-          members: membersRes.data.filter((m: any) => m.unitId === unit.id)
+          members: membersRes.data.filter((m: any) => m.unitId === unit.id),
+          slug: slugify(unit.unitTitleEn || unit.unitTitle) // ✅ توليد slug من الاسم
         }));
 
         return {

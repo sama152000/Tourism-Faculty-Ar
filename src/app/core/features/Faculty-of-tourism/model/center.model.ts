@@ -48,6 +48,7 @@ export interface Center {
   centerAttachments: CenterAttachment[];
   details: CenterDetail[];
   members: CenterMember[];
+  slug?: string
 }
 
 export interface CentersTabsData {

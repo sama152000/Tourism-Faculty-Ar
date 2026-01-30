@@ -10,11 +10,11 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   backdrop-filter: blur(10px);
-  width: 60px;
+  width: 40px;
 }
 
 .quick-sidebar.right-position {
-  right: 20px;
+  right: -5px;
 }
 
 .quick-sidebar.left-position {
@@ -22,7 +22,7 @@
 }
 
 .quick-sidebar.expanded {
-  width: 250px;
+  width: 200px;
 }
 
 /* ===== TOGGLE BUTTON ===== */

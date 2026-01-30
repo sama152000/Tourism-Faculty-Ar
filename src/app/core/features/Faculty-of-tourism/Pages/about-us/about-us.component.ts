@@ -18,7 +18,7 @@ export class AboutUsComponent implements OnInit {
     subtitle: '',
     sections: []
   };
-  selectedTab: string = 'vision-mission';
+  selectedTab: string = '';
 
   constructor(
     private aboutTabsService: AboutTabsService,
@@ -27,21 +27,26 @@ export class AboutUsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  this.aboutTabsService.getAboutTabsData().subscribe(data => {
-    this.aboutData = data;
-    console.log('[AboutUs] aboutData loaded:', this.aboutData);
+    this.aboutTabsService.getAboutTabsData().subscribe(data => {
+      this.aboutData = data;
+      console.log('[AboutUs] aboutData loaded:', this.aboutData);
 
-    this.route.queryParams.subscribe(params => {
-      if (params['tab']) {
-        this.selectedTab = params['tab'];
+      if (data.sections.length) {
+        // ✅ أول تاب افتراضي بالـ slug بدل id
+        this.selectedTab = data.sections[0].slug!;
       }
+
+      this.route.queryParams.subscribe(params => {
+        if (params['tab']) {
+          this.selectedTab = params['tab'];
+        }
+      });
     });
-  });
-}
+  }
 
-
-  onTabChange(tabId: string): void {
-    this.selectedTab = tabId;
+  // ✅ onTabChange بالـ slug
+  onTabChange(slug: string): void {
+    this.selectedTab = slug;
 
     // Update URL without reloading
     this.router.navigate([], {

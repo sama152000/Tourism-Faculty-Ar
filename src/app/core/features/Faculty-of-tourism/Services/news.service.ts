@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { NewsPost, NewsCategory, NewsTabsData } from '../model/news.model';
 import { map, Observable } from 'rxjs';
+import { slugify } from '../../../../utilities/slug.util'; // ✅ استدعاء الدالة
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,13 @@ export class NewsService {
   getNewsTabsData(): Observable<NewsTabsData> {
     return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
       map(res => {
-        const posts: NewsPost[] = res.data;
+        const posts: NewsPost[] = res.data.map((post: any) => {
+          const s = slugify(post.urlTitleEn || post.title);
+          return {
+            ...post,
+            slug: s || post.id // fallback to id when slug empty
+          } as NewsPost;
+        });
 
         // تجميع الأخبار حسب الـ categoryName
         const categoryMap: { [key: string]: NewsPost[] } = {};
@@ -42,7 +49,10 @@ export class NewsService {
 
   getNews(): Observable<NewsPost[]> {
     return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
-      map(res => res.data as NewsPost[])
+      map(res => res.data.map((post: any) => {
+        const s = slugify(post.urlTitleEn || post.title);
+        return { ...post, slug: s || post.id } as NewsPost;
+      }))
     );
   }
 }

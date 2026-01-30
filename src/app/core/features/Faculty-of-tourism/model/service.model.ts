@@ -4,6 +4,8 @@ export interface Service {
   description: string;
   iconPath: string;
   isActive: boolean;
+    slug?: string;
+
 }
 
 export interface ServicesTabsData {

@@ -26,13 +26,12 @@
         </div>
         
         <!-- زر تحميل أو رابط -->
-        <a 
+        <a
           *ngIf="selectedJournal.journalAttachments.length"
-          [href]="selectedJournal.journalAttachments[0].url"
+          [href]="contactInfo?.instagram"
           target="_blank"
           rel="noopener noreferrer"
-          class="magazine-btn faculty-btn faculty-btn-secondary"
-        >
+          class="magazine-btn faculty-btn faculty-btn-secondary">
           تصفح العدد
           <i class="pi pi-external-link ml-2"></i>
         </a>

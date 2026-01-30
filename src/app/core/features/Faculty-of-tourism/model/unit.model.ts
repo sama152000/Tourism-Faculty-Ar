@@ -48,6 +48,8 @@ export interface Unit {
   unitAttachments: UnitAttachment[];
   details: UnitDetail[];
   members: UnitMember[];
+  slug?: string;
+
 }
 
 export interface UnitsTabsData {

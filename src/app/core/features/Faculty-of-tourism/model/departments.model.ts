@@ -68,6 +68,8 @@ export interface Department {
   members: DepartmentMember[];
   programs: DepartmentProgram[];
   services: DepartmentService[];
+    slug?: string;
+
 }
 
 export interface DepartmentTabsData {

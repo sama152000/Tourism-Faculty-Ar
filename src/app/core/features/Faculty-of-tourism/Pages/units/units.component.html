@@ -14,8 +14,8 @@
           <button
             *ngFor="let unit of unitData.sections"
             class="departments-tab"
-            [class.active]="selectedTab === unit.id"
-            (click)="onTabChange(unit.id)"
+            [class.active]="selectedTab === unit.slug"
+            (click)="onTabChange(unit.slug!)"
           >
             {{ unit.unitTitle }}
           </button>
@@ -26,7 +26,7 @@
           <div
             *ngFor="let unit of unitData.sections"
             class="departments-tabpanel"
-            [class.active]="selectedTab === unit.id"
+            [class.active]="selectedTab === unit.slug"
           >
             <div class="department-content-wrapper">
               <!-- Unit Header -->

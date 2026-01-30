@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewsService } from '../../../Services/news.service';
-import { NewsPost } from '../../../model/news.model';
+import { NewsPost, } from '../../../model/news.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { RouterLink } from "@angular/router";
+import { RouterLink,Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-news',
@@ -18,7 +19,7 @@ export class NewsComponent implements OnInit {
   newsData: { news: NewsPost[] } = { news: [] };
   @Input() limit: number = 3; // default limit for home page
 
-  constructor(private newsService: NewsService) {}
+  constructor(private newsService: NewsService,private router:Router) {}
 
   ngOnInit(): void {
     this.newsService.getNews().subscribe(posts => {
@@ -31,6 +32,7 @@ export class NewsComponent implements OnInit {
     });
   }
 
+  
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
     return new Intl.DateTimeFormat('ar-EG', {
@@ -38,5 +40,34 @@ export class NewsComponent implements OnInit {
       month: 'long',
       day: 'numeric'
     }).format(date);
+  }
+   goToPost(post: NewsPost): void {
+    if (!post.slug) {
+      this.handleMissingSlug();
+      return;
+    }
+
+    this.router.navigate(['/news', post.slug]);
+  }
+
+  handleMissingSlug(event?: Event): void {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    // Simple user feedback for now
+    // You can replace with a toast service if available
+    console.warn('Post has no slug; cannot navigate to details.');
+  }
+
+  navigateToPost(slug: string): void {
+    this.router.navigate(['/news', slug]).then(() => {
+      this.loadPostDetails(slug);
+      window.scrollTo(0, 0);
+    });
+  }
+
+  loadPostDetails(slug: string): void {
+    // Logic to load post details if needed
   }
 }

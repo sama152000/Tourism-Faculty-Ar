@@ -57,4 +57,12 @@ export class EventsComponent implements OnInit {
     if (diffDays <= 30) return `في غضون ${Math.ceil(diffDays / 7)} أسابيع`;
     return `في غضون ${Math.ceil(diffDays / 30)} أشهر`;
   }
+
+  handleMissingSlug(event?: Event): void {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    console.warn('Event has no slug; cannot navigate to details.');
+  }
 }

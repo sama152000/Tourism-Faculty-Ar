@@ -14,8 +14,8 @@
           <button
             *ngFor="let sector of sectorData.sections"
             class="departments-tab"
-            [class.active]="selectedTab === sector.id"
-            (click)="onTabChange(sector.id)"
+            [class.active]="selectedTab === sector.slug"
+            (click)="onTabChange(sector.slug!)"
           >
             {{ sector.name }}
           </button>
@@ -26,7 +26,7 @@
           <div
             *ngFor="let sector of sectorData.sections"
             class="departments-tabpanel"
-            [class.active]="selectedTab === sector.id"
+            [class.active]="selectedTab === sector.slug"
           >
             <div class="department-content-wrapper">
               <!-- Sector Header -->

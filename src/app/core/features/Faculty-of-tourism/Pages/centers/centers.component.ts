@@ -25,7 +25,8 @@ export class CentersComponent implements OnInit {
     this.centersService.getCentersTabsData().subscribe(data => {
       this.centerData = data;
       if (data.sections.length) {
-        this.selectedTab = data.sections[0].id;
+        // ✅ أول تاب بالـ slug بدل id
+        this.selectedTab = data.sections[0].slug!;
       }
 
       this.route.queryParams.subscribe(params => {
@@ -36,8 +37,9 @@ export class CentersComponent implements OnInit {
     });
   }
 
-  onTabChange(id: string): void {
-    this.selectedTab = id;
+  // ✅ onTabChange بالـ slug
+  onTabChange(slug: string): void {
+    this.selectedTab = slug;
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { tab: this.selectedTab },

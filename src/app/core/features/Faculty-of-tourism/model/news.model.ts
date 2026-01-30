@@ -36,6 +36,7 @@ export interface NewsPost {
   postCategories: PostCategory[];
   postAttachments: PostAttachment[];
   tags: PostTag[];
+  slug?: string;
 }
 
 export interface NewsCategory {

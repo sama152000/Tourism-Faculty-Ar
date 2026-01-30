@@ -94,6 +94,8 @@ export interface Sector {
   programs: SectorProgram[];
   services: SectorService[];
   units: SectorUnit[];
+      slug?: string;
+
 }
 
 export interface SectorsTabsData {

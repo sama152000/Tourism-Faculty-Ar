@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { Service, ServicesTabsData } from '../model/service.model';
 import { map, Observable } from 'rxjs';
+import { slugify } from '../../../../utilities/slug.util'; // ✅ استدعاء الدالة
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class ServicesService {
           title: s.title,
           description: s.description,
           iconPath: s.iconPath,
-          isActive: s.isActive
+          isActive: s.isActive,
+          slug: slugify(s.title) // ✅ توليد slug من عنوان الخدمة
         }));
 
         return {

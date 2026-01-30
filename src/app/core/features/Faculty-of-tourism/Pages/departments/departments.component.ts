@@ -24,22 +24,26 @@ export class DepartmentsComponent implements OnInit {
   ngOnInit(): void {
     this.departmentTabsService.getDepartmentTabsData().subscribe(data => {
       this.departmentData = data;
-      if (data.sections.length) {
-        this.selectedTab = data.sections[0].id; // أول قسم افتراضي
-      }
 
-      this.route.queryParams.subscribe(params => {
-        if (params['tab']) {
-          this.selectedTab = params['tab'];
+      // ✅ اسمع للتغييرات في params و queryParams
+      this.route.params.subscribe(params => {
+        if (params['slug']) {
+          this.selectedTab = params['slug'];
+        }
+      });
+
+      this.route.queryParams.subscribe(queryParams => {
+        if (queryParams['tab']) {
+          this.selectedTab = queryParams['tab'];
+        } else if (!this.selectedTab) {
+          this.selectedTab = data.sections[0].slug!;
         }
       });
     });
   }
 
-  onTabChange(id: string): void {
-    this.selectedTab = id;
-
-    // Update URL without reloading
+  onTabChange(slug: string): void {
+    this.selectedTab = slug;
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { tab: this.selectedTab },

@@ -25,7 +25,8 @@ export class SectorsComponent implements OnInit {
     this.sectorsService.getSectorsTabsData().subscribe(data => {
       this.sectorData = data;
       if (data.sections.length) {
-        this.selectedTab = data.sections[0].id;
+        // ✅ أول قطاع افتراضي بالـ slug بدل id
+        this.selectedTab = data.sections[0].slug!;
       }
 
       this.route.queryParams.subscribe(params => {
@@ -36,8 +37,9 @@ export class SectorsComponent implements OnInit {
     });
   }
 
-  onTabChange(id: string): void {
-    this.selectedTab = id;
+  // ✅ onTabChange بالـ slug
+  onTabChange(slug: string): void {
+    this.selectedTab = slug;
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { tab: this.selectedTab },

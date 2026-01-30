@@ -11,12 +11,20 @@ import { FooterData } from '../../../model/footer.model';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
-  footerData!: FooterData;
+  footerData: FooterData = {
+    aboutText: '',
+    footerSections: [],
+    contactInfo: { address: '', phone: '', email: '' },
+    socialLinks: [],
+    copyrightText: ''
+  };
   currentYear = new Date().getFullYear();
 
   constructor(private footerService: FooterService) {}
 
   ngOnInit(): void {
-    this.footerData = this.footerService.getFooterData();
+    this.footerService.getFooterData().subscribe(data => {
+      this.footerData = data;
+    });
   }
 }

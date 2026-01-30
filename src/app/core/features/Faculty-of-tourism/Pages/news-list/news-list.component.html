@@ -43,7 +43,7 @@
                   <h3 class="content-title">{{ item.title }}</h3>
                   <p class="content-excerpt">{{ item.content | slice:0:150 }}...</p>
                   <div class="content-card-footer">
-                    <a [routerLink]="['/news-details', item.id]" class="faculty-btn faculty-btn-primary">
+                    <a [routerLink]="['/news', item.slug]" class="faculty-btn faculty-btn-primary">
                       اقرأ المزيد
                       <i class="pi pi-arrow-left"></i>
                     </a>

@@ -4,6 +4,7 @@ export interface AboutSection {
   content: string;
   additionalInfo?: string;
   image?: string;
+  slug?: string;
 }
 
 export interface AboutInfo {

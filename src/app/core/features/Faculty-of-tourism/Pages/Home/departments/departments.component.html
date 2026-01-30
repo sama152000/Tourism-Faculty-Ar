@@ -1,10 +1,10 @@
-<section class="departments-section faculty-section" *ngIf="departmentsData">
+<section class="departments-section faculty-section" *ngIf="departmentData">
   <div class="faculty-container">
     
     <!-- Section Header -->
     <div class="section-header text-center mb-5">
-      <h2 class="faculty-title slide-in">{{ departmentsData.title }}</h2>
-      <p class="faculty-text fade-in">{{ departmentsData.subtitle }}</p>
+      <h2 class="faculty-title slide-in">{{ departmentData.title }}</h2>
+      <p class="faculty-text fade-in">{{ departmentData.subtitle }}</p>
     </div>
 
     <!-- Departments Grid -->
@@ -23,8 +23,9 @@
             class="dept-image"
           />
           <div class="image-overlay">
-            <a 
-              [routerLink]="['/departments', department.id]"
+            <a
+              [routerLink]="['/departments', department.slug]"
+              [queryParams]="{ tab: department.slug }"
               class="explore-btn faculty-btn faculty-btn-secondary"
             >
               <i class="pi pi-eye"></i>
@@ -39,15 +40,15 @@
           <p class="dept-description faculty-text">{{ department.about }}</p>
           
           <!-- Department Features -->
-          <div class="dept-features">
-            <span class="feature-badge" *ngFor="let feature of getDeptFeatures(department.id)">
+          <!-- <div class="dept-features">
+            <span class="feature-badge" *ngFor="let feature of getDeptFeatures(department.slug!)">
               <i class="pi pi-check"></i>
               {{ feature }}
             </span>
-          </div>
+          </div> -->
           
           <a
-            [routerLink]="['/departments', department.id]"
+            [routerLink]="['/departments', department.slug]"
             class="learn-more-btn faculty-btn faculty-btn-outline mt-auto"
           >
             تعرف على المزيد

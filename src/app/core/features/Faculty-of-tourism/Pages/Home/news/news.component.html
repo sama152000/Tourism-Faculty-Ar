@@ -39,7 +39,7 @@
         <!-- News Content -->
         <div class="news-content faculty-card-body">
           <h3 class="news-title">
-            <a [routerLink]="['/news-details', newsItem.id]" class="news-link">
+            <a [routerLink]="['/news', newsItem.slug||newsItem.id]" class="news-link">
               {{ newsItem.title }}
             </a>
           </h3>
@@ -54,13 +54,14 @@
               <i class="pi pi-clock"></i>
               {{ formatDate(newsItem.createdDate) }}
             </span>
-          </div>
+          </div >
           
-          <a 
-            [routerLink]="['/news-details', newsItem.id]"
+          <a  (click)="navigateToPost(newsItem.slug || newsItem.id)"
+            [routerLink]="['/news', newsItem.slug || newsItem.id]"
+
             class="read-more-btn faculty-btn faculty-btn-outline mt-auto"
           >
-            قراءة المزيد  
+            قراءة المزيد
             <i class="pi pi-arrow-left ml-2"></i>
           </a>
         </div>

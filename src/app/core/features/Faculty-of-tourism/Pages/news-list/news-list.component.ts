@@ -61,4 +61,9 @@ export class NewsListComponent implements OnInit {
     const section = this.newsData.sections.find(s => s.categoryName === this.selectedCategory);
     return section ? section.posts : [];
   }
+
+  // ✅ إضافة ميثود للتنقل لصفحة خبر معين بالـ slug
+  goToPost(post: NewsPost): void {
+    this.router.navigate(['/news', post.slug]); 
+  }
 }

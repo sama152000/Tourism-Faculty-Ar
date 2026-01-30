@@ -41,7 +41,7 @@
         <!-- Event Content -->
         <div class="event-content faculty-card-body">
           <h3 class="event-title">
-            <a [routerLink]="['/news-details', event.id]" class="event-link">
+            <a [routerLink]="['/news', event.slug]" class="event-link">
               {{ event.title }}
             </a>
           </h3>
@@ -64,8 +64,8 @@
           
           <!-- Event Actions -->
           <div class="event-actions">
-            <a 
-              [routerLink]="['/news-details', event.id]"
+            <a
+              [routerLink]="['/news', event.slug]"
               class="details-btn faculty-btn faculty-btn-primary"
             >
               تفاصيل الفعالية

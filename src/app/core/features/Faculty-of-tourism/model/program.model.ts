@@ -42,6 +42,7 @@ export interface Program {
   programAttachments: ProgramAttachment[];
   details: ProgramDetail[];
   members: ProgramMember[];
+  slug?: string;
 }
 
 export interface ProgramsTabsData {

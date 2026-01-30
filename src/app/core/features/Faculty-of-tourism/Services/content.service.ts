@@ -24,7 +24,7 @@ export class ContentService {
       image: './assets/tour1.jpg',
       date: new Date('2025-01-15'),
       category: 'news',
-      link: '/news-details/1'
+      link: '/news/1'
     },
     {
       id: '2',
@@ -42,7 +42,7 @@ export class ContentService {
       image: './assets/tour11.jpeg',
       date: new Date('2025-01-10'),
       category: 'news',
-      link: '/news-details/2'
+      link: '/news/2'
     },
     {
       id: '3',
@@ -62,7 +62,7 @@ export class ContentService {
       image: './assets/tour13.jpeg',
       date: new Date('2025-01-05'),
       category: 'news',
-      link: '/news-details/3'
+      link: '/news/3'
     },
 
     // المقالات
@@ -86,7 +86,7 @@ export class ContentService {
       image: './assets/tour7.jpg',
       date: new Date('2025-01-20'),
       category: 'articles',
-      link: '/news-details/4'
+      link: '/news/4'
     },
     {
       id: '5',
@@ -110,7 +110,7 @@ export class ContentService {
       image: './assets/tour1.jpg',
       date: new Date('2025-01-18'),
       category: 'articles',
-      link: '/news-details/5'
+      link: '/news/5'
     },
 
     // الإعلانات
@@ -136,7 +136,7 @@ export class ContentService {
       image: './assets/tour15.jpeg',
       date: new Date('2025-01-22'),
       category: 'announcements',
-      link: '/news-details/6'
+      link: '/news/6'
     },
     {
       id: '7',
@@ -162,7 +162,7 @@ export class ContentService {
       image: './assets/tour13.jpeg',
       date: new Date('2025-01-19'),
       category: 'announcements',
-      link: '/news-details/7'
+      link: '/news/7'
     },
 
     // الفعاليات
@@ -190,7 +190,7 @@ export class ContentService {
       image: './assets/event3.jpg',
       date: new Date('2025-03-15'),
       category: 'events',
-      link: '/news-details/8'
+      link: '/news/8'
     },
     {
       id: '9',
@@ -216,7 +216,7 @@ export class ContentService {
       image: './assets/event4.jpg',
       date: new Date('2025-02-28'),
       category: 'events',
-      link: '/news-details/9'
+      link: '/news/9'
     }
   ];
 

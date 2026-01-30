@@ -25,7 +25,7 @@ export class ProgramsComponent implements OnInit {
     this.programsService.getProgramsTabsData().subscribe(data => {
       this.programData = data;
       if (data.sections.length) {
-        this.selectedTab = data.sections[0].id;
+        this.selectedTab = data.sections[0].slug!; // ✅ استخدام slug
       }
 
       this.route.queryParams.subscribe(params => {
@@ -36,8 +36,8 @@ export class ProgramsComponent implements OnInit {
     });
   }
 
-  onTabChange(id: string): void {
-    this.selectedTab = id;
+  onTabChange(slug: string): void {
+    this.selectedTab = slug;
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { tab: this.selectedTab },

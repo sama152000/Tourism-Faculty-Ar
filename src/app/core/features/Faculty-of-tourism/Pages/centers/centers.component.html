@@ -13,8 +13,8 @@
         <div class="departments-tablist">
           <button *ngFor="let center of centerData.sections"
                   class="departments-tab"
-                  [class.active]="selectedTab === center.id"
-                  (click)="onTabChange(center.id)">
+                  [class.active]="selectedTab === center.slug"
+                  (click)="onTabChange(center.slug!)">
             {{ center.centerName }}
           </button>
         </div>
@@ -23,7 +23,7 @@
         <div class="departments-tabpanels">
           <div *ngFor="let center of centerData.sections"
                class="departments-tabpanel"
-               [class.active]="selectedTab === center.id">
+               [class.active]="selectedTab === center.slug">
             <div class="department-content-wrapper">
               <!-- Center Header -->
               <div class="row">

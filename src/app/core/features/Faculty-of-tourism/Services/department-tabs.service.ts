@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { Department, DepartmentTabsData } from '../model/departments.model';
 import { forkJoin, map, Observable } from 'rxjs';
+import { slugify } from '../../../../utilities/slug.util'; // ✅ استدعاء الدالة
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class DepartmentTabsService {
           details: detailsRes.data.filter((d: any) => d.departmentId === dept.id),
           members: membersRes.data.filter((m: any) => m.departmentId === dept.id),
           programs: programsRes.data.filter((p: any) => p.departmentId === dept.id),
-          services: servicesRes.data.filter((s: any) => s.departmentId === dept.id)
+          services: servicesRes.data.filter((s: any) => s.departmentId === dept.id),
+          slug: slugify(dept.nameEn || dept.name) // ✅ توليد slug من الاسم
         }));
 
         return {

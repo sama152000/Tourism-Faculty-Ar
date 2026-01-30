@@ -11,14 +11,14 @@
       <div class="departments-tabs">
         <div class="departments-tablist">
           <button *ngFor="let department of departmentData.sections" class="departments-tab"
-            [class.active]="selectedTab === department.id" (click)="onTabChange(department.id)">
+            [class.active]="selectedTab === department.slug" (click)="onTabChange(department.slug!)">
             {{ department.name }}
           </button>
         </div>
 
         <div class="departments-tabpanels">
           <div *ngFor="let department of departmentData.sections" class="departments-tabpanel"
-            [class.active]="selectedTab === department.id">
+            [class.active]="selectedTab === department.slug">
             <div class="department-content-wrapper">
               <!-- Department Header -->
               <div class="row">

@@ -25,29 +25,29 @@ export class NewsDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        this.loadPostDetails(id);
+      const slug = params['slug']; // ✅ استخدام slug بدل id
+      if (slug) {
+        this.loadPostDetails(slug);
       }
     });
   }
 
-  loadPostDetails(id: string): void {
+  loadPostDetails(slug: string): void {
     this.newsService.getNews().subscribe(posts => {
-      this.post = posts.find(p => p.id === id);
+      this.post = posts.find(p => p.slug === slug); // ✅ البحث بالـ slug
 
       if (this.post) {
         // related posts: نفس التصنيف
         const categoryNames = this.post.postCategories.map(c => c.categoryName);
         this.relatedPosts = posts.filter(
-          p => p.id !== id && p.postCategories.some(c => categoryNames.includes(c.categoryName))
+          p => p.slug !== slug && p.postCategories.some(c => categoryNames.includes(c.categoryName))
         );
 
         // ترتيب حسب التاريخ
         const sorted = [...posts].sort(
           (a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime()
         );
-        const index = sorted.findIndex(p => p.id === id);
+        const index = sorted.findIndex(p => p.slug === slug);
         this.previousPost = index > 0 ? sorted[index - 1] : undefined;
         this.nextPost = index < sorted.length - 1 ? sorted[index + 1] : undefined;
       } else {
@@ -65,9 +65,9 @@ export class NewsDetailsComponent implements OnInit {
     }).format(date);
   }
 
-  navigateToPost(id: string): void {
-    this.router.navigate(['/news-details', id]).then(() => {
-      this.loadPostDetails(id);
+  navigateToPost(slug: string): void { // ✅ التنقل بالـ slug
+    this.router.navigate(['/news', slug]).then(() => {
+      this.loadPostDetails(slug);
       window.scrollTo(0, 0);
     });
   }

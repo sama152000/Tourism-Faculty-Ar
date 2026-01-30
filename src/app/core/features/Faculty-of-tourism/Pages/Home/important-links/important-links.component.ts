@@ -12,7 +12,7 @@ import { CarouselModule } from 'primeng/carousel';
   styleUrls: ['./important-links.component.css']
 })
 export class ImportantLinksComponent implements OnInit {
-  linksData!: ImportantLinksData;
+  linksData: ImportantLinksData = { title: 'روابط وخدمات هامة', links: [] };
   responsiveOptions = [
     {
       breakpoint: '1024px',
@@ -34,6 +34,8 @@ export class ImportantLinksComponent implements OnInit {
   constructor(private importantLinksService: ImportantLinksService) {}
 
   ngOnInit(): void {
-    this.linksData = this.importantLinksService.getImportantLinksData();
+    this.importantLinksService.getImportantLinksData().subscribe(data => {
+      this.linksData = data;
+    });
   }
 }
