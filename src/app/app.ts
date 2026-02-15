@@ -8,10 +8,12 @@ import { FooterComponent } from "./core/features/Faculty-of-tourism/Pages/shared
 // import { HeaderComponent } from "./core/features/Faculty-of-tourism/Pages/shared/header/header.component";
 // import { FooterComponent } from "./core/features/Faculty-of-tourism/Pages/shared/footer/footer.component";
 // import { QuickSidebarComponent } from "./core/features/Faculty-of-tourism/Pages/shared/quick-sidebar/quick-sidebar.component";
+import { LoaderComponent } from '../app/core/features/Faculty-of-tourism/Pages/shared/loader/loader.component';
+
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule, CommonModule, RouterModule, HeaderComponent, QuickSidebarComponent, FooterComponent],
+  imports: [ButtonModule, CommonModule, RouterModule, HeaderComponent, QuickSidebarComponent, FooterComponent, LoaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -20,6 +22,11 @@ export class App {
   protected title = 'كلية السياحه والفنادق';
   showScrollButton = false;
 
+  isLoading = true;
+
+  onLoadingComplete(): void {
+    this.isLoading = false;
+  }
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.showScrollButton = window.pageYOffset > 300;

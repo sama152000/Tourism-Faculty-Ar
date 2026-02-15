@@ -11,7 +11,7 @@ import { RouterLink,Router} from "@angular/router";
   selector: 'app-news',
   standalone: true,
   imports: [CommonModule, CardModule, ButtonModule, RouterLink],
-  templateUrl: './news.component.html',
+  templateUrl:'./news.component.html',
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {

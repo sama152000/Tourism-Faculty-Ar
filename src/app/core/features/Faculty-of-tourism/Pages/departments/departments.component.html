@@ -24,8 +24,10 @@
               <div class="row">
                 <div class="col-lg-8 col-md-12">
                   <h2 class="department-title">{{ department.pageTitle }}</h2>
-                  <p class="faculty-text">{{ department.about }}</p>
-                </div>
+<div class="faculty-text quill-content description"
+                       [innerHTML]="department.about | cleanHtml">
+                  </div>
+                                </div>
                 <div class="col-lg-4 col-md-12">
                   <div class="department-stats">
                     <div class="stat-card">
@@ -53,16 +55,18 @@
           <div class="mission-card mb-4">
             <div class="card-header">رسالة القسم</div>
             <div class="card-body">
-              <p class="faculty-text">{{ department.mission }}</p>
-            </div>
+ <div class="faculty-text quill-content description"
+                       [innerHTML]="department.mission | cleanHtml">
+                  </div>            </div>
           </div>
 
           <!-- Vision -->
           <div class="mission-card mb-4">
                 <div class="card-header">رؤية القسم</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ department.vision }}</p>
-                </div>
+ <div class="faculty-text quill-content description"
+                       [innerHTML]="department.vision | cleanHtml">
+                  </div>                </div>
               </div>
 
           <!-- Objectives -->
@@ -83,8 +87,10 @@
             <div class="card-header">المقررات الأساسية</div>
             <div class="card-body">
               <div *ngFor="let detail of department.details">
-                <p class="faculty-text ">{{ detail.content }}</p>
-              </div>
+ <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.content | cleanHtml">
+                    </div>
+                                </div>
             </div>
           </div>
 

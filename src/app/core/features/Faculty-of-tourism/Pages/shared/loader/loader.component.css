@@ -1,0 +1,528 @@
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #4a4a4ae0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+  animation: loaderFadeOut 0.5s ease-out 5s forwards;
+}
+
+.loader-content {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hotel Building Styles */
+.hotel-building {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: translateX(-50%) translateY(20px);
+  animation: buildingFadeIn 0.8s ease-out 0.2s both;
+}
+
+.building-main {
+  width: 120px;
+  height: 140px;
+  background: var(--primary-color);
+  position: relative;
+  border-radius: 4px 4px 0 0;
+  box-shadow: var(--shadow-lg);
+}
+
+.building-top {
+  width: 100%;
+  height: 15px;
+  background: var(--accent-color);
+  border-radius: 4px 4px 0 0;
+}
+
+.building-middle {
+  padding: 8px;
+  height: 100px;
+}
+
+.window-row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 8px;
+}
+
+.window {
+  width: 12px;
+  height: 12px;
+  background: var(--secondary-color);
+  border-radius: 2px;
+  animation: windowGlow 2s ease-in-out infinite alternate;
+}
+
+.building-entrance {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 25px;
+  background: var(--dark-primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.door {
+  width: 20px;
+  height: 15px;
+  background: var(--accent-color);
+  border-radius: 2px;
+  margin-bottom: 2px;
+}
+
+.hotel-sign {
+  font-size: 6px;
+  color: var(--secondary-color);
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
+
+.building-glow {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(circle, rgba(255, 204, 0, 0.2) 0%, transparent 70%);
+  border-radius: 8px;
+  animation: buildingGlow 3s ease-in-out infinite alternate;
+}
+
+/* Tourist Character Styles */
+.tourist-character {
+  position: absolute;
+  right: 50%;
+  bottom: 50%;
+  transform: translateX(80px) translateY(20px);
+  animation: touristWalkIn 1s ease-out 0.8s both;
+}
+
+.tourist-head {
+  width: 20px;
+  height: 20px;
+  background: #fdbcb4;
+  border-radius: 50%;
+  position: relative;
+  margin: 0 auto 2px;
+}
+
+.tourist-body {
+  width: 25px;
+  height: 35px;
+  background: var(--accent-color);
+  border-radius: 4px;
+  margin: 0 auto 3px;
+}
+
+.tourist-arm-left {
+  position: absolute;
+  top: 25px;
+  left: -5px;
+  width: 8px;
+  height: 25px;
+  background: #fdbcb4;
+  border-radius: 10px;
+  animation: armSwing 0.5s ease-in-out 1.5s both;
+}
+
+.tourist-arm-right {
+  position: absolute;
+  top: 22px;
+  right: -8px;
+  width: 8px;
+  height: 28px;
+  background: #fdbcb4;
+  border-radius: 10px;
+  transform-origin: top center;
+  animation: cameraLift 0.5s ease-out 1.2s both;
+}
+
+.camera {
+  position: absolute;
+  bottom: -5px;
+  right: -8px;
+  animation: cameraPosition 0.5s ease-out 1.2s both;
+}
+
+.camera-body {
+  width: 12px;
+  height: 8px;
+  background: var(--dark-primary-color);
+  border-radius: 2px;
+}
+
+.camera-lens {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 4px;
+  height: 4px;
+  background: var(--text-light);
+  border-radius: 50%;
+}
+
+.camera-flash {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 3px;
+  height: 2px;
+  background: var(--secondary-color);
+  border-radius: 1px;
+  opacity: 0;
+  animation: flashBlink 0.2s ease-out 1.7s both;
+}
+
+.tourist-legs {
+  display: flex;
+  justify-content: space-around;
+  width: 25px;
+  margin: 0 auto;
+}
+
+.leg-left, .leg-right {
+  width: 6px;
+  height: 20px;
+  background: var(--dark-primary-color);
+  border-radius: 0 0 3px 3px;
+}
+
+/* Flash Effect Styles */
+.flash-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  animation: flashSequence 0.6s ease-out 1.7s both;
+}
+
+.flash-burst {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 204, 0, 0.4) 30%, transparent 70%);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: burstExpand 0.4s ease-out 1.7s both;
+}
+
+.flash-ring-1, .flash-ring-2, .flash-ring-3 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 2px solid rgba(255, 204, 0, 0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.flash-ring-1 {
+  width: 100px;
+  height: 100px;
+  animation: ringExpand 0.5s ease-out 1.7s both;
+}
+
+.flash-ring-2 {
+  width: 150px;
+  height: 150px;
+  animation: ringExpand 0.6s ease-out 1.75s both;
+}
+
+.flash-ring-3 {
+  width: 200px;
+  height: 200px;
+  animation: ringExpand 0.7s ease-out 1.8s both;
+}
+
+/* Light Rays */
+.light-rays {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  animation: raysAppear 0.5s ease-out 1.8s both;
+}
+
+.ray {
+  position: absolute;
+  width: 2px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(255, 204, 0, 0.8), transparent);
+  transform-origin: bottom center;
+}
+
+.ray-1 { transform: rotate(0deg) translateX(-1px); }
+.ray-2 { transform: rotate(60deg) translateX(-1px); }
+.ray-3 { transform: rotate(120deg) translateX(-1px); }
+.ray-4 { transform: rotate(180deg) translateX(-1px); }
+.ray-5 { transform: rotate(240deg) translateX(-1px); }
+.ray-6 { transform: rotate(300deg) translateX(-1px); }
+
+/* Faculty Text */
+.faculty-text {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;
+  animation: textFadeIn 0.5s ease-out 1s both;
+}
+
+.faculty-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.university-name {
+  font-size: 0.9rem;
+  color: white;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Keyframe Animations */
+@keyframes buildingFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(20px);
+  }
+}
+
+@keyframes touristWalkIn {
+  0% {
+    opacity: 0;
+    transform: translateX(120px) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(80px) translateY(20px);
+  }
+}
+
+@keyframes cameraLift {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-30deg);
+  }
+}
+
+@keyframes cameraPosition {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-2px, -10px);
+  }
+}
+
+@keyframes armSwing {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(10deg); }
+}
+
+@keyframes flashBlink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@keyframes flashSequence {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes burstExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes ringExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes raysAppear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+@keyframes windowGlow {
+  0% { box-shadow: 0 0 5px rgba(255, 204, 0, 0.3); }
+  100% { box-shadow: 0 0 15px rgba(255, 204, 0, 0.8); }
+}
+
+@keyframes buildingGlow {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
+
+@keyframes textFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes loaderFadeOut {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .loader-content {
+    width: 300px;
+    height: 250px;
+  }
+  
+  .building-main {
+    width: 90px;
+    height: 110px;
+  }
+  
+  .window {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .faculty-title {
+    font-size: 1.2rem;
+  }
+  
+  .university-name {
+    font-size: 0.8rem;
+  }
+  
+  .flash-burst {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .ray {
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loader-content {
+    width: 250px;
+    height: 200px;
+  }
+  
+  .building-main {
+    width: 70px;
+    height: 90px;
+  }
+  
+  .window {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .faculty-title {
+    font-size: 1rem;
+  }
+  
+  .university-name {
+    font-size: 0.7rem;
+  }
+  
+  .tourist-head {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .tourist-body {
+    width: 20px;
+    height: 30px;
+  }
+  
+  .flash-burst {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .ray {
+    height: 50px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .loader-container *,
+  .loader-container *::before,
+  .loader-container *::after {
+    animation-duration: 0.1s !important;
+    animation-iteration-count: 1 !important;
+  }
+}

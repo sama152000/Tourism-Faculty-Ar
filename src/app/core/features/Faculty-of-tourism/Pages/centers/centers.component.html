@@ -29,8 +29,9 @@
               <div class="row">
                 <div class="col-lg-8 col-md-12">
                   <h2 class="department-title">{{ center.centerName }}</h2>
-                  <p class="faculty-text">{{ center.about }}</p>
-                </div>
+  <div class="faculty-text quill-content description"
+                       [innerHTML]="center.about | cleanHtml">
+                  </div>                </div>
                 <div class="col-lg-4 col-md-12">
                   <div class="department-stats">
                     <div class="stat-card">
@@ -50,17 +51,19 @@
               <div class="mission-card mb-4">
                 <div class="card-header">رسالة المركز</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ center.mission }}</p>
-                </div>
+  <div class="faculty-text quill-content description"
+                       [innerHTML]="center.mission | cleanHtml">
+                  </div>
+                                </div>
               </div>
 
               <!-- Vision -->
               <div class="mission-card mb-4">
                 <div class="card-header">رؤية المركز</div>
                 <div class="card-body">
-                  <p class="faculty-text">
-                    {{ center.vision && center.vision.trim() !== '' ? center.vision : 'لا توجد رؤية مسجلة لهذا المركز حالياً' }}
-                  </p>
+                 <div class="faculty-text quill-content description"
+                       [innerHTML]="center.vision | cleanHtml">
+                  </div>
                 </div>
               </div>
 
@@ -84,9 +87,13 @@
                 <div class="card-header">تفاصيل المركز</div>
                 <div class="card-body">
                   <div *ngFor="let detail of center.details">
-                    <h4>{{ detail.title }}</h4>
-                    <p class="faculty-text">{{ detail.description }}</p>
-                    <p class="faculty-text">{{ detail.content }}</p>
+                    <!-- <h4>{{ detail.title }}</h4> -->
+                    <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.description | cleanHtml">
+                    </div>
+                    <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.content | cleanHtml">
+                    </div>
                   </div>
                 </div>
               </div>

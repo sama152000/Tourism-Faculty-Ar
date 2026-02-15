@@ -39,14 +39,14 @@
         <!-- News Content -->
         <div class="news-content faculty-card-body">
           <h3 class="news-title">
-            <a [routerLink]="['/news', newsItem.slug||newsItem.id]" class="news-link">
+            <a [routerLink]="['/news', newsItem.slug]" class="news-link">
               {{ newsItem.title }}
             </a>
           </h3>
           
-          <p class="news-excerpt faculty-text">
+          <!-- <p class="news-excerpt faculty-text">
             {{ newsItem.content | slice:0:120 }}...
-          </p>
+          </p> -->
           
           <!-- News Meta -->
           <div class="news-meta">
@@ -56,8 +56,9 @@
             </span>
           </div >
           
-          <a  (click)="navigateToPost(newsItem.slug || newsItem.id)"
-            [routerLink]="['/news', newsItem.slug || newsItem.id]"
+          <a  (click)="navigateToPost(newsItem.slug || '')"
+            [routerLink]="['/news', newsItem.slug]"
+            
 
             class="read-more-btn faculty-btn faculty-btn-outline mt-auto"
           >

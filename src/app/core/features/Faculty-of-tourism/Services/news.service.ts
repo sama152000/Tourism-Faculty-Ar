@@ -15,10 +15,11 @@ export class NewsService {
     return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
       map(res => {
         const posts: NewsPost[] = res.data.map((post: any) => {
-          const s = slugify(post.urlTitleEn || post.title);
+          // Generate slug from title - always prefer title for Arabic content
+          const s = slugify(post.title || post.urlTitleEn || '');
           return {
             ...post,
-            slug: s || post.id // fallback to id when slug empty
+            slug: s || `news-${post.id}` // Always have a slug
           } as NewsPost;
         });
 
@@ -50,8 +51,9 @@ export class NewsService {
   getNews(): Observable<NewsPost[]> {
     return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
       map(res => res.data.map((post: any) => {
-        const s = slugify(post.urlTitleEn || post.title);
-        return { ...post, slug: s || post.id } as NewsPost;
+        // Generate slug from title - always prefer title for Arabic content
+        const s = slugify(post.title || post.urlTitleEn || '');
+        return { ...post, slug: s || `news-${post.id}` } as NewsPost;
       }))
     );
   }

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AboutTabsService } from '../../Services/about-tabs.service';
 import { AboutSection, AboutTabsData } from '../../model/about-faculty.model';
+import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
 
 @Component({
   selector: 'app-about-us',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CleanHtmlPipe],
   templateUrl: './about-us.component.html',
   styleUrls: ['./about-us.component.css']
 })
@@ -59,5 +60,15 @@ export class AboutUsComponent implements OnInit {
   formatContent(content?: string): string[] {
     const text = content || '';
     return text.split('\n').filter(line => line.trim() !== '');
+  }
+
+  // Method to parse goals content and return array for list rendering
+  getGoalsList(content: string): string[] {
+    if (!content) return [];
+    // Split by newlines and remove bullet point characters (• or -)
+    return content
+      .split('\n')
+      .map(line => line.replace(/^[•\-]\s*/, '').trim())
+      .filter(line => line !== '');
   }
 }

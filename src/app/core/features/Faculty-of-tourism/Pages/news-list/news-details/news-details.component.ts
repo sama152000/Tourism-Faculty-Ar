@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NewsService } from '../../../Services/news.service';
 import { NewsPost } from '../../../model/news.model';
+import { CleanHtmlPipe } from '../../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
+
 
 @Component({
   selector: 'app-news-details',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CleanHtmlPipe],
   templateUrl: './news-details.component.html',
   styleUrls: ['./news-details.component.css']
 })
@@ -34,7 +36,12 @@ export class NewsDetailsComponent implements OnInit {
 
   loadPostDetails(slug: string): void {
     this.newsService.getNews().subscribe(posts => {
-      this.post = posts.find(p => p.slug === slug); // ✅ البحث بالـ slug
+      // First try direct match, then try with 'news-' prefix for fallback slugs
+      this.post = posts.find(p => 
+        (p.slug && p.slug === slug) || 
+        (p.slug && `news-${slug}` === p.slug) || 
+        (p.slug && slug.includes(p.slug))
+      );
 
       if (this.post) {
         // related posts: نفس التصنيف

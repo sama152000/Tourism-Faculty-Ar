@@ -23,11 +23,17 @@ export class AboutTabsService {
 
         if (aboutUniversity) {
           sections.push({
-            id: 'vision-mission',
-            title: 'الرؤية والرسالة',
-            content: `${aboutUniversity.vision}\n\n${aboutUniversity.mission}`,
-            additionalInfo: aboutUniversity.content,
-            slug: slugify('الرؤية والرسالة') // ✅ توليد slug
+            id: 'vision',
+            title: 'الرؤية',
+            content: aboutUniversity.vision,
+            slug: slugify('الرؤية')
+          });
+
+          sections.push({
+            id: 'mission',
+            title: 'الرسالة',
+            content: aboutUniversity.mission,
+            slug: slugify('الرسالة')
           });
 
           sections.push({

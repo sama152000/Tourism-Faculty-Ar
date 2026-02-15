@@ -37,7 +37,7 @@
         <!-- Department Info -->
         <div class="dept-info faculty-card-body">
           <h3 class="dept-name faculty-subtitle">{{ department.name }}</h3>
-          <p class="dept-description faculty-text">{{ department.about }}</p>
+          <!-- <p class="dept-description faculty-text">{{ department.about }}</p> -->
           
           <!-- Department Features -->
           <!-- <div class="dept-features">
@@ -49,6 +49,7 @@
           
           <a
             [routerLink]="['/departments', department.slug]"
+              [queryParams]="{ tab: department.slug }"
             class="learn-more-btn faculty-btn faculty-btn-outline mt-auto"
           >
             تعرف على المزيد

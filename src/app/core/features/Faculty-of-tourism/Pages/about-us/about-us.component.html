@@ -29,47 +29,49 @@
             [class.active]="selectedTab === section.slug"
           >
             <div class="tab-content-wrapper">
-              <div class="row align-items-center" *ngIf="section.slug !== 'dean-word' || !section.image">
+              <div class="row align-items-center" *ngIf="section.id !== 'dean-word' || !section.image">
                 <!-- Content Column -->
                 <div class="col-lg-12 col-md-12">
                   <div class="content-section">
-
                     <h2 class="section-title">{{ section.title }}</h2>
-<div *ngIf="section.image" class="dean-image text-center mb-3">
-  <img [src]="section.image" alt="Dean Image" class="img-fluid rounded shadow">
-</div>
 
-                    <div class="content-text">
-                      <p *ngFor="let paragraph of formatContent(section.content)"
-                         class="faculty-text"
-                         [innerHTML]="paragraph">
+                    <div *ngIf="section.image" class="dean-image text-center mb-3">
+                      <img [src]="section.image" alt="Dean Image" class="img-fluid rounded shadow">
+                    </div>
 
-                      </p>
+                    <!-- Goals Section - Render as list -->
+                    <div *ngIf="section.id === 'goals' && section.content" class="goals-list">
+                      <ul class="goals-ul">
+                        <li *ngFor="let goal of getGoalsList(section.content)" class="goal-item">
+                          {{ goal }}
+                        </li>
+                      </ul>
+                    </div>
 
+                    <!-- ✅ عرض Vision, Mission, History باستخدام innerHTML + cleanHtml -->
+                    <div *ngIf="section.id !== 'goals'" class="content-text quill-content description"
+                         [innerHTML]="section.content | cleanHtml">
                     </div>
 
                     <div *ngIf="section.additionalInfo" class="additional-info">
                       <div class="info-card">
                         <i class="pi pi-info-circle info-icon"></i>
                         <p class="faculty-text-light">{{ section.additionalInfo }}</p>
-
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
+
               <!-- Two Column Layout for Dean Word -->
-              <div class="row align-items-center" *ngIf="section.slug === 'dean-word' && section.image">
+              <div class="row align-items-center" *ngIf="section.id === 'dean-word' && section.image">
                 <!-- Content Column -->
                 <div class="col-lg-6 col-md-12">
                   <div class="content-section">
                     <h2 class="section-title">{{ section.title }}</h2>
-                    <div class="content-text">
-                      <p *ngFor="let paragraph of formatContent(section.content)"
-                         class="faculty-text"
-                         [innerHTML]="paragraph">
-                      </p>
+                    <!-- ✅ عرض كلمة العميد باستخدام innerHTML + cleanHtml -->
+                    <div class="content-text quill-content description"
+                         [innerHTML]="section.content | cleanHtml">
                     </div>
                     <div *ngIf="section.additionalInfo" class="additional-info">
                       <div class="info-card">

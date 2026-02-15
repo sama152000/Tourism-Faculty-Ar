@@ -41,8 +41,8 @@
                     </span>
                   </div>
                   <h3 class="content-title">{{ item.title }}</h3>
-                  <p class="content-excerpt">{{ item.content | slice:0:150 }}...</p>
-                  <div class="content-card-footer">
+ <div class="content-excerpt quill-content description"
+                    [innerHTML]="(item.content | cleanHtml) | slice:0:150"> </div>                  <div class="content-card-footer">
                     <a [routerLink]="['/news', item.slug]" class="faculty-btn faculty-btn-primary">
                       اقرأ المزيد
                       <i class="pi pi-arrow-left"></i>

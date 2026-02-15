@@ -40,9 +40,9 @@
         <div class="col-lg-8 col-md-12">
           <article class="content-article">
             <div class="content-body">
-              <p *ngFor="let paragraph of post.content.split('\n\n')" class="content-paragraph">
-                {{ paragraph.trim() }}
-              </p>
+              <div class="content-paragraph quill-content description"
+                   [innerHTML]="post.content | cleanHtml">
+              </div>
             </div>
           </article>
         </div>

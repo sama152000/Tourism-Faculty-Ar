@@ -15,38 +15,38 @@ export class QuickSidebarService {
            id: '1',
            title: 'عن الكلية',
            icon: 'pi pi-info-circle',
-           routerLink: '/about'
+           routerLink: ['/about']
          },
        
         {
           id: '4',
           title: ' الاخبار',
           icon: 'pi pi-file-edit',
-          routerLink: '/news-list'
+          routerLink: ['/news-list']
         },
         {
           id: '2',
           title: ' القطاعات',
           icon: 'pi pi-desktop',
-          routerLink: '/sectors'
+          routerLink:['/sectors'] 
         },
         {
           id: '3',
           title: 'الوحدات',
           icon: 'pi pi-book',
-          routerLink: '/units'
+          routerLink: ['/units']
         },
         {
           id: '6',
           title: ' الاقسام',
           icon: 'pi pi-user',
-          routerLink: '/departments'
+          routerLink: ['/departments']
         },
         {
           id: '5',
           title: 'اتصل بنا',
           icon: 'pi pi-phone',
-          routerLink: '/contact'
+          routerLink: ['/contact']
         },
        
 

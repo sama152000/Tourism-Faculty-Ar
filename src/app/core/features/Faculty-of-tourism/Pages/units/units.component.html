@@ -33,8 +33,9 @@
               <div class="row align-items-center">
                 <div class="col-lg-8 col-md-12">
                   <h2 class="department-title">{{ unit.unitTitle }}</h2>
-                  <p class="faculty-text">{{ unit.content }}</p>
-                </div>
+  <div class="faculty-text quill-content description"
+                       [innerHTML]="unit.content | cleanHtml">
+                  </div>                </div>
                 <div class="col-lg-4 col-md-12">
                   <div class="department-stats">
                     <div class="stat-card">
@@ -54,24 +55,29 @@
               <div class="mission-card mb-4">
                 <div class="card-header">رسالة الوحدة</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ unit.mission }}</p>
-                </div>
+ <div class="faculty-text quill-content description"
+                       [innerHTML]="unit.mission | cleanHtml">
+                  </div>                </div>
               </div>
 
               <!-- Vision -->
               <div class="mission-card mb-4">
                 <div class="card-header">رؤية الوحدة</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ unit.vision }}</p>
-                </div>
+ <div class="faculty-text quill-content description"
+                       [innerHTML]="unit.vision | cleanHtml">
+                  </div>
+                                </div>
               </div>
 
               <!-- History -->
               <div class="mission-card mb-4" *ngIf="unit.history">
                 <div class="card-header">تاريخ الوحدة</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ unit.history }}</p>
-                </div>
+  <div class="faculty-text quill-content description"
+                       [innerHTML]="unit.history | cleanHtml">
+                  </div>
+                                </div>
               </div>
 
               <!-- Goals -->
@@ -95,8 +101,10 @@
                 <div class="card-body">
                   <div *ngFor="let detail of unit.details">
                     <h4>{{ detail.title }}</h4>
-                    <p class="faculty-text">{{ detail.content }}</p>
-                    <small class="faculty-text">{{ detail.unitPlace }}</small>
+  <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.content | cleanHtml">
+                    </div>
+                                        <small class="faculty-text">{{ detail.unitPlace }}</small>
                   </div>
                 </div>
               </div>

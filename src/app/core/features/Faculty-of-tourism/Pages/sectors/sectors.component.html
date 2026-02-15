@@ -33,8 +33,9 @@
               <div class="row align-items-center">
                 <div class="col-lg-8 col-md-12">
                   <h2 class="department-title">{{ sector.pageTitle }}</h2>
-                  <p class="faculty-text">{{ sector.about }}</p>
-                </div>
+ <div class="faculty-text quill-content description"
+                       [innerHTML]="sector.about | cleanHtml">
+                  </div>                </div>
                 <div class="col-lg-4 col-md-12">
                   <div class="department-stats">
                     <div class="stat-card">
@@ -54,16 +55,19 @@
               <div class="mission-card mb-4">
                 <div class="card-header">رسالة القطاع</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ sector.mission }}</p>
-                </div>
+ <div class="faculty-text quill-content description"
+                       [innerHTML]="sector.mission | cleanHtml">
+                  </div>                </div>
               </div>
 
               <!-- Vision -->
               <div class="mission-card mb-4">
                 <div class="card-header">رؤية القطاع</div>
                 <div class="card-body">
-                  <p class="faculty-text">{{ sector.vision }}</p>
-                </div>
+ <div class="faculty-text quill-content description"
+                       [innerHTML]="sector.vision | cleanHtml">
+                  </div>
+                                </div>
               </div>
 
               <!-- Goals -->
@@ -87,8 +91,10 @@
                 <div class="card-body">
                   <div *ngFor="let detail of sector.details">
                     <h4>{{ detail.title }}</h4>
-                    <p class="faculty-text">{{ detail.content }}</p>
-                  </div>
+ <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.content | cleanHtml">
+                    </div>
+                                    </div>
                 </div>
               </div>
 
@@ -141,14 +147,12 @@
                   <ul style="list-style-type: none;">
                     <li *ngFor="let member of sector.members">
                                                           <i class="pi pi-check-circle objective-icon"></i>
-
                       {{ member.memberName }} <span *ngIf="member.isLeader">(رئيس القطاع)</span>
                     </li>
                   </ul>
                 </div>
               </div>
-
-            </div>
+              </div>
           </div>
         </div>
       </div>
