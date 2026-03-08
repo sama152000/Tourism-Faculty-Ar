@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { Sector, SectorsTabsData } from '../model/sector.model';
 import { forkJoin, map, Observable } from 'rxjs';
-import { slugify } from '../../../../utilities/slug.util'; // ✅ استدعاء الدالة
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +29,7 @@ export class SectorsService {
           programs: programsRes.data.filter((pr: any) => pr.sectorId === sector.id),
           services: servicesRes.data.filter((s: any) => s.sectorId === sector.id),
           units: unitsRes.data.filter((u: any) => u.sectorId === sector.id),
-          slug: slugify(sector.nameEn || sector.name) // ✅ توليد slug من الاسم
+          slug: sector.slug // ✅ استخدام الـ slug من الـ backend مباشرة
         }));
 
         return {

@@ -5,7 +5,6 @@ import { UnitsService } from '../../Services/units.service';
 import { Unit, UnitsTabsData } from '../../model/unit.model';
 import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
 
-
 @Component({
   selector: 'app-units',
   standalone: true,
@@ -24,29 +23,32 @@ export class UnitsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // ✅ قراءة الـ slug من الـ route
+    const initialSlug = this.route.snapshot.paramMap.get('slug');
+    
     this.unitsService.getUnitsTabsData().subscribe(data => {
       this.unitData = data;
-      if (data.sections.length) {
-        // ✅ أول وحدة افتراضية بالـ slug بدل id
+
+      // ✅ تعيين التاب المختار بناءً على الـ slug أو أول وحدة
+      if (initialSlug) {
+        this.selectedTab = initialSlug;
+      } else if (data.sections.length) {
         this.selectedTab = data.sections[0].slug!;
       }
 
-      this.route.queryParams.subscribe(params => {
-        if (params['tab']) {
-          this.selectedTab = params['tab'];
+      // ✅ متابعة أي تغيير في الـ route params
+      this.route.params.subscribe(params => {
+        if (params['slug'] && params['slug'] !== this.selectedTab) {
+          this.selectedTab = params['slug'];
         }
       });
     });
   }
 
-  // ✅ onTabChange بالـ slug
+  // ✅ التنقل باستخدام الـ slug من الـ backend
   onTabChange(slug: string): void {
     this.selectedTab = slug;
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { tab: this.selectedTab },
-      queryParamsHandling: 'merge'
-    });
+    this.router.navigate(['/units', slug]);
   }
 
   getMembersCount(unit: Unit): number {

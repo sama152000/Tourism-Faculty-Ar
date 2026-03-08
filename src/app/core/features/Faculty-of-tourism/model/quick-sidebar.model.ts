@@ -2,7 +2,8 @@ export interface SidebarLink {
   id: string;
   title: string;
   icon: string;
-  routerLink: string | string[];
+  routerLink?: string | string[];
+  url?: string;
   isExternal?: boolean;
 }
 

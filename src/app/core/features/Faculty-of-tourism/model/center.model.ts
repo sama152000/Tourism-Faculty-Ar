@@ -42,13 +42,14 @@ export interface Center {
   centerNameEn: string;
   aboutId: string;
   about: string;
+      slug:string;
+
   mission: string;
   vision: string;
   goals: CenterGoal[];
   centerAttachments: CenterAttachment[];
   details: CenterDetail[];
   members: CenterMember[];
-  slug?: string
 }
 
 export interface CentersTabsData {

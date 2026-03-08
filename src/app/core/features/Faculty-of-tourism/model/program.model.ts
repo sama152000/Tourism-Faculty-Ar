@@ -37,12 +37,13 @@ export interface Program {
   aboutId: string;
   about: string;
   mission: string;
+    slug:string;
+
   vision: string;
   goals: ProgramGoal[];
   programAttachments: ProgramAttachment[];
   details: ProgramDetail[];
   members: ProgramMember[];
-  slug?: string;
 }
 
 export interface ProgramsTabsData {

@@ -18,6 +18,9 @@ export class AboutFacultyComponent implements OnInit {
   constructor(private aboutFacultyService: AboutFacultyService) {}
 
   ngOnInit(): void {
-    this.aboutData = this.aboutFacultyService.getAboutFacultyData();
+    // ✅ جلب بيانات عن الكلية من الـ API
+    this.aboutFacultyService.getAboutFacultyData().subscribe(data => {
+      this.aboutData = data;
+    });
   }
 }

@@ -11,14 +11,14 @@
       <div class="custom-tabs">
         <!-- Tab Headers -->
         <div class="tab-headers">
-          <button
+          <a
             *ngFor="let section of aboutData.sections"
             class="tab-button"
             [class.active]="selectedTab === section.slug"
-            (click)="onTabChange(section.slug!)"
+            [routerLink]="['/about', section.slug]"
           >
             {{ section.title }}
-          </button>
+          </a>
         </div>
 
         <!-- Tab Content -->

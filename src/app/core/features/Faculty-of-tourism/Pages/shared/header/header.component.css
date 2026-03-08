@@ -72,6 +72,7 @@
 /* ===== LOGO SECTION ===== */
 .logo-section {
   gap: 12px;
+  flex: 0 0 auto;
 }
 
 .logo-img {
@@ -91,6 +92,12 @@
 }
 
 /* ===== NAVIGATION ===== */
+.main-navigation {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .main-navigation :ng-deep .p-menubar {
   background: var(--text-secondary);
   border: none;

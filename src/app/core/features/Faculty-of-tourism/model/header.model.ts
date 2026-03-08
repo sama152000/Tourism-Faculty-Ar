@@ -9,12 +9,16 @@ export interface HeaderData {
 
 export interface MenuItem {
   id: string;
-  label: string;
-  routerLink?: string;
-  url?: string;
+  label: string;              // اسم العنصر (title)
+  titleEn?: string;          // الاسم بالإنجليزية
+  slug?: string;             // الـ slug من الـ backend
+  routerLink?: string | string[];  // الرابط النهائي (دعم string أو array)
+  url?: string;              // لو فيه رابط خارجي
   icon?: string;
-  queryParams?: {[k: string]: any};
-  items?: MenuItem[];
+  order?: number;
+  queryParams?: { [k: string]: any };
+  items?: MenuItem[];         // العناصر الفرعية (childs)
+  pageTemplate?: 'Default' | 'Custome'; // نوع الصفحة
 }
 
 export interface SocialLink {
@@ -27,14 +31,18 @@ export interface SocialLink {
 export interface NavigationItem {
   id: string;
   label: string;
+  slug: string;
   routerLink?: string;
   items?: NavigationSubItem[];
   icon?: string;
+  pageTemplate?: 'Default' | 'Custome';
 }
 
 export interface NavigationSubItem {
   id: string;
   label: string;
+  slug: string;
   routerLink: string;
   queryParams?: any;
+  pageTemplate?: 'Default' | 'Custome';
 }

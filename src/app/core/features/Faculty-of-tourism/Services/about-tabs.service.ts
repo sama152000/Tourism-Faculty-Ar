@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { AboutTabsData, AboutSection } from '../model/about-faculty.model';
-import { map, forkJoin, Observable } from 'rxjs';
-import { slugify } from '../../../../utilities/slug.util'; // ✅ استدعاء الدالة
+import { map, forkJoin, Observable } from 'rxjs'; // ✅ استدعاء الدالة
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +25,14 @@ export class AboutTabsService {
             id: 'vision',
             title: 'الرؤية',
             content: aboutUniversity.vision,
-            slug: slugify('الرؤية')
+            slug: 'vision'
           });
 
           sections.push({
             id: 'mission',
             title: 'الرسالة',
             content: aboutUniversity.mission,
-            slug: slugify('الرسالة')
+            slug: 'mission'
           });
 
           sections.push({
@@ -43,7 +42,7 @@ export class AboutTabsService {
               .filter((g: any) => g.goalName)
               .map((g: any) => `• ${g.goalName}`)
               .join('\n'),
-            slug: slugify('أهداف الكلية') // ✅ توليد slug
+            slug: 'goals'
           });
 
           if (aboutUniversity.history) {
@@ -51,7 +50,7 @@ export class AboutTabsService {
               id: 'history',
               title: 'تاريخ الكلية',
               content: aboutUniversity.history,
-              slug: slugify('تاريخ الكلية') // ✅ توليد slug
+              slug: 'history'
             });
           }
         }
@@ -64,7 +63,7 @@ export class AboutTabsService {
             content: deanSpeech.speech,
             additionalInfo: `${deanSpeech.memberName} - ${deanSpeech.memberPosition}`,
             image: deanSpeech.deanSpeechAttachments?.[0]?.url,
-            slug: slugify('كلمة العميد') // ✅ توليد slug
+            slug: 'dean-word'
           });
         }
 

@@ -44,6 +44,8 @@ export interface SectorProgram {
   id: string;
   name: string;
   sectorId: string;
+    slug:string;
+
   sectorName: string;
   programId: string;
   programName: string | null;
@@ -71,6 +73,8 @@ export interface SectorUnit {
   unitId: string;
   unitName: string;
   managementId: string;
+    slug:string;
+
   managementName: string;
   sectorId: string;
   sectorName: string;
@@ -94,7 +98,7 @@ export interface Sector {
   programs: SectorProgram[];
   services: SectorService[];
   units: SectorUnit[];
-      slug?: string;
+  slug:string;
 
 }
 

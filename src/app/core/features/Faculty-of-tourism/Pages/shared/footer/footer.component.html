@@ -37,7 +37,8 @@
           <ul class="footer-links">
             <li *ngFor="let link of section.links" class="footer-link-item">
               <a 
-                [href]="link.routerLink || link.url"
+                [routerLink]="link.routerLink || link.url"
+                [queryParams]="link.queryParams"
                 class="footer-link"
               >
                 <i class="pi pi-angle-right link-icon"></i>
@@ -113,11 +114,11 @@
 
         <!-- Additional Links -->
         <div class="footer-legal">
-          <a href="/privacy" class="legal-link">سياسة الخصوصية</a>
+          <a routerLink="/privacy" class="legal-link">سياسة الخصوصية</a>
           <span class="separator">|</span>
-          <a href="/terms" class="legal-link">شروط الاستخدام</a>
+          <a routerLink="/terms" class="legal-link">شروط الاستخدام</a>
           <span class="separator">|</span>
-          <a href="/sitemap" class="legal-link">خريطة الموقع</a>
+          <a routerLink="/sitemap" class="legal-link">خريطة الموقع</a>
         </div>
         
       </div>

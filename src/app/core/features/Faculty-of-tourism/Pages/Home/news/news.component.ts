@@ -22,12 +22,8 @@ export class NewsComponent implements OnInit {
   constructor(private newsService: NewsService,private router:Router) {}
 
   ngOnInit(): void {
-    this.newsService.getNews().subscribe(posts => {
-      // فلترة الأخبار فقط
-      const newsOnly = posts.filter(p =>
-        p.postCategories.some(c => c.categoryName === 'أخبار')
-      );
-      this.newsPosts = newsOnly.slice(0, this.limit);
+    this.newsService.getLatestNews(this.limit).subscribe(posts => {
+      this.newsPosts = posts;
       this.newsData.news = this.newsPosts;
     });
   }

@@ -24,16 +24,23 @@ export class CentersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Get initial tab from route params first
+    const initialSlug = this.route.snapshot.paramMap.get('slug');
+    
     this.centersService.getCentersTabsData().subscribe(data => {
       this.centerData = data;
-      if (data.sections.length) {
-        // ✅ أول تاب بالـ slug بدل id
+
+      // Set selectedTab based on route param or default to first section
+      if (initialSlug) {
+        this.selectedTab = initialSlug;
+      } else if (data.sections.length) {
         this.selectedTab = data.sections[0].slug!;
       }
 
-      this.route.queryParams.subscribe(params => {
-        if (params['tab']) {
-          this.selectedTab = params['tab'];
+      // Subscribe to route params for changes
+      this.route.params.subscribe(params => {
+        if (params['slug'] && params['slug'] !== this.selectedTab) {
+          this.selectedTab = params['slug'];
         }
       });
     });
@@ -42,11 +49,7 @@ export class CentersComponent implements OnInit {
   // ✅ onTabChange بالـ slug
   onTabChange(slug: string): void {
     this.selectedTab = slug;
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { tab: this.selectedTab },
-      queryParamsHandling: 'merge'
-    });
+    this.router.navigate(['/centers', slug]);
   }
 
   getMembersCount(center: Center): number {

@@ -20,18 +20,8 @@ export class EventsComponent implements OnInit {
   constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
-    this.newsService.getNews().subscribe(posts => {
-      // فلترة الأحداث فقط
-      const eventsOnly = posts.filter(p =>
-        p.postCategories.some(c => c.categoryName === 'حدث')
-      );
-
-      // ترتيب حسب التاريخ تنازلي
-      const sorted = [...eventsOnly].sort(
-        (a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
-      );
-
-      this.eventsPosts = sorted.slice(0, this.limit);
+    this.newsService.getLatestEvents(this.limit).subscribe(posts => {
+      this.eventsPosts = posts;
     });
   }
 

@@ -23,7 +23,7 @@
     <ul class="sidebar-links">
       <li *ngFor="let link of sidebarData.links; let i = index" class="sidebar-item">
         <a
-          [routerLink]="link.routerLink"
+          [routerLink]="link.routerLink || link.url"
           class="sidebar-link"
           [title]="link.title"
           [style.animation-delay]="(i * 0.1) + 's'"

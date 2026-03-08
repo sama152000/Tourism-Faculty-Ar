@@ -10,12 +10,13 @@ import { NewsDetailsComponent } from './core/features/Faculty-of-tourism/Pages/n
 import { ContactUsComponent } from './core/features/Faculty-of-tourism/Pages/contact-us/contact-us.component';
 import { ProgramsComponent } from './core/features/Faculty-of-tourism/Pages/programs/programs.component';
 import { CentersComponent } from './core/features/Faculty-of-tourism/Pages/centers/centers.component';
+import { CustomPageComponent } from './core/features/Faculty-of-tourism/Pages/shared/custom-page/custom-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutUsComponent },
-    { path: 'about/:slug', component: AboutUsComponent },
+  { path: 'about/:slug', component: AboutUsComponent },
 
   { path: 'departments', component: DepartmentsComponent },
   { path: 'departments/:slug', component: DepartmentsComponent },
@@ -34,7 +35,8 @@ export const routes: Routes = [
  { path: 'centers', component: CentersComponent },
   { path: 'centers/:slug', component: CentersComponent },
 
-
+ { path: 'custom/:slug', component: CustomPageComponent },
+  { path: 'custom', component: CustomPageComponent },
   { path: '**', redirectTo: '/home' }
 
 ];

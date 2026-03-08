@@ -1,4 +1,4 @@
-<section class="about-faculty-section faculty-section">
+<section class="about-faculty-section faculty-section" *ngIf="aboutData">
   <div class="faculty-container">
     <div class="about-faculty-container">
       
@@ -8,10 +8,10 @@
           {{ aboutData.aboutInfo.title }}
         </h2>
         
-        <p class="faculty-text fade-in">
+        <!-- <p class="faculty-text fade-in">
           {{ aboutData.aboutInfo.description }}
         </p>
-        
+         -->
         <!-- Highlights List -->
         <ul class="about-highlights fade-in">
           <li 

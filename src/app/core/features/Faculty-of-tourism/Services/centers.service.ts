@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { Center, CentersTabsData } from '../model/center.model';
 import { forkJoin, map, Observable } from 'rxjs';
-import { slugify } from '../../../../utilities/slug.util'; // ✅ استدعاء الدالة
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,7 @@ export class CentersService {
           ...center,
           details: detailsRes.data.filter((d: any) => d.centerId === center.id),
           members: membersRes.data.filter((m: any) => m.centerId === center.id),
-          slug: slugify(center.centerName) // ✅ توليد slug من الاسم
+          slug: center.slug // ✅ استخدام الـ slug من الـ backend مباشرة
         }));
 
         return {

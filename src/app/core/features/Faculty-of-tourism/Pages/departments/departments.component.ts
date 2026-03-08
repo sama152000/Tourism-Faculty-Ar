@@ -24,21 +24,23 @@ export class DepartmentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Get initial tab from route params first
+    const initialSlug = this.route.snapshot.paramMap.get('slug');
+    
     this.departmentTabsService.getDepartmentTabsData().subscribe(data => {
       this.departmentData = data;
 
-      // ✅ اسمع للتغييرات في params و queryParams
-      this.route.params.subscribe(params => {
-        if (params['slug']) {
-          this.selectedTab = params['slug'];
-        }
-      });
+      // Set selectedTab based on route param or default to first section
+      if (initialSlug) {
+        this.selectedTab = initialSlug;
+      } else if (data.sections.length) {
+        this.selectedTab = data.sections[0].slug!;
+      }
 
-      this.route.queryParams.subscribe(queryParams => {
-        if (queryParams['tab']) {
-          this.selectedTab = queryParams['tab'];
-        } else if (!this.selectedTab) {
-          this.selectedTab = data.sections[0].slug!;
+      // Subscribe to route params for changes
+      this.route.params.subscribe(params => {
+        if (params['slug'] && params['slug'] !== this.selectedTab) {
+          this.selectedTab = params['slug'];
         }
       });
     });
@@ -46,11 +48,7 @@ export class DepartmentsComponent implements OnInit {
 
   onTabChange(slug: string): void {
     this.selectedTab = slug;
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { tab: this.selectedTab },
-      queryParamsHandling: 'merge'
-    });
+    this.router.navigate(['/departments', slug]);
   }
 
   getFacultyCount(department: Department): number {

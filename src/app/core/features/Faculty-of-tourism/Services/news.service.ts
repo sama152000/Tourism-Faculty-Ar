@@ -57,4 +57,56 @@ export class NewsService {
       }))
     );
   }
+
+  getLatestNews(limit: number = 3): Observable<NewsPost[]> {
+    return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
+      map(res => {
+        const posts: NewsPost[] = res.data.map((post: any) => {
+          // Generate slug from title - always prefer title for Arabic content
+          const s = slugify(post.title || post.urlTitleEn || '');
+          return { ...post, slug: s || `news-${post.id}` } as NewsPost;
+        });
+
+        // Sort by createdDate descending (newest first)
+        const sortedPosts = posts.sort((a, b) => {
+          const dateA = new Date(a.createdDate).getTime();
+          const dateB = new Date(b.createdDate).getTime();
+          return dateB - dateA;
+        });
+
+        // Filter for news category and take only the latest 'limit' items
+        const newsOnly = sortedPosts.filter(p =>
+          p.postCategories.some(c => c.categoryName === 'أخبار')
+        );
+
+        return newsOnly.slice(0, limit);
+      })
+    );
+  }
+
+  getLatestEvents(limit: number = 3): Observable<NewsPost[]> {
+    return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
+      map(res => {
+        const posts: NewsPost[] = res.data.map((post: any) => {
+          // Generate slug from title - always prefer title for Arabic content
+          const s = slugify(post.title || post.urlTitleEn || '');
+          return { ...post, slug: s || `news-${post.id}` } as NewsPost;
+        });
+
+        // Sort by createdDate descending (newest first)
+        const sortedPosts = posts.sort((a, b) => {
+          const dateA = new Date(a.createdDate).getTime();
+          const dateB = new Date(b.createdDate).getTime();
+          return dateB - dateA;
+        });
+
+        // Filter for events category and take only the latest 'limit' items
+        const eventsOnly = sortedPosts.filter(p =>
+          p.postCategories.some(c => c.categoryName === 'حدث')
+        );
+
+        return eventsOnly.slice(0, limit);
+      })
+    );
+  }
 }

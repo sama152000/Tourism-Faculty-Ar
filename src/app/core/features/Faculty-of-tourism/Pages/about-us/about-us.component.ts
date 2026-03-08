@@ -1,25 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AboutTabsService } from '../../Services/about-tabs.service';
 import { AboutSection, AboutTabsData } from '../../model/about-faculty.model';
-import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe'; // ✅ استدعاء الـ Pipe
+import { CleanHtmlPipe } from '../../../../pipes/clean-html.pipe';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-about-us',
   standalone: true,
-  imports: [CommonModule, CleanHtmlPipe],
+  imports: [CommonModule, CleanHtmlPipe, RouterModule],
   templateUrl: './about-us.component.html',
   styleUrls: ['./about-us.component.css']
 })
-export class AboutUsComponent implements OnInit {
-  // initialize with defaults to avoid template binding errors in early lifecycle
+export class AboutUsComponent implements OnInit, OnDestroy {
   aboutData: AboutTabsData = {
     title: '',
     subtitle: '',
     sections: []
   };
   selectedTab: string = '';
+  private routeSub?: Subscription;
 
   constructor(
     private aboutTabsService: AboutTabsService,
@@ -28,33 +29,42 @@ export class AboutUsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Get initial tab from route params first
+    const initialTab = this.route.snapshot.paramMap.get('slug');
+    
+    // Load data
     this.aboutTabsService.getAboutTabsData().subscribe(data => {
       this.aboutData = data;
-      console.log('[AboutUs] aboutData loaded:', this.aboutData);
 
-      if (data.sections.length) {
-        // ✅ أول تاب افتراضي بالـ slug بدل id
+      // Set selectedTab based on route param or default to first section
+      if (initialTab) {
+        this.selectedTab = initialTab;
+      } else if (data.sections.length) {
         this.selectedTab = data.sections[0].slug!;
       }
 
-      this.route.queryParams.subscribe(params => {
-        if (params['tab']) {
-          this.selectedTab = params['tab'];
+      // Subscribe to route params for changes
+      this.routeSub = this.route.paramMap.subscribe(params => {
+        const slug = params.get('slug');
+        
+        if (slug && slug !== this.selectedTab) {
+          this.selectedTab = slug;
         }
       });
     });
   }
 
-  // ✅ onTabChange بالـ slug
-  onTabChange(slug: string): void {
+  ngOnDestroy(): void {
+    this.routeSub?.unsubscribe();
+  }
+
+  // ✅ onTabChange بالـ slug وتحديث الـ route
+  onTabChange(slug: string | undefined): void {
+    if (!slug) return;
     this.selectedTab = slug;
 
-    // Update URL without reloading
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { tab: this.selectedTab },
-      queryParamsHandling: 'merge'
-    });
+    // Update URL without reloading - navigate to /about/:slug
+    this.router.navigate(['/about', slug]);
   }
 
   formatContent(content?: string): string[] {

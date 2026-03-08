@@ -32,6 +32,8 @@ export interface DepartmentProgram {
   name: string;
   departmentId: string;
   departmentName: string;
+    slug:string;
+
   programId: string;
   programName: string;
 }
@@ -68,7 +70,7 @@ export interface Department {
   members: DepartmentMember[];
   programs: DepartmentProgram[];
   services: DepartmentService[];
-    slug?: string;
+  slug:string;
 
 }
 

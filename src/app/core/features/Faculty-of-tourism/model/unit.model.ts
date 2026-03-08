@@ -41,6 +41,7 @@ export interface Unit {
   unitTitleEn: string;
   aboutId: string;
   content: string;
+  slug:string;
   mission: string;
   vision: string;
   history?: string | null;
@@ -48,7 +49,6 @@ export interface Unit {
   unitAttachments: UnitAttachment[];
   details: UnitDetail[];
   members: UnitMember[];
-  slug?: string;
 
 }
 
