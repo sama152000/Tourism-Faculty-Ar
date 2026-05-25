@@ -82,7 +82,7 @@ export class NewsDetailsComponent implements OnInit {
     if (navigator.share && this.post) {
       navigator.share({
         // title: this.post.title,
-        text: this.post.content?.slice(0, 100) ?? '',
+        // text: this.post.content?.slice(0, 100) ?? '',
         url: window.location.href
       });
     } else {
