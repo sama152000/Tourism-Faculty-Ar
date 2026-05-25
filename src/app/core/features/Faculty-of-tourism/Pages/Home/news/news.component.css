@@ -302,3 +302,25 @@
     margin-bottom: 20px;
   }
 }
+
+/* ===== VIEWS BADGE ===== */
+.views-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  pointer-events: none;
+}
+
+.views-badge i {
+  font-size: 0.75rem;
+}

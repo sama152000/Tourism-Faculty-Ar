@@ -6,6 +6,7 @@
       <h2 class="faculty-title slide-in">آخر الأخبار</h2>
       <a
         routerLink="/news-list"
+        [queryParams]="{ type: '0' }"
         class="view-all-btn faculty-btn faculty-btn-primary"
       >
         <i class="pi pi-list mr-2"></i>
@@ -34,12 +35,17 @@
               {{ formatDate(newsItem.createdDate) }}
             </span>
           </div>
+          <!-- Views Badge -->
+          <span class="views-badge" *ngIf="newsItem.totalViewCount > 0">
+            <i class="pi pi-eye"></i>
+            {{ newsItem.totalViewCount }}
+          </span>
         </div>
 
         <!-- News Content -->
         <div class="news-content faculty-card-body">
           <h3 class="news-title">
-            <a [routerLink]="['/news', newsItem.slug]" class="news-link">
+            <a [routerLink]="['/news', newsItem.id]" class="news-link">
               {{ newsItem.title }}
             </a>
           </h3>
@@ -56,8 +62,8 @@
             </span>
           </div >
           
-          <a  (click)="navigateToPost(newsItem.slug || '')"
-            [routerLink]="['/news', newsItem.slug]"
+          <a  (click)="navigateToPost(newsItem.id)"
+            [routerLink]="['/news', newsItem.id]"
             
 
             class="read-more-btn faculty-btn faculty-btn-outline mt-auto"

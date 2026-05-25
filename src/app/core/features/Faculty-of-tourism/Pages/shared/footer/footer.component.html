@@ -102,6 +102,49 @@
     </div>
   </div>
 
+
+    <!-- إحصائيات الزوار -->
+  <div class="visitors-bar">
+    <div class="container-fluid">
+      <div class="visitors-stats">
+
+        <div class="visitor-stat">
+          <div class="visitor-icon-wrap">
+            <i class="pi pi-eye visitor-icon"></i>
+          </div>
+          <div class="visitor-info">
+            <span class="visitor-count">{{ todayViews !== null ? (todayViews | number) : '—' }}</span>
+            <span class="visitor-label">زوار اليوم</span>
+          </div>
+        </div>
+
+        <div class="visitor-divider"></div>
+
+        <div class="visitor-stat">
+          <div class="visitor-icon-wrap">
+            <i class="pi pi-calendar visitor-icon"></i>
+          </div>
+          <div class="visitor-info">
+            <span class="visitor-count">{{ monthViews !== null ? (monthViews | number) : '—' }}</span>
+            <span class="visitor-label">زوار الشهر</span>
+          </div>
+        </div>
+
+        <div class="visitor-divider"></div>
+
+        <div class="visitor-stat">
+          <div class="visitor-icon-wrap">
+            <i class="pi pi-users visitor-icon"></i>
+          </div>
+          <div class="visitor-info">
+            <span class="visitor-count">{{ totalViews !== null ? (totalViews | number) : '—' }}</span>
+            <span class="visitor-label">إجمالي الزوار سنوياً</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
   <!-- Footer Bottom -->
   <div class="footer-bottom">
     <div class="faculty-container">

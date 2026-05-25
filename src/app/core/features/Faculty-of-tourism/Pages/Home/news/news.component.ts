@@ -38,12 +38,7 @@ export class NewsComponent implements OnInit {
     }).format(date);
   }
    goToPost(post: NewsPost): void {
-    if (!post.slug) {
-      this.handleMissingSlug();
-      return;
-    }
-
-    this.router.navigate(['/news', post.slug]);
+    this.router.navigate(['/news', post.id]);
   }
 
   handleMissingSlug(event?: Event): void {
@@ -51,19 +46,15 @@ export class NewsComponent implements OnInit {
       event.preventDefault();
       event.stopPropagation();
     }
-    // Simple user feedback for now
-    // You can replace with a toast service if available
-    console.warn('Post has no slug; cannot navigate to details.');
   }
 
-  navigateToPost(slug: string): void {
-    this.router.navigate(['/news', slug]).then(() => {
-      this.loadPostDetails(slug);
+  navigateToPost(id: string): void {
+    this.router.navigate(['/news', id]).then(() => {
       window.scrollTo(0, 0);
     });
   }
 
-  loadPostDetails(slug: string): void {
-    // Logic to load post details if needed
+  loadPostDetails(id: string): void {
+    // reserved for future use
   }
 }

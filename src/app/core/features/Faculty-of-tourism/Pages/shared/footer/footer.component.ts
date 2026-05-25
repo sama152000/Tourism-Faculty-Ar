@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FooterService } from '../../../Services/footer.service';
 import { FooterData } from '../../../model/footer.model';
+import { VisitorsService } from '../../../Services/visitors.service';
 
 @Component({
   selector: 'app-footer',
@@ -20,12 +21,20 @@ export class FooterComponent implements OnInit {
     copyrightText: ''
   };
   currentYear = new Date().getFullYear();
-
-  constructor(private footerService: FooterService) {}
+  totalViews: number | null = null;
+  monthViews: number | null = null;
+  todayViews: number | null = null;
+  constructor(private footerService: FooterService,    private visitorsService: VisitorsService
+) {
+    
+  }
 
   ngOnInit(): void {
     this.footerService.getFooterData().subscribe(data => {
       this.footerData = data;
+       this.visitorsService.getTotalViews().subscribe(data => this.totalViews = data.totalViews);
+    this.visitorsService.getMonthViews().subscribe(data => this.monthViews = data.monthViews);
+    this.visitorsService.getTodayViews().subscribe(data => this.todayViews = data.todayViews);
     });
   }
 }

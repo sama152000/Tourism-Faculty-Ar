@@ -16,18 +16,19 @@ export interface PostAttachment {
 }
 
 export interface PostTag {
-  id: string;
   postId: string;
   index: number;
+  id: string;
   name: string;
 }
 
-export interface NewsPost {
+export interface News {
   id: string;
   title: string;
   urlTitleEn: string;
   content: string;
   status: string;
+  type: number | string;
   publishedDate: string | null;
   featuredImagePath: string;
   pageId: string;
@@ -36,16 +37,28 @@ export interface NewsPost {
   postCategories: PostCategory[];
   postAttachments: PostAttachment[];
   tags: PostTag[];
-  slug?: string;
+  newsViewCounters: any[];
+  totalViewCount: number;
 }
 
-export interface NewsCategory {
-  categoryName: string;
-  posts: NewsPost[];
+/** Alias used across components */
+export type NewsPost = News;
+
+export interface ApiListResponse<T> {
+  success: boolean;
+  data: T[];
+  message: string;
+  errors: string[];
+  statusCode: number;
+  timestamp: string;
 }
 
-export interface NewsTabsData {
-  title: string;
-  subtitle: string;
-  sections: NewsCategory[];
+export interface PagedResponse<T> {
+  success: boolean;
+  data: {
+    items: T[];
+    totalCount: number;
+    pageNumber: number;
+    pageSize: number;
+  };
 }

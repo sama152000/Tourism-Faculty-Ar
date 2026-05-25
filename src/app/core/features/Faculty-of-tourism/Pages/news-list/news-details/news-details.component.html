@@ -1,13 +1,32 @@
-<section class="faculty-section" *ngIf="post">
+<!-- Loading State -->
+<div *ngIf="isLoading" class="loading-state faculty-section">
+  <div class="faculty-container text-center">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+    <p class="mt-3">جارٍ التحميل...</p>
+  </div>
+</div>
+
+<!-- Error State -->
+<div *ngIf="hasError && !isLoading" class="faculty-section">
+  <div class="faculty-container text-center">
+    <i class="pi pi-exclamation-triangle" style="font-size: 2.5rem; color: #dc3545;"></i>
+    <h3 class="mt-3">تعذّر تحميل الخبر</h3>
+    <a routerLink="/news-list" class="faculty-btn faculty-btn-primary mt-3">
+      <i class="pi pi-arrow-right"></i> العودة للأخبار
+    </a>
+  </div>
+</div>
+
+<!-- Post Content -->
+<section class="faculty-section" *ngIf="post && !isLoading">
   <div class="faculty-container">
+
     <!-- Breadcrumb -->
     <nav class="breadcrumb-nav">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a routerLink="/">الرئيسية</a></li>
         <li class="breadcrumb-item">
-          <a [routerLink]="['/news-list']" [queryParams]="{category: post.postCategories[0]?.categoryName}">
-            {{ post.postCategories[0]?.categoryName }}
-          </a>
+          <a routerLink="/news-list">الأخبار والفعاليات</a>
         </li>
         <li class="breadcrumb-item active">{{ post.title }}</li>
       </ol>
@@ -16,9 +35,21 @@
     <!-- Header -->
     <div class="content-header">
       <div class="content-meta">
+        <!-- Category badges -->
+        <span
+          *ngFor="let cat of post.postCategories"
+          class="category-badge"
+        >
+          {{ cat.categoryName }}
+        </span>
         <span class="content-date">
           <i class="pi pi-calendar"></i>
-          {{ formatDate(post.createdDate) }}
+          {{ formatDate(post.publishedDate || post.createdDate) }}
+        </span>
+        <!-- View count -->
+        <span class="view-count" *ngIf="post.totalViewCount > 0">
+          <i class="pi pi-eye"></i>
+          {{ post.totalViewCount }} مشاهدة
         </span>
       </div>
       <h1 class="content-title">{{ post.title }}</h1>
@@ -29,59 +60,104 @@
       </div>
     </div>
 
-    <!-- Featured Image -->
-    <div class="content-image-container" *ngIf="post.featuredImagePath">
-      <img [src]="post.featuredImagePath" [alt]="post.title" class="content-featured-image">
+    <!-- Image Slider -->
+    <div class="content-slider-wrapper" *ngIf="sliderImages.length > 0">
+
+      <!-- Main Slide -->
+      <div class="slider-main">
+        <img
+          [src]="sliderImages[activeSlideIndex]"
+          [alt]="post.title"
+          class="slider-main-img"
+        />
+
+        <!-- Prev / Next arrows (only when more than one image) -->
+        <ng-container *ngIf="sliderImages.length > 1">
+          <button class="slider-arrow slider-arrow-prev" (click)="prevSlide()" aria-label="السابق">
+            <i class="pi pi-chevron-right"></i>
+          </button>
+          <button class="slider-arrow slider-arrow-next" (click)="nextSlide()" aria-label="التالي">
+            <i class="pi pi-chevron-left"></i>
+          </button>
+
+          <!-- Dot indicators -->
+          <div class="slider-dots">
+            <span
+              *ngFor="let img of sliderImages; let i = index"
+              class="slider-dot"
+              [class.active]="i === activeSlideIndex"
+              (click)="goToSlide(i)"
+            ></span>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Thumbnail Strip -->
+      <div class="slider-thumbs" *ngIf="sliderImages.length > 1">
+        <button
+          *ngFor="let img of sliderImages; let i = index"
+          class="slider-thumb-btn"
+          [class.active]="i === activeSlideIndex"
+          (click)="goToSlide(i)"
+          [attr.aria-label]="'صورة ' + (i + 1)"
+        >
+          <img [src]="img" [alt]="'صورة ' + (i + 1)" loading="lazy" />
+        </button>
+      </div>
+
     </div>
 
     <!-- Body -->
     <div class="content-body-wrapper">
       <div class="row">
+
+        <!-- Article -->
         <div class="col-lg-8 col-md-12">
           <article class="content-article">
             <div class="content-body">
-              <div class="content-paragraph quill-content description"
-                   [innerHTML]="post.content | cleanHtml">
-              </div>
+              <div
+                class="content-paragraph quill-content description"
+                [innerHTML]="post.content | cleanHtml"
+              ></div>
             </div>
           </article>
+
+          <!-- Attachments Gallery
+          <div class="attachments-section" *ngIf="post.postAttachments && post.postAttachments.length > 1">
+            <h3 class="sidebar-title">الصور</h3>
+            <div class="attachments-grid">
+              <a
+                *ngFor="let att of post.postAttachments"
+                [href]="att.url"
+                target="_blank"
+                class="attachment-thumb"
+              >
+                <img [src]="att.url" [alt]="att.fileName" loading="lazy" />
+              </a>
+            </div>
+          </div> -->
         </div>
 
         <!-- Sidebar -->
         <div class="col-lg-4 col-md-12">
           <aside class="content-sidebar">
-            <!-- Navigation -->
-            <div class="sidebar-section" *ngIf="previousPost || nextPost">
-              <h3 class="sidebar-title">التنقل</h3>
-              <div class="navigation-buttons">
-                <a *ngIf="previousPost" class="nav-btn prev-btn" (click)="navigateToPost(previousPost.slug!)">
-                  <i class="pi pi-arrow-right"></i>
-                  <div class="nav-content">
-                    <span class="nav-label">السابق</span>
-                    <span class="nav-title">{{ previousPost.title }}</span>
-                  </div>
-                </a>
-                <a *ngIf="nextPost" class="nav-btn next-btn" (click)="navigateToPost(nextPost.slug!)">
-                  <div class="nav-content">
-                    <span class="nav-label">التالي</span>
-                    <span class="nav-title">{{ nextPost.title }}</span>
-                  </div>
-                  <i class="pi pi-arrow-left"></i>
-                </a>
-              </div>
-            </div>
 
-            <!-- Related -->
+            <!-- Related Posts -->
             <div class="sidebar-section" *ngIf="relatedPosts.length > 0">
               <h3 class="sidebar-title">محتوى ذات صلة</h3>
               <div class="related-items">
-                <a *ngFor="let item of relatedPosts" class="related-item" (click)="navigateToPost(item.slug!)">
-                  <img [src]="item.featuredImagePath" [alt]="item.title" class="related-image">
+                <a
+                  *ngFor="let item of relatedPosts"
+                  class="related-item"
+                  (click)="navigateToPost(item.id)"
+                  style="cursor: pointer;"
+                >
+                  <img [src]="item.featuredImagePath" [alt]="item.title" class="related-image" loading="lazy" />
                   <div class="related-content">
                     <h4 class="related-title">{{ item.title }}</h4>
                     <span class="related-date">
                       <i class="pi pi-calendar"></i>
-                      {{ formatDate(item.createdDate) }}
+                      {{ formatDate(item.publishedDate || item.createdDate) }}
                     </span>
                   </div>
                 </a>
@@ -95,17 +171,23 @@
                 <a routerLink="/news-list" class="quick-link">
                   <i class="pi pi-list"></i> جميع الأخبار والفعاليات
                 </a>
-                <a routerLink="/news-list" [queryParams]="{category: 'حدث'}" class="quick-link">
-                  <i class="pi pi-calendar"></i> الفعاليات القادمة
-                </a>
                 <a routerLink="/contact" class="quick-link">
                   <i class="pi pi-envelope"></i> اتصل بنا
                 </a>
               </div>
             </div>
+
           </aside>
         </div>
       </div>
     </div>
+
+    <!-- Back Button -->
+    <div class="back-btn-wrapper">
+      <a routerLink="/news-list" class="faculty-btn faculty-btn-secondary">
+        <i class="pi pi-arrow-right"></i> العودة للأخبار
+      </a>
+    </div>
+
   </div>
 </section>

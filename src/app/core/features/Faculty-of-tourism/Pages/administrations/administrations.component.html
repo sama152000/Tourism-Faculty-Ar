@@ -1,0 +1,148 @@
+<section class="faculty-section" *ngIf="administrationData">
+  <div class="faculty-container">
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+      <h1 class="faculty-title">{{ administrationData.title }}</h1>
+      <p class="faculty-text">{{ administrationData.subtitle }}</p>
+    </div>
+
+    <!-- Administrations Tabs -->
+    <div class="departments-tabs-container" *ngIf="administrationData.sections.length">
+      <div class="departments-tabs">
+
+        <!-- Side Tabs -->
+        <div class="departments-tablist">
+          <button
+            *ngFor="let admin of administrationData.sections"
+            class="departments-tab"
+            [class.active]="selectedTab === admin.slug"
+            (click)="onTabChange(admin.slug)"
+          >
+            {{ admin.managementTitle }}
+          </button>
+        </div>
+
+        <!-- Tab Panels -->
+        <div class="departments-tabpanels">
+          <div
+            *ngFor="let admin of administrationData.sections"
+            class="departments-tabpanel"
+            [class.active]="selectedTab === admin.slug"
+          >
+            <div class="department-content-wrapper">
+
+              <!-- Administration Header -->
+              <div class="row align-items-center">
+                <div class="col-lg-8 col-md-12">
+                  <h2 class="department-title">{{ admin.managementTitle }}</h2>
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="admin.content | cleanHtml">
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                  <div class="department-stats">
+                    <div class="stat-card">
+                      <i class="pi pi-users stat-icon"></i>
+                      <div class="stat-info">
+                        <span class="stat-number">{{ getMembersCount(admin) }}</span>
+                        <span class="stat-label">الأعضاء</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="department-divider">
+
+              <!-- Mission -->
+              <div class="mission-card mb-4" *ngIf="admin.mission">
+                <div class="card-header">رسالة الإدارة</div>
+                <div class="card-body">
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="admin.mission | cleanHtml">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vision -->
+              <div class="mission-card mb-4" *ngIf="admin.vision">
+                <div class="card-header">رؤية الإدارة</div>
+                <div class="card-body">
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="admin.vision | cleanHtml">
+                  </div>
+                </div>
+              </div>
+
+              <!-- History -->
+              <div class="mission-card mb-4" *ngIf="admin.history">
+                <div class="card-header">تاريخ الإدارة</div>
+                <div class="card-body">
+                  <div class="faculty-text quill-content description"
+                       [innerHTML]="admin.history | cleanHtml">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Goals -->
+              <div class="objectives-card mb-4" *ngIf="admin.goals?.length">
+                <div class="card-header">الأهداف</div>
+                <div class="card-body">
+                  <ul class="objectives-list" style="list-style-type: none;">
+                    <ng-container *ngFor="let goal of admin.goals">
+                      <li *ngIf="goal.goalName" class="objective-item">
+                        <i class="pi pi-check-circle objective-icon"></i>
+                        {{ goal.goalName }}
+                      </li>
+                    </ng-container>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Details -->
+              <div class="courses-card mb-4" *ngIf="admin.details?.length">
+                <div class="card-header">تفاصيل الإدارة</div>
+                <div class="card-body">
+                  <div *ngFor="let detail of admin.details">
+                    <h4>{{ detail.title }}</h4>
+                    <div class="faculty-text quill-content description"
+                         [innerHTML]="detail.content | cleanHtml">
+                    </div>
+                    <p class="faculty-text">{{ detail.description }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Attachments -->
+              <div class="courses-card mb-4" *ngIf="admin.managementAttachments?.length">
+                <div class="card-header">مرفقات الإدارة</div>
+                <div class="card-body">
+                  <div *ngFor="let attach of admin.managementAttachments">
+                    <img [src]="attach.url" alt="Management Attachment"
+                         class="img-fluid rounded shadow mb-3">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Members -->
+              <div class="careers-card mb-4" *ngIf="admin.members?.length">
+                <div class="card-header">الأعضاء</div>
+                <div class="card-body">
+                  <ul style="list-style-type: none;">
+                    <li *ngFor="let member of admin.members">
+                      <i class="pi pi-check-circle objective-icon"></i>
+                      {{ member.memberName }}
+                      <span *ngIf="member.isLeader">(مدير الإدارة)</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

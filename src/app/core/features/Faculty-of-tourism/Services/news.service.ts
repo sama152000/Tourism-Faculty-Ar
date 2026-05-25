@@ -1,112 +1,113 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, map, switchMap } from 'rxjs';
+import { News, NewsPost, PostCategory } from '../model/news.model';
+import { Category } from '../model/category.model';
 import { environment } from '../../../../../environments/environment';
-import { NewsPost, NewsCategory, NewsTabsData } from '../model/news.model';
-import { map, Observable } from 'rxjs';
-import { slugify } from '../../../../utilities/slug.util'; // ✅ استدعاء الدالة
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
+  private baseUrl = environment.apiUrl + 'posts';
+  private categoriesUrl = environment.apiUrl + 'categories';
+
   constructor(private http: HttpClient) {}
 
-  getNewsTabsData(): Observable<NewsTabsData> {
-    return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
-      map(res => {
-        const posts: NewsPost[] = res.data.map((post: any) => {
-          // Generate slug from title - always prefer title for Arabic content
-          const s = slugify(post.title || post.urlTitleEn || '');
-          return {
-            ...post,
-            slug: s || `news-${post.id}` // Always have a slug
-          } as NewsPost;
-        });
+  /**
+   * جلب الأخبار بالـ pagination مع فلترة اختيارية
+   * يدعم: pageNumber, pageSize, categoryId, title (بحث), status
+   */
+  getPagedNews(
+    pageNumber: number,
+    pageSize: number,
+    filter: { categoryId?: string; title?: string; status?: string; type?: string } = {}
+  ): Observable<{ items: News[]; totalCount: number }> {
+    const body: any = {
+      pageNumber,
+      pageSize,
+      filter,
+      orderByValue: [{ colId: 'createdDate', sort: 'desc' }]
+    };
 
-        // تجميع الأخبار حسب الـ categoryName
-        const categoryMap: { [key: string]: NewsPost[] } = {};
-        posts.forEach(post => {
-          post.postCategories.forEach(cat => {
-            if (!categoryMap[cat.categoryName]) {
-              categoryMap[cat.categoryName] = [];
-            }
-            categoryMap[cat.categoryName].push(post);
-          });
-        });
+    return this.http.post<any>(`${this.baseUrl}/getpaged`, body).pipe(
+      map(response => {
+        // API may return data as array or as { items, totalCount }
+        let items: News[];
+        let totalCount: number;
 
-        const categories: NewsCategory[] = Object.keys(categoryMap).map(name => ({
-          categoryName: name,
-          posts: categoryMap[name]
-        }));
+        if (Array.isArray(response.data)) {
+          items = response.data;
+          totalCount = response.totalCount ?? items.length;
+        } else if (response.data?.items) {
+          items = response.data.items;
+          totalCount = response.data.totalCount ?? items.length;
+        } else {
+          items = [];
+          totalCount = 0;
+        }
 
-        return {
-          title: 'الأخبار والفعاليات',
-          subtitle: 'تابع أحدث الأخبار والفعاليات الخاصة بالكلية',
-          sections: categories
-        } as NewsTabsData;
+        return { items, totalCount };
       })
     );
   }
 
-  getNews(): Observable<NewsPost[]> {
-    return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
-      map(res => res.data.map((post: any) => {
-        // Generate slug from title - always prefer title for Arabic content
-        const s = slugify(post.title || post.urlTitleEn || '');
-        return { ...post, slug: s || `news-${post.id}` } as NewsPost;
-      }))
+  /** جلب كل التصنيفات */
+  getCategories(): Observable<Category[]> {
+    return this.http.get<{ success: boolean; data: Category[] }>(`${this.categoriesUrl}/getall`).pipe(
+      map(response => response.data)
     );
   }
 
-  getLatestNews(limit: number = 3): Observable<NewsPost[]> {
-    return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
-      map(res => {
-        const posts: NewsPost[] = res.data.map((post: any) => {
-          // Generate slug from title - always prefer title for Arabic content
-          const s = slugify(post.title || post.urlTitleEn || '');
-          return { ...post, slug: s || `news-${post.id}` } as NewsPost;
-        });
-
-        // Sort by createdDate descending (newest first)
-        const sortedPosts = posts.sort((a, b) => {
-          const dateA = new Date(a.createdDate).getTime();
-          const dateB = new Date(b.createdDate).getTime();
-          return dateB - dateA;
-        });
-
-        // Filter for news category and take only the latest 'limit' items
-        const newsOnly = sortedPosts.filter(p =>
-          p.postCategories.some(c => c.categoryName === 'أخبار')
-        );
-
-        return newsOnly.slice(0, limit);
-      })
+  /** جلب خبر واحد بالـ id */
+  getNewsById(id: string): Observable<News> {
+    return this.http.get<{ success: boolean; data: News }>(`${this.baseUrl}/get/${id}`).pipe(
+      map(response => response.data)
     );
   }
 
-  getLatestEvents(limit: number = 3): Observable<NewsPost[]> {
-    return this.http.get<any>(`${environment.apiUrl}posts/getall`).pipe(
-      map(res => {
-        const posts: NewsPost[] = res.data.map((post: any) => {
-          // Generate slug from title - always prefer title for Arabic content
-          const s = slugify(post.title || post.urlTitleEn || '');
-          return { ...post, slug: s || `news-${post.id}` } as NewsPost;
-        });
+  /** الأخبار المرتبطة بنفس التصنيف */
+  getRelatedNews(post: News, limit: number = 4): Observable<News[]> {
+    const categoryIds = post.postCategories.map(c => c.categoryId);
+    // Use first category for related filter
+    const filter: any = { status: 'Published' };
+    if (categoryIds.length > 0) {
+      filter.categoryId = categoryIds[0];
+    }
+    return this.getPagedNews(1, limit + 1, filter).pipe(
+      map(result => result.items.filter(p => p.id !== post.id).slice(0, limit))
+    );
+  }
 
-        // Sort by createdDate descending (newest first)
-        const sortedPosts = posts.sort((a, b) => {
-          const dateA = new Date(a.createdDate).getTime();
-          const dateB = new Date(b.createdDate).getTime();
-          return dateB - dateA;
-        });
+  /** جلب آخر الأخبار للـ Home (type=0 فقط، بدون أحداث) */
+  getLatestNews(limit: number = 4): Observable<News[]> {
+    // Request extra items to account for any server-side filtering inconsistency,
+    // then filter client-side to exclude events (type !== 0 and type !== '0')
+    return this.getPagedNews(1, limit * 2, { status: 'Published', type: '0' }).pipe(
+      map(result =>
+        result.items
+          .filter(p => p.type === 0 || p.type === '0')
+          .slice(0, limit)
+      )
+    );
+  }
 
-        // Filter for events category and take only the latest 'limit' items
-        const eventsOnly = sortedPosts.filter(p =>
-          p.postCategories.some(c => c.categoryName === 'حدث')
-        );
-
-        return eventsOnly.slice(0, limit);
-      })
+  /** جلب آخر الأحداث (Events) */
+  getLatestEvents(limit: number = 3): Observable<News[]> {
+    return this.getCategories().pipe(
+      map(categories =>
+        categories.find(c =>
+          c.name === 'فاعليات' || c.name === 'احداث' || c.name.toLowerCase() === 'events'
+        )
+      ),
+      switchMap(category => {
+        const filter: any = { status: 'Published' };
+        if (category) {
+          filter.categoryId = category.id;
+        }
+        return this.getPagedNews(1, limit, filter);
+      }),
+      map(result => result.items)
     );
   }
 }

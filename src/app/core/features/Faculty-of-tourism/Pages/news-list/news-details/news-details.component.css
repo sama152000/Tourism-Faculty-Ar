@@ -128,7 +128,7 @@
 .content-featured-image {
   width: 100%;
   height: 850px;
-  object-fit: fill;
+  object-fit: contain;
 }
 
 /* Content Body */
@@ -395,5 +395,235 @@
   .related-image {
     width: 100%;
     height: 120px;
+  }
+}
+
+/* Category Badge (inline in meta) */
+.category-badge {
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 3px 12px;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+/* View Count */
+.view-count {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+}
+
+.view-count i {
+  color: var(--accent-color);
+}
+
+/* Attachments Gallery */
+.attachments-section {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
+}
+
+.attachments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.attachment-thumb {
+  display: block;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.attachment-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.attachment-thumb:hover img {
+  transform: scale(1.05);
+}
+
+/* Back Button */
+.back-btn-wrapper {
+  margin-top: var(--spacing-2xl);
+  text-align: center;
+}
+
+/* Loading State */
+.loading-state {
+  padding: var(--spacing-2xl) 0;
+}
+
+/* =====================
+   Image Slider
+   ===================== */
+
+.content-slider-wrapper {
+  margin-bottom: var(--spacing-2xl);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Main slide area */
+.slider-main {
+  position: relative;
+  width: 100%;
+  /* background: #000; */
+  overflow: hidden;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.slider-main-img {
+  width: 100%;
+  height: 750px;
+  object-fit: contain;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+/* Prev / Next arrows */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.45);
+  border: none;
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.25s ease;
+}
+
+.slider-arrow:hover {
+  background: var(--primary-color, #1a5276);
+}
+
+.slider-arrow-prev {
+  right: 12px;
+}
+
+.slider-arrow-next {
+  left: 12px;
+}
+
+.slider-arrow i {
+  font-size: 1rem;
+}
+
+/* Dot indicators */
+.slider-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.slider-dot.active {
+  background: #fff;
+  transform: scale(1.3);
+}
+
+/* Thumbnail strip */
+.slider-thumbs {
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  /* background: #111; */
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color, #1a5276) #333;
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+.slider-thumbs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.slider-thumbs::-webkit-scrollbar-track {
+  background: #333;
+}
+
+.slider-thumbs::-webkit-scrollbar-thumb {
+  background: var(--primary-color, #1a5276);
+  border-radius: 2px;
+}
+
+.slider-thumb-btn {
+  flex-shrink: 0;
+  width: 80px;
+  height: 60px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+  transition: border-color 0.25s ease, opacity 0.25s ease;
+  opacity: 0.6;
+}
+
+.slider-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.slider-thumb-btn.active,
+.slider-thumb-btn:hover {
+  border-color: var(--accent-color, #e67e22);
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .slider-main-img {
+    height: 280px;
+  }
+
+  .slider-thumb-btn {
+    width: 60px;
+    height: 46px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider-main-img {
+    height: 220px;
+  }
+
+  .slider-arrow {
+    width: 34px;
+    height: 34px;
   }
 }

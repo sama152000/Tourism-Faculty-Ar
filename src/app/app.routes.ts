@@ -11,6 +11,7 @@ import { ContactUsComponent } from './core/features/Faculty-of-tourism/Pages/con
 import { ProgramsComponent } from './core/features/Faculty-of-tourism/Pages/programs/programs.component';
 import { CentersComponent } from './core/features/Faculty-of-tourism/Pages/centers/centers.component';
 import { CustomPageComponent } from './core/features/Faculty-of-tourism/Pages/shared/custom-page/custom-page.component';
+import { AdministrationsComponent } from './core/features/Faculty-of-tourism/Pages/administrations/administrations.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,14 +29,17 @@ export const routes: Routes = [
   { path: 'services', component: ServicesComponent },
   { path: 'services/:slug', component: ServicesComponent },
   { path: 'news-list', component: NewsListComponent },
-  { path: 'news/:slug', component: NewsDetailsComponent },
+  { path: 'news/:id', component: NewsDetailsComponent },
   { path: 'contact', component: ContactUsComponent },
   { path: 'programs', component: ProgramsComponent },
     { path: 'programs/:slug', component: ProgramsComponent },
  { path: 'centers', component: CentersComponent },
   { path: 'centers/:slug', component: CentersComponent },
 
- { path: 'custom/:slug', component: CustomPageComponent },
+ { path: 'administrations', component: AdministrationsComponent },
+  { path: 'administrations/:slug', component: AdministrationsComponent },
+
+  { path: 'custom/:slug', component: CustomPageComponent },
   { path: 'custom', component: CustomPageComponent },
   { path: '**', redirectTo: '/home' }
 

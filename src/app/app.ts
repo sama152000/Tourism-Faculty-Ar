@@ -1,4 +1,5 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from "@angular/router";
@@ -9,6 +10,7 @@ import { FooterComponent } from "./core/features/Faculty-of-tourism/Pages/shared
 // import { FooterComponent } from "./core/features/Faculty-of-tourism/Pages/shared/footer/footer.component";
 // import { QuickSidebarComponent } from "./core/features/Faculty-of-tourism/Pages/shared/quick-sidebar/quick-sidebar.component";
 import { LoaderComponent } from '../app/core/features/Faculty-of-tourism/Pages/shared/loader/loader.component';
+import { LogoService } from './core/features/Faculty-of-tourism/Services/logo.service';
 
 
 @Component({
@@ -23,7 +25,25 @@ export class App {
   showScrollButton = false;
 
   isLoading = true;
+ private logoService = inject(LogoService);
+  private document = inject(DOCUMENT);
 
+  ngOnInit(): void {
+    this.logoService.getLogo().subscribe((url: string) => {
+      if (url) {
+        const favicon = this.document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+        if (favicon) {
+          favicon.href = url;
+        } else {
+          const link = this.document.createElement('link');
+          link.rel = 'icon';
+          link.type = 'image/x-icon';
+          link.href = url;
+          this.document.head.appendChild(link);
+        }
+      }
+    });
+  }
   onLoadingComplete(): void {
     this.isLoading = false;
   }

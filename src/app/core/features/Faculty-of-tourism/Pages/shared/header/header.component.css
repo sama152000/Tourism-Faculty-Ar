@@ -159,6 +159,12 @@
   min-width: 200px;
 }
 
+.faculty-containerr {
+  width: 100%;
+  max-width: 1650px;
+  margin: 0 auto;
+  padding: var(--container-padding);
+}
 /* Ensure submenu items are readable on the primary color */
 .main-navigation :ng-deep .p-menubar-submenu .p-menuitem-link,
 .main-navigation :ng-deep .p-submenu-list .p-menuitem-link {

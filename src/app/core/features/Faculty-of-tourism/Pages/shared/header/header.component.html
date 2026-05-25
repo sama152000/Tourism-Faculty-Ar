@@ -19,20 +19,29 @@
           {{ headerData?.languageButton }}
         </button>
         </a>
+        <div class="search-lang d-flex align-center">
+       <a href="{{ contactInfo?.youTube }}">
+        <button class="lang-btn faculty-btn faculty-btn-secondary">
+          زيارة موقع الجامعة
+        </button>
+        </a>
+        
       </div>
+      </div>
+      
     </div>
   </div>
 </div>
 
 <!-- MAIN HEADER -->
 <header class="faculty-header">
-  <div class="faculty-container">
+  <div class="faculty-containerr">
     <div class="header-content d-flex justify-between align-center">
       <!-- Logo Section -->
-      <div class="logo-section d-flex align-center">
+      <a routerLink="/" class="logo-section d-flex align-center" style="text-decoration: none;">
         <img [src]="headerData?.logo" [alt]="headerData?.title" class="logo-img">
         <h1 class="logo-title">{{ headerData?.title }}</h1>
-      </div>
+      </a>
 
       <!-- Mobile Menu Toggle -->
       <button 

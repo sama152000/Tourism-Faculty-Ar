@@ -36,12 +36,18 @@
           <div class="event-status-badge">
             {{ getTimeUntilEvent(event.createdDate) }}
           </div>
+
+          <!-- Views Badge -->
+          <span class="views-badge" *ngIf="event.totalViewCount > 0">
+            <i class="pi pi-eye"></i>
+            {{ event.totalViewCount }}
+          </span>
         </div>
 
         <!-- Event Content -->
         <div class="event-content faculty-card-body">
           <h3 class="event-title">
-            <a [routerLink]="['/news', event.slug]" class="event-link">
+            <a [routerLink]="['/news', event.id]" class="event-link">
               {{ event.title }}
             </a>
           </h3>
@@ -65,7 +71,7 @@
           <!-- Event Actions -->
           <div class="event-actions">
             <a
-              [routerLink]="['/news', event.slug]"
+              [routerLink]="['/news', event.id]"
               class="details-btn faculty-btn faculty-btn-primary"
             >
               تفاصيل الفعالية

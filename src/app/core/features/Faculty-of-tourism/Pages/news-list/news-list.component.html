@@ -1,47 +1,44 @@
-<section class="faculty-section" *ngIf="newsData">
+<section class="faculty-section">
   <div class="faculty-container">
-    <!-- Header Section -->
+
+    <!-- Page Header -->
     <div class="text-center mb-5">
-      <h1 class="faculty-title">{{ newsData.title }}</h1>
-      <p class="faculty-text">{{ newsData.subtitle }}</p>
+      <h1 class="faculty-title">الأخبار والفعاليات</h1>
     </div>
 
-    <!-- Filter Section: Button, Custom Dropdown, Search -->
-    <div class="news-filter-section" *ngIf="newsData.sections.length">
+    <!-- Filter Bar -->
+    <div class="news-filter-section">
+
       <!-- All News Button -->
-      <button 
-        class="btn btn-primary all-news-btn" 
-        [class.active]="selectedDropdownCategory === 'الكل'"
+      <button
+        class="btn btn-primary all-news-btn"
+        [class.active]="!selectedCategoryId && !searchQuery"
         (click)="showAllNews()"
       >
         <i class="pi pi-list"></i>
         كل الأخبار
       </button>
 
-      <!-- Custom Category Dropdown (Native HTML/CSS) -->
+      <!-- Category Dropdown -->
       <div class="custom-dropdown" [class.open]="isDropdownOpen">
-        <button 
-          class="dropdown-trigger" 
-          (click)="toggleDropdown()"
-          type="button"
-        >
-          <span class="dropdown-label">{{ selectedDropdownCategory }}</span>
+        <button class="dropdown-trigger" (click)="toggleDropdown()" type="button">
+          <span class="dropdown-label">{{ selectedCategoryName }}</span>
           <i class="pi pi-chevron-down dropdown-arrow"></i>
         </button>
-        
+
         <ul class="dropdown-menu" *ngIf="isDropdownOpen">
-          <li 
+          <li
             class="dropdown-item"
-            [class.active]="selectedDropdownCategory === 'الكل'"
-            (click)="selectCategory('الكل')"
+            [class.active]="!selectedCategoryId"
+            (click)="selectCategory(null)"
           >
             كل الفئات
           </li>
-          <li 
+          <li
             *ngFor="let cat of categories"
             class="dropdown-item"
-            [class.active]="selectedDropdownCategory === cat.name"
-            (click)="selectCategory(cat.name)"
+            [class.active]="selectedCategoryId === cat.id"
+            (click)="selectCategory(cat)"
           >
             {{ cat.name }}
           </li>
@@ -50,41 +47,77 @@
 
       <!-- Search Bar -->
       <div class="search-bar">
-        <input 
-          type="text" 
-          [(ngModel)]="searchQuery" 
-          (keyup.enter)="onSearch()"
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
           placeholder="ابحث في الأخبار..."
           class="form-control"
-        >
+        />
         <button class="search-btn" (click)="onSearch()">
           <i class="pi pi-search"></i>
         </button>
+        <button *ngIf="searchQuery" class="search-btn clear-btn" (click)="clearSearch()" title="مسح البحث">
+          <i class="pi pi-times"></i>
+        </button>
       </div>
+
     </div>
 
-    <!-- Content Grid -->
-    <div class="content-grid" *ngIf="paginatedPosts.length">
-      <div class="content-card" *ngFor="let item of paginatedPosts">
+    <!-- Active Filters Info -->
+    <div class="filter-info" *ngIf="selectedCategoryId || searchQuery">
+      <span *ngIf="selectedCategoryId">
+        <i class="pi pi-tag"></i> {{ selectedCategoryName }}
+      </span>
+      <span *ngIf="searchQuery">
+        <i class="pi pi-search"></i> "{{ searchQuery }}"
+      </span>
+      <span class="total-count">{{ totalCount }} نتيجة</span>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-state">
+      <i class="pi pi-spin pi-spinner"></i>
+      <p>جارٍ التحميل...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="hasError && !isLoading" class="empty-state">
+      <div class="empty-state-icon">
+        <i class="pi pi-exclamation-triangle"></i>
+      </div>
+      <h3 class="empty-state-title">حدث خطأ</h3>
+      <p class="empty-state-text">تعذّر تحميل البيانات. يرجى المحاولة مرة أخرى.</p>
+      <button class="btn btn-primary mt-3" (click)="loadPosts()">إعادة المحاولة</button>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="content-grid" *ngIf="!isLoading && !hasError && posts.length > 0">
+      <div class="content-card" *ngFor="let item of posts">
         <div class="content-image-container">
-          <img [src]="item.featuredImagePath" [alt]="item.title" class="content-image">
+          <img [src]="item.featuredImagePath" [alt]="item.title" class="content-image" loading="lazy" />
           <div class="content-category-badge">
             {{ getPostCategories(item) }}
+          </div>
+          <!-- View Count Badge -->
+          <div class="view-count-badge" *ngIf="item.totalViewCount > 0">
+            <i class="pi pi-eye"></i> {{ item.totalViewCount }}
           </div>
         </div>
         <div class="content-card-body">
           <div class="content-meta">
             <span class="content-date">
               <i class="pi pi-calendar"></i>
-              {{ formatDate(item.createdDate) }}
+              {{ formatDate(item.publishedDate || item.createdDate) }}
             </span>
           </div>
           <h3 class="content-title">{{ item.title }}</h3>
-          <div class="content-excerpt quill-content description"
-            [innerHTML]="(item.content | cleanHtml) | slice:0:150"> 
-          </div>
+          <div
+            class="content-excerpt quill-content description"
+            [innerHTML]="(item.content | cleanHtml) | slice:0:150"
+          ></div>
           <div class="content-card-footer">
-            <a [routerLink]="['/news', item.slug]" class="faculty-btn faculty-btn-primary">
+            <a [routerLink]="['/news', item.id]" class="faculty-btn faculty-btn-primary">
               اقرأ المزيد
               <i class="pi pi-arrow-left"></i>
             </a>
@@ -94,19 +127,17 @@
     </div>
 
     <!-- Empty State -->
-    <div *ngIf="paginatedPosts.length === 0" class="empty-state">
+    <div *ngIf="!isLoading && !hasError && posts.length === 0" class="empty-state">
       <div class="empty-state-icon">
         <i class="pi pi-search"></i>
       </div>
       <h3 class="empty-state-title">لا يوجد محتوى</h3>
-      <p class="empty-state-text">
-        لا توجد عناصر تطابق بحثك أو التصنيف المحدد.
-      </p>
+      <p class="empty-state-text">لا توجد عناصر تطابق بحثك أو التصنيف المحدد.</p>
     </div>
-    
+
     <!-- Pagination -->
-    <div class="pagination-container" *ngIf="totalPages > 1">
-      <button 
+    <div class="pagination-container" *ngIf="totalPages > 1 && !isLoading">
+      <button
         class="pagination-btn pagination-prev"
         [disabled]="currentPage === 1"
         (click)="prevPage()"
@@ -114,9 +145,9 @@
         <i class="pi pi-chevron-right"></i>
         السابق
       </button>
-      
+
       <div class="pagination-pages">
-        <button 
+        <button
           *ngFor="let page of pages"
           class="pagination-page"
           [class.active]="page === currentPage"
@@ -125,8 +156,8 @@
           {{ page }}
         </button>
       </div>
-      
-      <button 
+
+      <button
         class="pagination-btn pagination-next"
         [disabled]="currentPage === totalPages"
         (click)="nextPage()"
@@ -135,8 +166,11 @@
         <i class="pi pi-chevron-left"></i>
       </button>
     </div>
-    
+
     <!-- Pagination Info -->
-   
+    <div class="pagination-info" *ngIf="totalPages > 1 && !isLoading">
+      صفحة {{ currentPage }} من {{ totalPages }} — إجمالي {{ totalCount }} خبر
+    </div>
+
   </div>
 </section>
