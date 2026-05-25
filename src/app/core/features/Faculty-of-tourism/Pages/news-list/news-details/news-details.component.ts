@@ -81,7 +81,7 @@ export class NewsDetailsComponent implements OnInit {
   sharePost(): void {
     if (navigator.share && this.post) {
       navigator.share({
-        title: this.post.title,
+        // title: this.post.title,
         text: this.post.content?.slice(0, 100) ?? '',
         url: window.location.href
       });
